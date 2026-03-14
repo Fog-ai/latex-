@@ -1,0 +1,45 @@
+\begin{abstractCN}
+\setlength{\baselineskip}{23pt} %设置行距23磅
+
+随着物联网的高速发展，越来越多的设备接入了通信网络，并且广泛分布于现代社会的各个领域，这极大地推动了对高效、低功耗、大规模连接通信技术的需求。例如，在城市中部署大规模的传感器网络，实现对环境的实时监测与优化；而在工业自动化领域，设备间的互联互通是提升生产效率的关键。在这些应用场景中，设备极其依赖周边环境的实时信息以进行可靠的决策，因此对信息的时效性提出了严苛的要求。为了准确刻画这种信息的新鲜度，信息年龄（Age of Information，AoI）这一重要性能指标被提出并受到广泛关注，学术界也涌现出了许多具有代表性的面向 AoI 的随机接入机制。
+
+然而，这些随机接入机制存在一定的局限性，因为它们没有正视信道碰撞所带来的影响。针对这一问题，本文做了如下工作：
+
+\begin{enumerate} [wide]
+    \item \textbf{提出了等待随机接入机制。}该机制不依赖全局统筹，而是在设备成功传输后强制其进行一段时间的退避，主动为网络让渡传输机会；同时在遭遇碰撞后引入随机退避以打散并发流量。该机制为缓解高并发场景下的持续碰撞死锁提供了务实的底层 MAC 层协议方案。
+    \item \textbf{构建等待 ALOHA 协议并进行性能分析。}将等待机制应用到无载波侦听环境下的等待 ALOHA 中，利用马尔可夫链对系统进行建模，严格推导了稳态自洽方程。为了规避多节点耦合下复杂的无穷卷积运算，创新性地引入了近似匹配的分析方法，成功推导出了平均 AoI 与 AoI 违规概率的计算闭式。
+    \item \textbf{构建等待 CSMA 协议并进行性能分析。}将等待机制应用到更加复杂、更贴近真实物理层环境的 CSMA 网络中，在充分考虑变长系统时隙的基础上，利用马尔可夫链对系统进行建模，推导了考虑微时隙冻结特性的稳态自洽方程。沿用近似匹配的分析方法，对等待 CSMA 下的 AoI 相关指标也进行了闭式推导。
+    \item \textbf{仿真验证与理论价值总结。}在具有一定规模的通信网络中，本文提出的等待机制能够有效应对真实非理想环境下的信道碰撞。仿真结果证明，适度的主动退避不仅不会加剧信息老化，反而是提升系统整体时效性的有效途径，为未来高并发场景下的 MAC 层协议提供了一种设计思路。此外，本文所推导的解析闭式在仿真中也证明了准确性，可以作为已知结论为后续的研究提供助力。
+\end{enumerate}
+
+
+\end{abstractCN}
+
+
+\begin{keywordCN}
+随机接入，信息年龄，性能分析
+\end{keywordCN}
+
+\begin{abstractEN}
+\setlength{\baselineskip}{23pt} %设置行距23磅
+
+With the rapid development of the Internet of Things (IoT), an increasing number of devices are connected to communication networks and widely distributed across various fields of modern society, which greatly drives the demand for efficient, low-power, and massive-connectivity communication technologies. For example, deploying large-scale sensor networks in cities enables real-time environmental monitoring and optimization; in the field of industrial automation, the interconnection among devices is key to improving production efficiency. In these application scenarios, devices heavily rely on real-time information from the surrounding environment to make reliable decisions, thus imposing stringent requirements on information timeliness. To accurately measure the freshness of this information, an important performance metric called Age of Information (AoI) has been proposed and received widespread attention, leading to the emergence of many representative AoI-oriented random access mechanisms in academia.
+
+However, these random access mechanisms have certain limitations because they fail to address the impact of channel collisions. To tackle this issue, this thesis conducts the following work:
+
+\begin{enumerate} [wide]
+\item \textbf{Proposal of the Wait Random Access Mechanism.} This mechanism does not rely on global coordination; instead, it forces a device to back off for a certain period after a successful transmission, proactively yielding transmission opportunities to the network. Meanwhile, it introduces a random backoff logic after encountering a collision to disperse concurrent traffic. This mechanism provides a pragmatic underlying MAC layer protocol solution to alleviate continuous collision deadlocks in high-concurrency scenarios.
+
+\item \textbf{Construction and Performance Analysis of the Wait-ALOHA Protocol.} The wait mechanism is applied to Wait-ALOHA in an environment without carrier sensing. A Markov chain is utilized to model the system, and the steady-state self-consistent equations are rigorously derived. To circumvent the complex infinite convolution operations caused by multi-node coupling, an approximate matching analysis method is innovatively introduced, successfully deriving the closed-form expressions for the average AoI and the AoI violation probability.
+
+\item \textbf{Construction and Performance Analysis of the Wait-CSMA Protocol.} The wait mechanism is extended to a more complex CSMA network that closer resembles the real physical layer environment. Fully considering the variable-length system slots, a Markov chain is used to model the system, and the steady-state self-consistent equations accounting for the mini-slot freezing characteristics are derived. Following the same approximate matching analysis method, closed-form derivations for the AoI metrics under Wait-CSMA are also obtained.
+
+\item \textbf{Simulation Verification and Summary of Theoretical Value.} In communication networks of a certain scale, the wait mechanism proposed in this thesis can effectively cope with channel collisions in real, non-ideal environments. Simulation results demonstrate that moderate proactive backoff not only does not exacerbate information aging but is an effective way to enhance the overall timeliness of the system, providing a design perspective for MAC layer protocols in future high-concurrency scenarios. Furthermore, the analytical closed-form expressions derived in this thesis have been proven accurate in simulations and can serve as known conclusions to facilitate future research.
+\end{enumerate}
+
+\end{abstractEN}
+
+\begin{keywordEN}
+Random access, Age of information, Performance analysis
+\end{keywordEN}
+
