@@ -147,7 +147,4 @@
 \bibitem{fiems2024age}
 \bibauthor{FIEMS D\@, VINEL A}\@. \bibtitle{The Age-of-Information Distribution in Slotted ALOHA}\bibmark{[J]}\@. \bibjournal{IEEE Access}\@, \bibyear{2024}\@.
 
-\bibitem{probability_book}
-\bibauthor{ROSS S~M}\@. \bibbooktitle{A first course in probability}\bibmark{[M]}\@. \bibaddress{[S.l.]}\thinspace{}\textnormal{: }\bibpublisher{Pearson Harlow, UK}\@, \bibyear{2020}\@.
-
 \end{thebibliography}
