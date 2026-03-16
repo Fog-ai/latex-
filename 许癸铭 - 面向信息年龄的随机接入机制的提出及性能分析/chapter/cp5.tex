@@ -1,38 +1,135 @@
 \clearpage
 
-\section{总结与展望}
+\section{仿真对比}
 
-\subsection{论文总结}
-随着物联网技术的快速发展，连接设备的数量呈指数增长，且这些设备广泛分布于现代社会各个领域。在诸如工业自动化、自动驾驶等时间敏感型应用中，控制中心的决策高度依赖于数据的新鲜度。传统的网络性能指标无法准确刻画这一特性，因此，AoI 作为衡量信息新鲜度的核心指标，被赋予了极高的研究价值。
+第三章和第四章分别给出了等待 ALOHA 与等待 CSMA 的系统模型、稳态接入分析以及平均 AoI 和 AoI 违规概率的闭式表达式。理论推导能够揭示性能变化的内在机理，但这些表达式是否能够准确刻画有限规模网络中的实际行为，仍然需要通过进行数值仿真来做进一步的验证。与此同时，所提等待机制的实际价值也不能只停留在解析层面，还需要与已有的相关协议进行横向比较。
 
-本文立足于海量设备接入的大规模物联网通信场景，指出了传统随机接入机制中“盲目竞争”对网络 AoI 造成的恶化影响。秉承着“主动让渡与协同接入”的核心优化理念，本文设计了一种新的随机接入机制，并将其分别应用到无载波侦听与有载波侦听两种典型的无线接入环境中，设计出了等待 ALOHA 和等待 CSMA 两种协议，并构建严密的底层数学理论分析框架。本文的主要研究工作与创新成果总结如下：
-\begin{enumerate}[wide]
-    \item \textbf{提出等待随机接入机制}
+基于上述考虑，本章在统一的仿真框架下，先对等待 ALOHA 和等待 CSMA 的理论表达式进行验证，再分别与多种随机接入协议进行性能上的横向对比。本章内容安排如下：5.1 节介绍仿真设置与对比对象；5.2 节分别验证等待 ALOHA 和等待 CSMA 理论表达式的准确性，并结合仿真结果给出性能洞察；5.3 节将所提机制与已有 ALOHA 类和 CSMA 类协议进行横向比较；5.4 节对本章工作进行总结。
 
-    针对现有随机接入机制的局限性，本文提出了一种全新的\textbf{等待随机接入机制}。该机制的核心思想是正视信道碰撞的客观存在，在保留现有改进协议“成功传输后主动让步”的基础上，为节点在遭遇碰撞后引入了合理的等待与退避逻辑。通过引入这种确定的碰撞处理措施，本机制可打破高并发场景下的持续碰撞死锁，使网络在非理想的真实碰撞环境中依然能够维持较好的信息更新能力。
+\subsection{仿真设置}
 
-    \item \textbf{等待 ALOHA 协议的构建与分析}
+本章采用蒙特卡洛方法对系统进行仿真，来分别得到平均 AoI 与 AoI 违规概率的结果。用来与仿真结果进行对比的理论曲线分别由第三章和第四章得到的闭式表达式直接计算获得，其中等待 ALOHA 的理论结果分别对应式\eqref{cp3_AoI_Final}与式\eqref{cp3_violation_prob_simplified}，等待 CSMA 的理论结果分别对应式\eqref{cp4_AoI_Final}与式\eqref{cp4_violation_prob_simplified}。在同一组实验中，除图中横轴所对应的变量外，其余参数均保持不变。
 
-    本章将所提出的等待机制首先应用于基础的等长时隙 ALOHA 框架，构建了等待 ALOHA 协议。我们通过马尔可夫链对系统进行建模，进而推导出了关于系统稳态工作点的非线性自洽方程，并证明了该方程解的存在性与唯一性。接着，我们还对等待 ALOHA 的性能进行了严密的分析，成功推导出了平均 AoI 与 AoI 违规概率的计算闭式。
+为便于比较，本章将实验分为两类。第一类用于验证理论表达式的准确性，分别考察节点数量 $N$ 和等待窗口 $z$ 变化时理论值与仿真值的一致程度；第二类用于比较不同机制在同一负载条件下的性能表现。ALOHA 类机制的对比对象包括经典时隙 ALOHA 和文献\cite{yavascan2021analysis}提出的阈值 ALOHA；CSMA 类机制的对比对象包括标准 IEEE 802.11 DCF、文献\cite{maatouk2020age}提出的睡眠 CSMA，以及文献\cite{tripathi2023fresh}提出的 Fresh CSMA。节点规模的验证图主要用来观察网络负载提高后理论模型是否仍能贴合仿真结果；等待窗口的验证图则更关注等待窗口的变化对 AoI 性能的影响。
 
-    \item \textbf{等待 CSMA 协议的构建与分析}
+\subsection{理论表达式验证}
 
-    本章将等待机制进一步应用到了具备载波侦听与变长系统时隙的 CSMA 网络中，构建了等待 CSMA 协议。针对 CSMA 机制的特性，我们利用马尔可夫链对系统进行建模，并推导了考虑微时隙冻结特性的自洽方程，并对方程解的存在性与唯一性进行了证明。我们也在充分考虑变长时隙因素的基础上对它进行了性能分析，并最终得到了平均 AoI 与 AoI 违规概率的计算闭式。
+\subsubsection{等待 ALOHA}
 
-    \item \textbf{完成了仿真验证并提炼了理论价值。}
-    
-    本文通过对比仿真证明了所提理论解析闭式的准确性，并验证了等待机制在真实非理想碰撞环境中的优越性。研究结果深刻揭示了“适度的主动退避不仅不会加剧信息老化，反而是提升系统整体时效性的有效途径”，为未来高并发场景下的 MAC 层协议设计提供了一种高度稳健的设计思路与理论依据。
-\end{enumerate}
+图\ref{fig:cp5_aloha_n_validation}给出了固定等待窗口 $z=60$ 时，等待 ALOHA 在节点数量变化条件下的理论值与仿真值对比结果。图\ref{fig:cp5_aloha_n_validation_aoi}与图\ref{fig:cp5_aloha_n_validation_violation}分别对应平均 AoI 和 AoI 违规概率的结果。
 
-\subsection{研究展望}
-本文主要聚焦于面向于 AoI 的随机接入机制设计与性能分析，虽取得了一定的成果，然而，受限于研究时间与模型的侧重点，本文的系统建模仍存在部分理想化假设。未来的研究工作可以从以下几个维度进行拓展与深化：
-\begin{enumerate}[wide]
-    \item \textbf{物理层信道模型的拓展。}本文考虑的是一个理想的信道条件，没有将路径损耗、信道衰减以及阴影效应等复杂物理层特性对数据包传输的影响考虑在内。在未来的工作中，将尝试引入更贴近真实无线传输环境的衰落信道模型，进一步提高所提算法的适用性。
-    \item \textbf{排队机制与随机网络流量的引入。}本文的节点设计采用了按需生成模型且未设置数据缓存队列，从而剥离了数据到达率和服务率动态变化带来的额外影响。然而，实际通信系统中的业务流往往具备高度随机性。因此，未来的研究中将进一步结合排队论，构建带有节点队列、且支持随机数据到达与服务过程的系统级模型，探索其对网络整体 AoI 性能的影响。
-    \item \textbf{系统参数的最优化求解与策略设计。}尽管本文中已经推导出了平均 AoI 与 AoI 违规概率的相关闭式，但在最优传输参数的理论求解与闭式最优化论证方面仍留有空白。下一步研究将重点探索上述理论表达式的极值条件，尝试构建并求解相关的优化问题，旨在为实际网络的参数配置提供具备数学支撑的最优策略。
-\end{enumerate}
+\begin{figure}[htbp]
+    \centering
+    \subfigure[平均 AoI 随节点数量变化\label{fig:cp5_aloha_n_validation_aoi}]{
+        \includegraphics[width=0.47\textwidth]{figure/cp5/aloha/AoI_N50150z60.pdf}
+    }
+    \hfill
+    \subfigure[AoI 违规概率随节点数量变化\label{fig:cp5_aloha_n_validation_violation}]{
+        \includegraphics[width=0.47\textwidth]{figure/cp5/aloha/Violation_N50150z60.pdf}
+    }
+    \caption{固定等待窗口 $z=60$ 时等待 ALOHA 的理论与仿真对比}
+    \label{fig:cp5_aloha_n_validation}
+\end{figure}
+
+从图\ref{fig:cp5_aloha_n_validation}可以看出，无论是平均 AoI 还是 AoI 违规概率，理论计算结果与仿真结果都保持了良好的一致性，说明第三章基于解耦假设、马尔可夫链建模以及矩匹配近似得到的闭式表达式能够较准确地刻画系统的稳态行为。随着节点数量的增加，碰撞概率也随之增大，离开时间间隔 $Y$ 的均值和方差都会增大，因此这两个指标整体呈恶化趋势。
+
+图\ref{fig:cp5_aloha_z_validation}给出了固定节点数量 $N=50$ 时，等待窗口变化条件下的理论值与仿真值对比结果。图\ref{fig:cp5_aloha_z_validation_aoi}和图\ref{fig:cp5_aloha_z_validation_violation}分别对应平均 AoI 与 AoI 违规概率的结果。
+
+\begin{figure}[htbp]
+    \centering
+    \subfigure[平均 AoI 随等待窗口变化\label{fig:cp5_aloha_z_validation_aoi}]{
+        \includegraphics[width=0.47\textwidth]{figure/cp5/aloha/AoI_N50z10100.pdf}
+    }
+    \hfill
+    \subfigure[AoI 违规概率随等待窗口变化\label{fig:cp5_aloha_z_validation_violation}]{
+        \includegraphics[width=0.47\textwidth]{figure/cp5/aloha/violation_N50z10100.pdf}
+    }
+    \caption{固定节点数量 $N=50$ 时等待 ALOHA 的理论与仿真对比}
+    \label{fig:cp5_aloha_z_validation}
+\end{figure}
+
+从图\ref{fig:cp5_aloha_z_validation}的结果可以发现，当 $z$ 较小时，刚完成更新的节点会过早地回到信道竞争中来，无法有效地起到降低碰撞概率的作用，因此表现出来的性能相对较差；随着 $z$ 的增大，节点在完成更新后主动退避更长的时间，相当于直接减少了单位时隙内的活跃节点数量，因此平均 AoI 与违规概率都得到了改善；随着 $z$ 的继续增大，虽然竞争强度进一步下降了，但成功更新后的确定性等待时间也在同步上升，过大的等待窗口会反过来拉长离开时间间隔，导致性能反而降低。因此，平均 AoI 与 AoI 违规概率都不会随着 $z$ 单调变化，而是会随着 $z$ 的增大呈现先减小后增加的变化规律。
+
+\subsubsection{等待 CSMA}
+
+图\ref{fig:cp5_csma_n_validation}给出了固定等待窗口 $z=64$ 时，等待 CSMA 在节点数量变化条件下的理论值与仿真值对比结果。图\ref{fig:cp5_csma_n_validation_aoi}与图\ref{fig:cp5_csma_n_validation_violation}分别对应平均 AoI 和 AoI 违规概率的结果。
+
+\begin{figure}[htbp]
+    \centering
+    \subfigure[平均 AoI 随节点数量变化\label{fig:cp5_csma_n_validation_aoi}]{
+        \includegraphics[width=0.47\textwidth]{figure/cp5/csma/AoI_N50150z64.pdf}
+    }
+    \hfill
+    \subfigure[AoI 违规概率随节点数量变化\label{fig:cp5_csma_n_validation_violation}]{
+        \includegraphics[width=0.47\textwidth]{figure/cp5/csma/violation_N50150z64.pdf}
+    }
+    \caption{固定等待窗口 $z=64$ 时等待 CSMA 的理论与仿真对比}
+    \label{fig:cp5_csma_n_validation}
+\end{figure}
+
+从图\ref{fig:cp5_csma_n_validation}可以看出，第四章得到的理论表达式同样能够较准确地拟合等待 CSMA 的仿真结果。虽然载波侦听可以减少盲目碰撞发生的概率，但是随着节点数量的增加，系统中的忙碌时隙占比会逐步提高，竞争阶段和冻结阶段所带来的等待时间也会增加，因此平均 AoI 和 AoI 违规概率整体上仍表现为上升趋势。
+
+图\ref{fig:cp5_csma_z_validation}给出了固定节点数量 $N=100$ 时，等待窗口变化条件下的理论值与仿真值对比结果。图\ref{fig:cp5_csma_z_validation_aoi}和图\ref{fig:cp5_csma_z_validation_violation}分别对应平均 AoI 与 AoI 违规概率的结果。
+
+\begin{figure}[htbp]
+    \centering
+    \subfigure[平均 AoI 随等待窗口变化\label{fig:cp5_csma_z_validation_aoi}]{
+        \includegraphics[width=0.47\textwidth]{figure/cp5/csma/AoI_N100z10100.pdf}
+    }
+    \hfill
+    \subfigure[AoI 违规概率随等待窗口变化\label{fig:cp5_csma_z_validation_violation}]{
+        \includegraphics[width=0.47\textwidth]{figure/cp5/csma/violation_N100z10100.pdf}
+    }
+    \caption{固定节点数量 $N=100$ 时等待 CSMA 的理论与仿真对比}
+    \label{fig:cp5_csma_z_validation}
+\end{figure}
+
+从图\ref{fig:cp5_csma_z_validation}的结果可以发现，当 $z$ 过小时，刚完成更新的节点会过早地回到信道竞争中来，无法有效地起到降低碰撞概率的作用，因此表现出来的性能相对较差；随着 $z$ 的增大，节点在完成更新后会主动退避更长的时间，相当于直接减少了单位时隙内的活跃节点数量，因此平均 AoI 与违规概率都得到了改善。
+
+\subsection{不同机制的性能对比}
+
+\subsubsection{ALOHA 类机制对比}
+
+图\ref{fig:cp5_aloha_comparison}给出了等待 ALOHA、经典时隙 ALOHA 以及阈值 ALOHA\cite{yavascan2021analysis}在不同节点规模下的性能对比结果。图\ref{fig:cp5_aloha_comparison_aoi}与图\ref{fig:cp5_aloha_comparison_violation}分别对应平均 AoI与违规概率的对比结果。
+
+\begin{figure}[htbp]
+    \centering
+    \subfigure[平均 AoI 对比\label{fig:cp5_aloha_comparison_aoi}]{
+        \includegraphics[width=0.47\textwidth]{figure/cp5/aloha/aoi_aloha.pdf}
+    }
+    \hfill
+    \subfigure[AoI 违规概率对比\label{fig:cp5_aloha_comparison_violation}]{
+        \includegraphics[width=0.47\textwidth]{figure/cp5/aloha/violation_aloha.pdf}
+    }
+    \caption{ALOHA 类机制的性能对比}
+    \label{fig:cp5_aloha_comparison}
+\end{figure}
+
+从图\ref{fig:cp5_aloha_comparison}可以看出，等待 ALOHA 在所考察的规模范围内整体优于经典时隙 ALOHA 与阈值 ALOHA。经典时隙 ALOHA 不区分节点状态的新鲜程度，刚完成更新的节点仍会立即重新参与竞争，因此节点数量增加后更容易形成较高的碰撞强度，平均 AoI 与违规概率都会快速恶化。阈值 ALOHA 是通过年龄阈值压缩活跃节点的数量，以此来减少单位时隙内的活跃节点数量，从而来降低网络中的碰撞概率。这一策略在网络负载较轻的条件下是有效的，但当网络的负载上升后，碰撞概率急剧增加，大量节点由于无法成功传输而导致其在接收端的 AoI 不断增大，且由于该机制因为缺乏碰撞后的处理措施，导致它无法处理这种拥塞现象，随着时间的推移，所有节点的 AoI 都将突破原先设定的年龄阈值，阈值 ALOHA 将失去作用。
+
+相比之下，等待 ALOHA 则通过对节点在成功传输后施加确定性等待，主动减少单位时隙内的活跃节点数量，以此来减少碰撞，并且保留了碰撞后的随机退避机制，保证了在高负载的条件下，避免节点在碰撞后再次集中接入，由此确保了系统的稳定运行。
+
+\subsubsection{CSMA 类机制对比}
+
+图\ref{fig:cp5_csma_comparison}给出了等待 CSMA、标准 IEEE 802.11 DCF、睡眠 CSMA\cite{maatouk2020age,baiocchi2020age,wang2024analytical}以及 Fresh CSMA\cite{tripathi2023fresh}的性能对比结果。图\ref{fig:cp5_csma_comparison_aoi}与图\ref{fig:cp5_csma_comparison_violation}分别对应平均 AoI 与违规概率的对比结果。
+
+\begin{figure}[htbp]
+    \centering
+    \subfigure[平均 AoI 对比\label{fig:cp5_csma_comparison_aoi}]{
+        \includegraphics[width=0.47\textwidth]{figure/cp5/csma/aoi_csma.pdf}
+    }
+    \hfill
+    \subfigure[AoI 违规概率对比\label{fig:cp5_csma_comparison_violation}]{
+        \includegraphics[width=0.47\textwidth]{figure/cp5/csma/violation_csma.pdf}
+    }
+    \caption{CSMA 类机制的性能对比}
+    \label{fig:cp5_csma_comparison}
+\end{figure}
+
+从图\ref{fig:cp5_csma_comparison}可以看出，将等待机制引入 802.11 DCF 后，系统在平均 AoI 和 AoI 违规概率两个指标上均有明显改善。标准 DCF 的设计目标更偏向吞吐量和长期接入公平性，并不会主动限制刚完成更新节点的再次竞争，因此在 AoI 视角下并不占优。睡眠 CSMA 通过成功后的休眠来让出信道资源，较标准 DCF 有所改进，但其等待时间由一个指数分布的随机数决定，容易得到一个较短的休眠时间，导致节点迅速地回到信道的竞争中来。Fresh CSMA 在理想化的条件下通过当前时刻的 AoI 来选择最优的退避计时器。但当节点数量过多时，由于无休止的碰撞，绝大部分甚至全部节点都处于较高的 AoI，根据 Fresh CSMA 的设计，节点将选择极短的退避计时器，甚至是0，这非但无法缓解碰撞的现象，反而会进一步加剧碰撞，由此导致 Fresh CSMA 在节点数量增加后 AoI 性能急剧恶化。相比之下，等待 CSMA 在建立系统模型时便是基于信道会产生碰撞而出发的，因此在考虑碰撞因素的真实物理环境下，等待 CSMA 依旧能展现出良好的性能。
+
+综合图\ref{fig:cp5_aloha_comparison}与图\ref{fig:cp5_csma_comparison}可以看出，等待随机接入机制并不依赖某一种特定的底层 MAC 框架。无论是在等长时隙的 ALOHA 环境中，还是在具备载波侦听和变长系统时隙的 CSMA 环境中，适度限制成功节点的再次接入，并对碰撞后的节点进行处理，都是改善 AoI 性能的有效思路。
 
 \subsection{本章小结}
-本章围绕全文的研究工作进行了归纳总结，并从机制设计、理论分析与数值验证三个层面对本文的主要贡献进行了系统梳理。总体来看，本文提出的等待随机接入机制能够在存在真实碰撞与大规模并发竞争的网络环境中有效改善信息时效性表现，说明适度、可控的主动等待并非额外负担，而是提升 AoI 性能与降低违规风险的重要手段。
 
-同时，针对当前研究中仍然存在的理想化建模与参数优化不足等问题，本章进一步给出了后续可拓展的研究方向。上述总结与展望表明，围绕 AoI 约束开展随机接入机制设计与闭式性能分析，仍具有明确的理论价值与应用前景。
+本章围绕等待 ALOHA 与等待 CSMA 的理论表达式验证和横向性能对比展开。首先，通过节点数量变化和等待窗口变化两类实验，验证了第三章与第四章所推导的平均 AoI 和 AoI 违规概率表达式的准确性，说明基于马尔可夫链、解耦近似以及矩匹配建立的分析框架能够较稳定地刻画系统稳态性能。在此基础上，本章进一步将所提机制与现有的随机接入协议进行了对比。结果表明，无论在 ALOHA 场景还是 CSMA 场景下，等待机制都能够在平均 AoI 与 AoI 违规概率两个指标上取得更优越的表现。尤其是在网络规模增大、竞争更为激烈时，这种优势更加明显。
