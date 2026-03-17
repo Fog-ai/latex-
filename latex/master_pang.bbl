@@ -1,0 +1,381 @@
+\begin{thebibliography}{10}
+\providecommand{\bibauthor}[1]{#1}
+\providecommand{\bibeditor}[1]{#1}
+\providecommand{\bibtranslator}[1]{#1}
+\providecommand{\bibtitle}[1]{#1}
+\providecommand{\bibbooktitle}[1]{#1}
+\providecommand{\bibjournal}[1]{#1}
+\providecommand{\bibmark}[1]{#1}
+\providecommand{\bibcountry}[1]{#1}
+\providecommand{\bibpatentid}[1]{#1}
+\providecommand{\bibedition}[1]{#1}
+\providecommand{\biborganization}[1]{#1}
+\providecommand{\bibaddress}[1]{#1}
+\providecommand{\bibpublisher}[1]{#1}
+\providecommand{\bibinstitution}[1]{#1}
+\providecommand{\bibschool}[1]{#1}
+\providecommand{\bibvolume}[1]{#1}
+\providecommand{\bibnumber}[1]{#1}
+\providecommand{\bibversion}[1]{#1}
+\providecommand{\bibpages}[1]{#1}
+\providecommand{\bibmodifydate}[1]{#1}
+\providecommand{\bibcitedate}[1]{#1}
+\providecommand{\bibyear}[1]{#1}
+\providecommand{\bibdate}[1]{#1}
+\providecommand{\biburl}[1]{\newline\url{#1}}
+
+\bibitem{atzori2010iot}
+\bibauthor{ATZORI L\@, IERA A\@, MORABITO G}\@. \bibtitle{The Internet of
+  Things: A Survey}\bibmark{[J]}\@. \bibjournal{Computer Networks}\@,
+  \bibyear{2010}\@, \bibvolume{54}\bibnumber{(15)}\thinspace{}\textnormal{:
+  }\bibpages{2787\thinspace{}\textnormal{--}\thinspace{}2805}\@.
+
+\bibitem{bockelmann2016mmtc}
+\bibauthor{BOCKELMANN C\@, PRATAS N\@, NIKOPOUR H, et~al}\@. \bibtitle{Massive
+  Machine-Type Communications in {5G}: Physical and {MAC}-Layer
+  Solutions}\bibmark{[J]}\@. \bibjournal{IEEE Communications Magazine}\@,
+  \bibyear{2016}\@, \bibvolume{54}\bibnumber{(9)}\thinspace{}\textnormal{:
+  }\bibpages{59\thinspace{}\textnormal{--}\thinspace{}65}\@.
+
+\bibitem{hasan2013randomaccess}
+\bibauthor{HASAN M\@, HOSSAIN E\@, NIYATO D}\@. \bibtitle{Random Access for
+  Machine-to-Machine Communication in {LTE}-Advanced Networks: Issues and
+  Approaches}\bibmark{[J]}\@. \bibjournal{IEEE Communications Magazine}\@,
+  \bibyear{2013}\@, \bibvolume{51}\bibnumber{(6)}\thinspace{}\textnormal{:
+  }\bibpages{86\thinspace{}\textnormal{--}\thinspace{}93}\@.
+
+\bibitem{laya2014lte}
+\bibauthor{LAYA A\@, ALONSO L\@, ALONSO-ZARATE J}\@. \bibtitle{Is the Random
+  Access Channel of {LTE} and {LTE-A} Suitable for {M2M} Communications? A
+  Survey of Alternatives}\bibmark{[J]}\@. \bibjournal{IEEE Communications
+  Surveys \& Tutorials}\@, \bibyear{2014}\@,
+  \bibvolume{16}\bibnumber{(1)}\thinspace{}\textnormal{:
+  }\bibpages{4\thinspace{}\textnormal{--}\thinspace{}16}\@.
+
+\bibitem{berioli2016modern}
+\bibauthor{BERIOLI M\@, COCCO G\@, LIVA G, et~al}\@. \bibtitle{Modern Random
+  Access Protocols}\bibmark{[J]}\@. \bibjournal{Foundations and Trends in
+  Networking}\@, \bibyear{2016}\@,
+  \bibvolume{10}\bibnumber{(4)}\thinspace{}\textnormal{:
+  }\bibpages{317\thinspace{}\textnormal{--}\thinspace{}446}\@.
+
+\bibitem{kaul2012real}
+\bibauthor{KAUL S\@, YATES R\@, GRUTESER M}\@. \bibtitle{Real-Time Status: How
+  Often Should One Update?}\bibmark{[C]} //\thinspace{}\bibbooktitle{2012
+  Proceedings {IEEE} INFOCOM}\@. \bibyear{2012}\thinspace{}\textnormal{:
+  }\bibpages{2731\thinspace{}\textnormal{--}\thinspace{}2735}\@.
+
+\bibitem{yates2012multiple}
+\bibauthor{YATES R~D\@, KAUL S}\@. \bibtitle{Real-Time Status Updating:
+  Multiple Sources}\bibmark{[C]} //\thinspace{}\bibbooktitle{2012 {IEEE}
+  International Symposium on Information Theory Proceedings}\@.
+  \bibyear{2012}\thinspace{}\textnormal{:
+  }\bibpages{2666\thinspace{}\textnormal{--}\thinspace{}2670}\@.
+
+\bibitem{costa2016packet}
+\bibauthor{COSTA M\@, CODREANU M\@, EPHREMIDES A}\@. \bibtitle{On the Age of
+  Information in Status Update Systems With Packet Management}\bibmark{[J]}\@.
+  \bibjournal{IEEE Transactions on Information Theory}\@, \bibyear{2016}\@,
+  \bibvolume{62}\bibnumber{(4)}\thinspace{}\textnormal{:
+  }\bibpages{1897\thinspace{}\textnormal{--}\thinspace{}1910}\@.
+
+\bibitem{chen2016error}
+\bibauthor{CHEN K\@, HUANG L}\@. \bibtitle{Age-of-Information in the Presence
+  of Error}\bibmark{[C]} //\thinspace{}\bibbooktitle{2016 {IEEE} International
+  Symposium on Information Theory ({ISIT})}\@.
+  \bibyear{2016}\thinspace{}\textnormal{:
+  }\bibpages{2579\thinspace{}\textnormal{--}\thinspace{}2583}\@.
+
+\bibitem{sun2017update}
+\bibauthor{SUN Y\@, UYSAL-BIYIKOGLU E\@, YATES R~D, et~al}\@. \bibtitle{Update
+  or Wait: How to Keep Your Data Fresh}\bibmark{[J]}\@. \bibjournal{IEEE
+  Transactions on Information Theory}\@, \bibyear{2017}\@,
+  \bibvolume{63}\bibnumber{(11)}\thinspace{}\textnormal{:
+  }\bibpages{7492\thinspace{}\textnormal{--}\thinspace{}7508}\@.
+
+\bibitem{kosta2017newconcept}
+\bibauthor{KOSTA A\@, PAPPAS N\@, ANGELAKIS V}\@. \bibtitle{Age of Information:
+  A New Concept, Metric, and Tool}\bibmark{[J]}\@. \bibjournal{Foundations and
+  Trends in Networking}\@, \bibyear{2017}\@,
+  \bibvolume{12}\bibnumber{(3)}\thinspace{}\textnormal{:
+  }\bibpages{162\thinspace{}\textnormal{--}\thinspace{}259}\@.
+
+\bibitem{yates2021survey}
+\bibauthor{YATES R~D\@, SUN Y\@, BROWN D~R, et~al}\@. \bibtitle{Age of
+  Information: An Introduction and Survey}\bibmark{[J]}\@. \bibjournal{IEEE
+  Journal on Selected Areas in Communications}\@, \bibyear{2021}\@,
+  \bibvolume{39}\bibnumber{(5)}\thinspace{}\textnormal{:
+  }\bibpages{1183\thinspace{}\textnormal{--}\thinspace{}1210}\@.
+
+\bibitem{shirvanimoghaddam2017noma}
+\bibauthor{SHIRVANIMOGHADDAM M\@, DOHLER M\@, JOHNSON S~J}\@. \bibtitle{Massive
+  Non-Orthogonal Multiple Access for Cellular {IoT}: Potentials and
+  Limitations}\bibmark{[J]}\@. \bibjournal{IEEE Communications Magazine}\@,
+  \bibyear{2017}\@, \bibvolume{55}\bibnumber{(9)}\thinspace{}\textnormal{:
+  }\bibpages{55\thinspace{}\textnormal{--}\thinspace{}61}\@.
+
+\bibitem{liu2018sparse}
+\bibauthor{LIU L\@, LARSSON E~G\@, YU W, et~al}\@. \bibtitle{Sparse Signal
+  Processing for Grant-Free Massive Connectivity: A Future Paradigm for Random
+  Access Protocols in the Internet of Things}\bibmark{[J]}\@. \bibjournal{IEEE
+  Signal Processing Magazine}\@, \bibyear{2018}\@,
+  \bibvolume{35}\bibnumber{(5)}\thinspace{}\textnormal{:
+  }\bibpages{88\thinspace{}\textnormal{--}\thinspace{}99}\@.
+
+\bibitem{roberts1975aloha}
+\bibauthor{ROBERTS L~G}\@. \bibtitle{ALOHA Packet System with and without Slots
+  and Capture}\bibmark{[J]}\@. \bibjournal{ACM SIGCOMM Computer Communication
+  Review}\@, \bibyear{1975}\@,
+  \bibvolume{5}\bibnumber{(2)}\thinspace{}\textnormal{:
+  }\bibpages{28\thinspace{}\textnormal{--}\thinspace{}42}\@.
+
+\bibitem{kleinrock1975packet}
+\bibauthor{KLEINROCK L\@, TOBAGI F}\@. \bibtitle{Packet Switching in Radio
+  Channels: Part {I}--Carrier Sense Multiple-Access Modes and Their
+  Throughput-Delay Characteristics}\bibmark{[J]}\@. \bibjournal{IEEE
+  Transactions on Communications}\@, \bibyear{1975}\@,
+  \bibvolume{23}\bibnumber{(12)}\thinspace{}\textnormal{:
+  }\bibpages{1400\thinspace{}\textnormal{--}\thinspace{}1416}\@.
+
+\bibitem{ramakrishnan1994capture}
+\bibauthor{RAMAKRISHNAN K~K\@, YANG H}\@. \bibtitle{The Ethernet Capture
+  Effect: Analysis and Solution}\bibmark{[C]}
+  //\thinspace{}\bibbooktitle{Proceedings of 19th Conference on Local Computer
+  Networks}\@. \bibyear{1994}\thinspace{}\textnormal{:
+  }\bibpages{228\thinspace{}\textnormal{--}\thinspace{}240}\@.
+
+\bibitem{cali2000dynamic}
+\bibauthor{CALI F\@, CONTI M\@, GREGORI E}\@. \bibtitle{Dynamic Tuning of the
+  {IEEE} 802.11 Protocol to Achieve a Theoretical Throughput
+  Limit}\bibmark{[J]}\@. \bibjournal{IEEE/ACM Transactions on Networking}\@,
+  \bibyear{2000}\@, \bibvolume{8}\bibnumber{(6)}\thinspace{}\textnormal{:
+  }\bibpages{785\thinspace{}\textnormal{--}\thinspace{}799}\@.
+
+\bibitem{wu2002reliable}
+\bibauthor{WU H\@, PENG Y\@, LONG K, et~al}\@. \bibtitle{Performance of
+  Reliable Transport Protocol over {IEEE} 802.11 Wireless {LAN}: Analysis and
+  Enhancement}\bibmark{[C]} //\thinspace{}\bibbooktitle{Proceedings.
+  Twenty-First Annual Joint Conference of the {IEEE} Computer and
+  Communications Societies}\@. \bibyear{2002}\@,
+  \bibvolume{2}\thinspace{}\textnormal{:
+  }\bibpages{599\thinspace{}\textnormal{--}\thinspace{}607}\@.
+
+\bibitem{song2003stability}
+\bibauthor{SONG N~O\@, KWAK B~J\@, MILLER L~E}\@. \bibtitle{On the Stability of
+  Exponential Backoff}\bibmark{[J]}\@. \bibjournal{Journal of Research of the
+  National Institute of Standards and Technology}\@, \bibyear{2003}\@,
+  \bibvolume{108}\bibnumber{(4)}\thinspace{}\textnormal{: }\bibpages{289}\@.
+
+\bibitem{bianchi2002performance}
+\bibauthor{BIANCHI G}\@. \bibtitle{Performance Analysis of the {IEEE} 802.11
+  Distributed Coordination Function}\bibmark{[J]}\@. \bibjournal{IEEE Journal
+  on Selected Areas in Communications}\@, \bibyear{2000}\@,
+  \bibvolume{18}\bibnumber{(3)}\thinspace{}\textnormal{:
+  }\bibpages{535\thinspace{}\textnormal{--}\thinspace{}547}\@.
+
+\bibitem{tickoo2004queueing}
+\bibauthor{TICKOO O\@, SIKDAR B}\@. \bibtitle{Queueing Analysis and Delay
+  Mitigation in {IEEE} 802.11 Random Access {MAC} Based Wireless
+  Networks}\bibmark{[C]} //\thinspace{}\bibbooktitle{IEEE INFOCOM 2004}\@.
+  \bibyear{2004}\@, \bibvolume{2}\thinspace{}\textnormal{:
+  }\bibpages{1404\thinspace{}\textnormal{--}\thinspace{}1413}\@.
+
+\bibitem{malone2007modeling}
+\bibauthor{MALONE D\@, DUFFY K\@, LEITH D}\@. \bibtitle{Modeling the 802.11
+  Distributed Coordination Function in Nonsaturated Heterogeneous
+  Conditions}\bibmark{[J]}\@. \bibjournal{IEEE/ACM Transactions on
+  Networking}\@, \bibyear{2007}\@,
+  \bibvolume{15}\bibnumber{(1)}\thinspace{}\textnormal{:
+  }\bibpages{159\thinspace{}\textnormal{--}\thinspace{}172}\@.
+
+\bibitem{kadota2018scheduling}
+\bibauthor{KADOTA I\@, SINHA A\@, UYSAL-BIYIKOGLU E, et~al}\@.
+  \bibtitle{Scheduling Policies for Minimizing Age of Information in Broadcast
+  Wireless Networks}\bibmark{[J]}\@. \bibjournal{IEEE/ACM Transactions on
+  Networking}\@, \bibyear{2018}\@,
+  \bibvolume{26}\bibnumber{(6)}\thinspace{}\textnormal{:
+  }\bibpages{2637\thinspace{}\textnormal{--}\thinspace{}2650}\@.
+
+\bibitem{hsu2019scheduling}
+\bibauthor{HSU Y-P\@, MODIANO E\@, DUAN L}\@. \bibtitle{Scheduling Algorithms
+  for Minimizing Age of Information in Wireless Broadcast Networks with Random
+  Arrivals}\bibmark{[J]}\@. \bibjournal{IEEE Transactions on Mobile
+  Computing}\@, \bibyear{2020}\@,
+  \bibvolume{19}\bibnumber{(12)}\thinspace{}\textnormal{:
+  }\bibpages{2903\thinspace{}\textnormal{--}\thinspace{}2915}\@.
+
+\bibitem{maatouk2020optimality}
+\bibauthor{KRIOUILE S\@, ASSAAD M\@, MAATOUK A}\@. \bibtitle{On the Global
+  Optimality of Whittle's Index Policy for Minimizing the Age of
+  Information}\bibmark{[J]}\@. \bibjournal{IEEE Transactions on Information
+  Theory}\@, \bibyear{2022}\@,
+  \bibvolume{68}\bibnumber{(1)}\thinspace{}\textnormal{:
+  }\bibpages{572\thinspace{}\textnormal{--}\thinspace{}600}\@.
+
+\bibitem{liva2011graph}
+\bibauthor{LIVA G}\@. \bibtitle{Graph-Based Analysis and Optimization of
+  Contention Resolution Diversity Slotted {ALOHA}}\bibmark{[J]}\@.
+  \bibjournal{IEEE Transactions on Communications}\@, \bibyear{2011}\@,
+  \bibvolume{59}\bibnumber{(2)}\thinspace{}\textnormal{:
+  }\bibpages{477\thinspace{}\textnormal{--}\thinspace{}487}\@.
+
+\bibitem{stefanovic2012frameless}
+\bibauthor{STEFANOVIC C\@, POPOVSKI P\@, VUKOBRATOVIC D}\@. \bibtitle{Frameless
+  {ALOHA} Protocol for Wireless Networks}\bibmark{[J]}\@. \bibjournal{IEEE
+  Communications Letters}\@, \bibyear{2012}\@,
+  \bibvolume{16}\bibnumber{(12)}\thinspace{}\textnormal{:
+  }\bibpages{2087\thinspace{}\textnormal{--}\thinspace{}2090}\@.
+
+\bibitem{paolini2015coded}
+\bibauthor{PAOLINI E\@, LIVA G\@, CHIANI M}\@. \bibtitle{Coded Slotted {ALOHA}:
+  A Graph-Based Method for Uncoordinated Multiple Access}\bibmark{[J]}\@.
+  \bibjournal{IEEE Transactions on Information Theory}\@, \bibyear{2015}\@,
+  \bibvolume{61}\bibnumber{(12)}\thinspace{}\textnormal{:
+  }\bibpages{6815\thinspace{}\textnormal{--}\thinspace{}6832}\@.
+
+\bibitem{chen2022randomaccess}
+\bibauthor{CHEN X\@, GATSIS K\@, HASSANI H, et~al}\@. \bibtitle{Age of
+  Information in Random Access Channels}\bibmark{[J]}\@. \bibjournal{IEEE
+  Transactions on Information Theory}\@, \bibyear{2022}\@,
+  \bibvolume{68}\bibnumber{(10)}\thinspace{}\textnormal{:
+  }\bibpages{6548\thinspace{}\textnormal{--}\thinspace{}6568}\@.
+
+\bibitem{yavascan2021analysis}
+\bibauthor{YAVASCAN O~T\@, UYSAL E}\@. \bibtitle{Analysis of Slotted {ALOHA}
+  With an Age Threshold}\bibmark{[J]}\@. \bibjournal{IEEE Journal on Selected
+  Areas in Communications}\@, \bibyear{2021}\@,
+  \bibvolume{39}\bibnumber{(5)}\thinspace{}\textnormal{:
+  }\bibpages{1456\thinspace{}\textnormal{--}\thinspace{}1470}\@.
+
+\bibitem{ahmetoglu2022mista}
+\bibauthor{AHMETOGLU M\@, YAVASCAN O~T\@, UYSAL E}\@. \bibtitle{{MiSTA}: An
+  Age-Optimized Slotted {ALOHA} Protocol}\bibmark{[J]}\@. \bibjournal{IEEE
+  Internet of Things Journal}\@, \bibyear{2022}\@,
+  \bibvolume{9}\bibnumber{(17)}\thinspace{}\textnormal{:
+  }\bibpages{15484\thinspace{}\textnormal{--}\thinspace{}15496}\@.
+
+\bibitem{saha2021minimum}
+\bibauthor{SAHA S\@, SUKUMARAN V~B\@, MURTHY C~R}\@. \bibtitle{On the Minimum
+  Average Age of Information in {IRSA} for Grant-Free mMTC}\bibmark{[J]}\@.
+  \bibjournal{IEEE Journal on Selected Areas in Communications}\@,
+  \bibyear{2021}\@, \bibvolume{39}\bibnumber{(5)}\thinspace{}\textnormal{:
+  }\bibpages{1441\thinspace{}\textnormal{--}\thinspace{}1455}\@.
+
+\bibitem{wang2023age}
+\bibauthor{WANG J\@, YU J\@, CHEN X, et~al}\@. \bibtitle{Age of Information for
+  Frame Slotted {ALOHA}}\bibmark{[J]}\@. \bibjournal{IEEE Transactions on
+  Communications}\@, \bibyear{2023}\@,
+  \bibvolume{71}\bibnumber{(4)}\thinspace{}\textnormal{:
+  }\bibpages{2121\thinspace{}\textnormal{--}\thinspace{}2135}\@.
+
+\bibitem{mollahosseini2024effect}
+\bibauthor{MOLLAHOSSEINI P\@, ASVADI S\@, ASHTIANI F}\@. \bibtitle{Effect of
+  Variable Backoff Algorithms on Age of Information in Slotted {ALOHA}
+  Networks}\bibmark{[J]}\@. \bibjournal{IEEE Transactions on Mobile
+  Computing}\@, \bibyear{2024}\@,
+  \bibvolume{23}\bibnumber{(9)}\thinspace{}\textnormal{:
+  }\bibpages{8620\thinspace{}\textnormal{--}\thinspace{}8633}\@.
+
+\bibitem{pan2022crra}
+\bibauthor{PAN H\@, CHAN T-T\@, LI J, et~al}\@. \bibtitle{Age of Information
+  With Collision-Resolution Random Access}\bibmark{[J]}\@. \bibjournal{IEEE
+  Transactions on Vehicular Technology}\@, \bibyear{2022}\@,
+  \bibvolume{71}\bibnumber{(10)}\thinspace{}\textnormal{:
+  }\bibpages{11295\thinspace{}\textnormal{--}\thinspace{}11300}\@.
+
+\bibitem{xie2025distributed}
+\bibauthor{XIE H\@, JEON S-W\@, JIN H}\@. \bibtitle{Distributed Real-Time
+  Control for Minimizing {AoI} in Random Access Networks}\bibmark{[J]}\@.
+  \bibjournal{IEEE Internet of Things Journal}\@, \bibyear{2025}\@,
+  \bibvolume{12}\bibnumber{(8)}\thinspace{}\textnormal{:
+  }\bibpages{10524\thinspace{}\textnormal{--}\thinspace{}10538}\@.
+
+\bibitem{maatouk2020age}
+\bibauthor{MAATOUK A\@, ASSAAD M\@, EPHREMIDES A}\@. \bibtitle{On the Age of
+  Information in a {CSMA} Environment}\bibmark{[J]}\@. \bibjournal{IEEE/ACM
+  Transactions on Networking}\@, \bibyear{2020}\@,
+  \bibvolume{28}\bibnumber{(2)}\thinspace{}\textnormal{:
+  }\bibpages{818\thinspace{}\textnormal{--}\thinspace{}831}\@.
+
+\bibitem{baiocchi2020age}
+\bibauthor{BAIOCCHI A\@, TURCANU I}\@. \bibtitle{Age of Information of One-Hop
+  Broadcast Communications in a {CSMA} Network}\bibmark{[J]}\@.
+  \bibjournal{IEEE Communications Letters}\@, \bibyear{2021}\@,
+  \bibvolume{25}\bibnumber{(1)}\thinspace{}\textnormal{:
+  }\bibpages{294\thinspace{}\textnormal{--}\thinspace{}298}\@.
+
+\bibitem{tripathi2023fresh}
+\bibauthor{TRIPATHI V\@, JONES N\@, MODIANO E}\@. \bibtitle{Fresh-{CSMA}: A
+  Distributed Protocol for Minimizing Age of Information}\bibmark{[J]}\@.
+  \bibjournal{Journal of Communications and Networks}\@, \bibyear{2023}\@,
+  \bibvolume{25}\bibnumber{(5)}\thinspace{}\textnormal{:
+  }\bibpages{556\thinspace{}\textnormal{--}\thinspace{}569}\@.
+
+\bibitem{wang2024analytical}
+\bibauthor{WANG S\@, AJAYI O~T\@, CHENG Y}\@. \bibtitle{An Analytical Approach
+  for Minimizing the Age of Information in a Practical {CSMA}
+  Network}\bibmark{[C]} //\thinspace{}\bibbooktitle{IEEE INFOCOM 2024 - IEEE
+  Conference on Computer Communications}\@.
+  \bibyear{2024}\thinspace{}\textnormal{:
+  }\bibpages{1721\thinspace{}\textnormal{--}\thinspace{}1730}\@.
+
+\bibitem{chen2019heterogeneous}
+\bibauthor{CHEN Z\@, PAPPAS N\@, BJORNSON E, et~al}\@. \bibtitle{Age of
+  Information in a Multiple Access Channel with Heterogeneous Traffic and an
+  Energy Harvesting Node}\bibmark{[C]} //\thinspace{}\bibbooktitle{IEEE INFOCOM
+  2019 - IEEE Conference on Computer Communications Workshops (INFOCOM
+  WKSHPS)}\@. \bibyear{2019}\thinspace{}\textnormal{:
+  }\bibpages{662\thinspace{}\textnormal{--}\thinspace{}667}\@.
+
+\bibitem{zou2020waiting}
+\bibauthor{ZOU P\@, OZEL O\@, SUBRAMANIAM S}\@. \bibtitle{Waiting Before
+  Serving: A Companion to Packet Management in Status Update
+  Systems}\bibmark{[J]}\@. \bibjournal{IEEE Transactions on Information
+  Theory}\@, \bibyear{2020}\@,
+  \bibvolume{66}\bibnumber{(6)}\thinspace{}\textnormal{:
+  }\bibpages{3864\thinspace{}\textnormal{--}\thinspace{}3877}\@.
+
+\bibitem{yates2018age}
+\bibauthor{YATES R~D\@, KAUL S~K}\@. \bibtitle{The Age of Information:
+  Real-Time Status Updating by Multiple Sources}\bibmark{[J]}\@.
+  \bibjournal{IEEE Transactions on Information Theory}\@, \bibyear{2019}\@,
+  \bibvolume{65}\bibnumber{(3)}\thinspace{}\textnormal{:
+  }\bibpages{1807\thinspace{}\textnormal{--}\thinspace{}1827}\@.
+
+\bibitem{zhang2023aoi}
+\bibauthor{ZHANG T\@, CHEN S\@, CHEN Z, et~al}\@. \bibtitle{{AoI} and {PAoI} in
+  the {IoT}-Based Multisource Status Update System: Violation Probabilities and
+  Optimal Arrival Rate Allocation}\bibmark{[J]}\@. \bibjournal{IEEE Internet of
+  Things Journal}\@, \bibyear{2023}\@,
+  \bibvolume{10}\bibnumber{(23)}\thinspace{}\textnormal{:
+  }\bibpages{20617\thinspace{}\textnormal{--}\thinspace{}20632}\@.
+
+\bibitem{fiems2024age}
+\bibauthor{FIEMS D\@, VINEL A}\@. \bibtitle{The Age-of-Information Distribution
+  in Slotted {ALOHA}}\bibmark{[J]}\@. \bibjournal{IEEE Access}\@,
+  \bibyear{2024}\@, \bibvolume{12}\thinspace{}\textnormal{:
+  }\bibpages{159462\thinspace{}\textnormal{--}\thinspace{}159472}\@.
+
+\bibitem{cao2021delay}
+\bibauthor{CAO J\@, FENG W\@, GE N, et~al}\@. \bibtitle{Delay Characterization
+  of Mobile-Edge Computing for {6G} Time-Sensitive Services}\bibmark{[J]}\@.
+  \bibjournal{IEEE Internet of Things Journal}\@, \bibyear{2021}\@,
+  \bibvolume{8}\bibnumber{(5)}\thinspace{}\textnormal{:
+  }\bibpages{3758\thinspace{}\textnormal{--}\thinspace{}3773}\@.
+
+\bibitem{khodakhah2025balancing}
+\bibauthor{KHODAKHAH F\@, MAHMOOD A\@, STEFANOVIC C, et~al}\@.
+  \bibtitle{Balancing {AoI} and Rate for Mission-Critical and eMBB Coexistence
+  With Puncturing, {NOMA}, and {RSMA} in Cellular Uplink}\bibmark{[J]}\@.
+  \bibjournal{IEEE Transactions on Vehicular Technology}\@, \bibyear{2025}\@,
+  \bibvolume{74}\bibnumber{(1)}\thinspace{}\textnormal{:
+  }\bibpages{1475\thinspace{}\textnormal{--}\thinspace{}1488}\@.
+
+\bibitem{daraseliya2025resource}
+\bibauthor{DARASELIYA A\@, SOPIN E\@, BEGISHEV V, et~al}\@. \bibtitle{Resource
+  Allocation in {5G} Cellular {IoT} Systems with Early Transmissions at the
+  Random Access Phase}\bibmark{[J]}\@. \bibjournal{Sensors}\@,
+  \bibyear{2025}\@, \bibvolume{25}\bibnumber{(7)}\thinspace{}\textnormal{:
+  }\bibpages{2264}\@.
+
+\end{thebibliography}
