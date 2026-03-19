@@ -1,0 +1,2280 @@
+1
+
+Fresh-CSMA: A Distributed Protocol for
+Minimizing Age of Information
+
+arXiv:2212.03087v2 [cs.NI] 12 Jul 2023
+
+Vishrant Tripathi, Nicholas Jones, and Eytan Modiano
+
+Abstract—We consider the design of distributed scheduling
+algorithms that minimize Age of Information (AoI) in singlehop wireless networks. The centralized max-weight policy is
+known to be nearly optimal in this setting; hence, our goal is
+to design a distributed Carrier Sense Multiple Access (CSMA)
+scheme that can mimic its performance. To that end, we propose
+a distributed protocol called Fresh-CSMA and show that in
+an idealized setting, Fresh-CSMA can match the scheduling
+decisions of the max-weight policy with high probability in each
+frame, and also match the theoretical performance guarantees
+of the max-weight policy over the entire time horizon. We then
+consider a more realistic setting and study the impact of protocol
+parameters on the probability of collisions and the overhead
+caused by the distributed nature of the protocol. We also consider
+the monitoring of Markov sources and extend our approach to
+CSMA protocols that incorporate Age of Incorrect Information
+(AoII) instead of AoI. Finally, we provide simulations that
+support our theoretical results and show that the performance
+gap between the ideal and realistic versions of Fresh-CSMA is
+small.
+
+I. I NTRODUCTION
+Many emerging applications require timely delivery of
+information updates over communication networks. Age of
+Information (AoI) is a metric that captures this notion of timeliness of received information at a destination [1]–[3]. Unlike
+packet delay, AoI measures the lag in obtaining information
+at a destination node, and is therefore suited for applications
+involving time sensitive updates. Age of information, at a
+destination, is defined as the time that has elapsed since the
+last received information update was generated at the source.
+AoI, upon reception of a new update, drops to the time that
+has elapsed since generation of the update, and grows linearly
+otherwise.
+The design of scheduling policies to minimize age of
+information metrics over single-hop wireless networks has
+received special interest over the past few years. In [4], [5],
+the authors consider a single-hop broadcast setting with the
+aim of minimizing weighted sum AoI. In [6], the authors
+also study the minimization of the weighted sum of AoI but
+under general interference constraints. These lines of work
+prove constant factor optimality of three different classes of
+scheduling policies; stationary randomized, max-weight and
+Whittle index. In [7], the authors prove asymptotic optimality
+of the Whittle index policy and in [8], the authors extend
+prior results to different sampling behaviors, update sizes and
+Vishrant Tripathi, Nicholas Jones, and Eytan Modiano are with the Laboratory for Information and Decision Systems (LIDS), Massachusetts Institute
+of Technology, Cambridge, MA, 02139. A preliminary version of this paper
+appeared in the conference proceedings of IEEE INFOCOM 2023.
+E-mail: {vishrant, jonesn, modiano}@mit.edu.
+
+transmission times in a single-hop broadcast setting. In [9],
+[10], the authors extend the AoI minimization framework to
+consider general nonlinear cost functions of AoI.
+Importantly, all of the works above focus on the design of
+centralized scheduling algorithms. Specifically, at the beginning of each time-slot, the base station looks at the AoI values
+for each node in the network and then decides which node to
+poll for an update. This requires support for polling protocols,
+which might not be available at the MAC layer and might
+involve excessive overhead for networks with many nodes.
+This has motivated the need to study distributed schemes for
+information freshness in wireless networks.
+In [11], the authors consider a simple class of distributed
+algorithms - each node transmits using a fixed attempt probability in each time-slot, and they design a scheme to find
+the attempt probabilities that minimize weighted sum AoI. In
+[12], the authors consider a single-hop setting with stochastic
+arrivals and solve the AoI minimization problem by deriving
+a Whittle index and propose a heuristic ALOHA-like scheme
+called Index-Prioritized-Random-Access (IPRA) where a node
+is active with a fixed probability but only when its AoI exceeds
+a specified threshold. The idea of ALOHA with thresholds
+has been explored in further detail in subsequent works. In
+[13], [14], the authors study the performance of ALOHA style
+random access protocols for information freshness and propose
+the idea of “thinning”, where only nodes with AoI greater
+than a specified threshold remain active. Along similar lines,
+the performance of threshold-ALOHA for AoI minimization is
+also analyzed in [15], [16] with performance bounds derived
+in a symmetric setting.
+Another class of distributed protocols commonly used in
+wireless networks for medium access is Carrier Sense Multiple
+Access with Collision Avoidance, also known as CSMA/CA.
+Throughout this work, when we use the term CSMA, we use it
+to denote CSMA/CA style protocols. Age of information has
+also been analyzed in settings where nodes employ CSMA
+[13], [17]–[21]. In [17], the authors analyze an idealized
+version of IEEE 802.11 CSMA and optimize the backoff timer
+parameters to minimize AoI. They show that this version of
+CSMA has poor delay and freshness performance in certain
+settings and suggest the need for new distributed scheduling
+schemes for AoI. In [18], [19], the authors analyze AoI under
+standard CSMA in broadcast environments. In [20], [21], the
+authors study sleep-wake carrier sensing based scheduling with
+the goal of minimizing energy consumption together with AoI.
+The CSMA protocol has been well studied in wireless
+networks for a long time, especially for optimizing throughput
+and utility. It was shown in [22] that CSMA tends to outper-
+
+2
+
+information update from the source. We assume active sources,
+i.e. in any time-slot, sources can generate fresh updates at will.
+Let 𝑠(𝑡) be the set of sources transmitting in time-slot 𝑡. Then,
+the age of information 𝐴𝑖 (𝑡) evolves as:
+(
+1,
+if 𝑠(𝑡) = {𝑖},
+𝐴𝑖 (𝑡 + 1) =
+(1)
+𝐴𝑖 (𝑡) + 1, otherwise.
+
+Fig. 1: Single-hop broadcast network with 𝑁 sources sending
+updates to a base station over a shared channel.
+form ALOHA in terms of both throughput and delay. In [23],
+the author developed an approximation that allows closed-form
+analysis for the IEEE 802.11 implementation of CSMA. More
+recently, there has been work on throughput and utility optimization by trying to replicate centralized scheduling policies’
+behavior using CSMA style schemes [24]–[27]. Typically,
+these works involve modifying the way CSMA backoff timers
+work by adding dependence on the current network state (e.g.
+queue lengths) and then analyzing performance guarantees by
+comparing to a centralized scheduling scheme. Our analysis
+and approach are motivated by this line of work, in particular
+the Fast-CSMA protocol proposed in [27].
+In this work, we propose Fresh-CSMA to replicate the
+behavior of centralized scheduling schemes that minimize AoI.
+In Section II we discuss our system model and set up the
+single-hop weighted age minimization problem. In Section III
+we introduce the Fresh-CSMA protocol in an idealized setting
+and provide performance guarantees that show that it can
+closely match the centralized max-weight scheduling policy
+both per time-slot and over the entire time horizon. In Section
+IV, we relax some of the assumptions from our idealized
+model and study the Fresh-CSMA protocol under a more
+realistic setting. We analyze two keys aspects - the probability
+of collision and the total time lost due to the backoff timers
+during which the channel remains idle. In Section V, we
+consider the recently proposed information freshness metric
+called Age of Incorrect Information (AoII) and extend our
+CSMA design to incorporate this metric. In Section VI, we
+provide simulations that support our theoretical results.
+A preliminary version of our paper appeared in the conference proceedings of IEEE INFOCOM 2023.
+II. S YSTEM M ODEL
+Consider a single-hop wireless network with 𝑁 sources
+generating real-time status updates that need to be sent to a
+monitoring base station (see Fig. 1). We consider a slotted
+system in which each source takes a single time-slot to
+transmit an update to the base station. Due to interference,
+only one of the sources can transmit successfully in any given
+time-slot. If multiple sources decide to transmit, a collision
+occurs and the transmitted updates are lost.
+For every source 𝑖, the age of information at the base station
+𝐴𝑖 (𝑡) measures the time elapsed since it received a fresh
+
+The metric of interest in this work will be average AoI,
+which is simply the long-term time-average of the AoI process.
+Specifically,
+𝑇
+1 ∑︁
+𝐴¯ 𝑖 ≜ lim sup
+𝐴𝑖 (𝑡).
+(2)
+𝑇→∞ 𝑇 𝑡=1
+The goal of this work is to design a distributed wireless
+scheduling policy that minimizes the weighted sum of average
+AoI across all sources:
+
+
+ ∑︁
+𝑇 ∑︁
+𝑁
+1
+𝑤 𝑖 𝐴𝑖 (𝑡) .
+(3)
+argmin lim sup
+𝑇 𝑡=1 𝑖=1
+𝜋
+𝑇→∞
+Here, the weights {𝑤 1 , 𝑤 2 , ..., 𝑤 𝑁 } are positive integers that
+denote the relative importance of each source to the overall
+monitoring or control application.
+III. D ISTRIBUTED S CHEDULING D ESIGN
+Before we introduce our distributed scheduling design, we
+briefly discuss key results from prior works that have looked
+at the same problem but from a centralized perspective.
+In [4], the authors considered a similar single-hop network
+setting with the goal of minimizing weighted-sum average
+AoI, i.e. solving (3). First, they considered the class of
+stationary randomized policies. Each policy within this class
+is simply a probability distribution over the set of sources and
+the scheduling decision is sampled from this distribution i.i.d.
+at the beginning of every time-slot. They showed that under
+the optimal stationary randomized policies that solve (3), each
+source 𝑖 is scheduled with probability
+√
+𝑤𝑖
+𝜋𝑖∗ = Í 𝑁 √ , ∀𝑖 ∈ [𝑁].
+(4)
+𝑖=1 𝑤 𝑖
+They further showed that the best stationary randomized
+policies can be at most a factor of two away from the overall
+optimal policy.
+They also proposed a centralized policy motivated by Lyapunov drift arguments called the max-weight policy. This
+policy, under reliable channels, makes scheduling decisions
+𝜋 𝑚𝑤 (𝑡) as follows:
+
+
+𝑚𝑤
+2
+𝜋 (𝑡) = argmax 𝑤 𝑗 𝐴 𝑗 (𝑡) .
+(5)
+𝑗∈[𝑁 ]
+
+In [28], the authors showed that this policy is at most a factor
+of two away from optimal using Lyapunov drift arguments.
+However, unlike stationary randomized policies, this policy
+turns out to be nearly optimal in practice.
+The goal of our distributed design is to replicate the decision
+making and performance guarantees of max-weight policies of
+the form (5).
+
+3
+
+A. Fresh-CSMA
+In general, a CSMA/CA style protocol involves the following steps. First, a node senses the channel to see if it
+is free. If the node determines the channel to be available,
+it starts transmitting a packet. Otherwise, if the channel is
+occupied, it generates a random backoff time and starts a timer
+counting down from this value. During this period, the node
+continuously senses the channel and only counts down when
+the channel is free. Once the timer hits zero, the node transmits
+a frame. Note that the timer can only hit zero when the channel
+is known to be free. Depending on whether an ACK is received
+or not from the receiving station, the node updates its random
+backoff timer parameters for the next transmission.
+The details of how to sample the backoff times, how
+to update them in case of a collision or re-transmission,
+and how to implement channel sensing determine the exact
+flavor of CSMA being implemented. To develop our scheme
+and provide tractable analysis, we will consider an idealized
+channel sensing setup that is commonly used in theoretical
+works addressing CSMA [24]–[27]. This involves making the
+following key assumptions.
+Assumption 1: Backoff timers are implemented in
+continuous time.
+Assumption 2: Carrier sensing happens instantly.
+Assumption 3: There is a discrete slotted system and
+all nodes start their backoff timers at the beginning of
+each time-slot.
+Assumption 4: Backoff timers are implemented with
+arbitrary precision, and can be made negligible in comparison to the duration of a time-slot.
+
+random variables take the exact same value is zero, so the
+probability of packet collisions is also zero in this idealized
+setup.
+The protocol above consists of two key ideas. First, each
+source 𝑖 generates a random timer 𝑍𝑖 (𝑡) that is i.i.d. exponentially distributed. Second, the source with the timer that runs
+out first gets to transmit in the entire time-slot 𝑡, i.e.
+𝜋(𝑡) = argmin 𝑍𝑖 (𝑡).
+
+Due to Assumption 4, we can scale the backoff timers by a
+factor 𝛿 such that they are negligible in comparison to the slot
+length, i.e. 𝛿𝑍𝑖 (𝑡) ≪ 1, ∀𝑖 with high probability.
+Next, we modify this CSMA protocol to create FreshCSMA, described in Alg. 2. This is also an idealized distributed protocol, but with the goal of replicating the behavior
+of the max-weight scheduling policy (5) for AoI minimization.
+This style of CSMA is motivated by the fast-CSMA protocol
+proposed in [27].
+Algorithm 2: Idealized Fresh-CSMA
+Input : parameters 𝛼 > 1, 𝛿 ≪ 1
+1 while 𝑡 ∈ 1, ..., 𝑇 do
+2
+At every source 𝑖 ∈ 1, ..., 𝑁 do
+3
+Generate a random
+timer
+
+
+2
+
+𝑍𝑖 (𝑡) ∼ exp 𝛼 𝑤𝑖 𝐴𝑖 (𝑡 ) .
+
+while 𝜏 < 𝛿𝑍𝑖 (𝑡) do
+Stay silent
+end
+if Channel is free then
+Transmit
+end
+
+4
+5
+6
+7
+8
+9
+
+Under these assumptions, a version of the classic CSMA
+protocol that uses exponential backoff timers is described in
+Alg. 1. We use 𝑡 to denote the discrete time-slots and 𝜏 to
+denote continuous time within each time-slot. We normalize
+the time-slot length to be 1 so 𝜏 is a continuous timer that
+increases from 0 to 1 within each time-slot.
+Algorithm 1: Idealized CSMA
+Input : parameter 𝛼 > 1
+1 while 𝑡 ∈ 1, ..., 𝑇 do
+2
+At every source 𝑖 ∈ 1, ..., 𝑁 do
+3
+Generate a random timer 𝑍𝑖 (𝑡) ∼ exp(𝛼).
+4
+while 𝜏 < 𝑍𝑖 (𝑡) do
+5
+Stay silent
+6
+end
+7
+if Channel is free then
+8
+Transmit
+9
+end
+11
+
+10
+11
+
+end
+
+Note that Fresh-CSMA consists of two key steps. First,
+each source 𝑖 generates a random timer 𝛿𝑍𝑖 (𝑡) where 𝑍𝑖 (𝑡) is
+2
+exponentially distributed with the parameter 𝛼 𝑤𝑖 𝐴𝑖 (𝑡 ) . Then,
+the source with the timer that runs out first gets to transmit in
+the entire time-slot 𝑡, i.e. according to (6).
+Importantly, each source only requires knowledge of its
+own AoI and scheduling weight to compute the backoff
+timer, thus maintaining the distributed nature of the protocol.
+The following lemma describes the structure of scheduling
+decisions made by this scheduling scheme.
+Lemma 1: For Fresh-CSMA at time-slot 𝑡, the probability that source 𝑖 is scheduled is given by:
+2
+
+𝑟 𝑖 (𝑡) =
+
+10
+
+end
+
+(6)
+
+𝑖∈[𝑁 ]
+
+𝛼 𝑤𝑖 𝐴𝑖 (𝑡 )
+.
+𝑁
+Í
+𝑤 𝑗 𝐴2𝑗 (𝑡 )
+𝛼
+
+(7)
+
+𝑗=1
+
+As a consequence of our idealized assumptions, note that a
+packet collision happens only if two nodes choose the exact
+same backoff times. Since the probability that two exponential
+
+Proof: First, note that the scheduling decision at timeslot 𝑡 is given by (6) where 𝑍𝑖 (𝑡) are independent and
+
+4
+
+2
+
+exponentially distributed with the parameters 𝛼 𝑤𝑖 𝐴𝑖 (𝑡 ) . Let
+𝑍 (𝑡) ≜ min 𝑍𝑖 (𝑡). Then, 𝑍 (𝑡) is the minimum of 𝑁
+𝑖∈[𝑁 ]
+
+independent exponential random variables. Thus, it is also ex2
+Í
+ponentially distributed and with the parameter 𝑁𝑗=1 𝛼 𝑤 𝑗 𝐴 𝑗 (𝑡 ) .
+2
+Let 𝜆𝑖 ≜ 𝛼 𝑤𝑖 𝐴𝑖 (𝑡 ) . We are interested in calculating the
+probability
+
+
+𝑟 𝑖 (𝑡) = P 𝜋(𝑡) = 𝑖 = P 𝑍 (𝑡) = 𝑍𝑖 (𝑡)
+∫ ∞
+Ö
+
+=
+𝑓 𝑍𝑖 (𝑡 ) (𝑥)
+P 𝑍 𝑘 (𝑡) > 𝑥 𝑑𝑥
+0
+
+𝑘≠𝑖
+
+∫ ∞
+=
+
+𝜆𝑖 𝑒
+
+−𝜆𝑖 𝑥
+
+0
+
+Ö
+
+(8)
+
+𝑒 −𝜆𝑘 𝑥 𝑑𝑥
+
+𝑘≠𝑖
+
+𝜆𝑖
+
+= Í𝑁
+
+.
+
+
+
+Case 2: The expression argmax 𝑤 𝑗 𝐴2𝑗 (𝑡) has multiple
+𝑗∈[𝑁 ]
+
+maxima. Suppose that the set of maxima is given by the nodes
+{1, ..., 𝑘 }. Then, the max-weight policy will choose one of
+these sources to be scheduled. We want to lower bound the
+probability that Fresh-CSMA chooses a node from within this
+set. To do so, we first make a similar observation as in the
+case above.
+𝑤 1 𝐴12 (𝑡) − 𝑤 𝑗 𝐴2𝑗 (𝑡) ≥ 1, ∀ 𝑗 = 𝑘 + 1, ..., 𝑁.
+
+(12)
+
+Using Lemma 1, we calculate the probability of interest
+
+
+2
+𝑘𝛼 𝑤1 𝐴1 (𝑡 )
+𝐹𝑟 𝑒𝑠ℎ−𝐶𝑆 𝑀 𝐴
+P 𝜋
+(𝑡) ∈ {1, ..., 𝑘 } =
+𝑁
+2
+Í
+𝛼 𝑤 𝑗 𝐴 𝑗 (𝑡 )
+
+𝑘=1 𝜆 𝑘
+
+𝑗=1
+
+This completes the proof.
+Using Lemma 1, we next show that if the parameter 𝛼 is
+set to be large enough, then in any particular time-slot, FreshCSMA will make the same scheduling decision as the maxweight policy with high probability.
+Theorem 1: Given any 𝛿 ∈ (0, 1) and 𝐴1 (𝑡), ..., 𝐴 𝑁 (𝑡);
+if we set 𝛼 ≥ (𝑁 − 1) 1−𝛿 𝛿 , then the following holds
+
+
+P 𝜋 𝐹𝑟 𝑒𝑠ℎ−𝐶𝑆 𝑀 𝐴 (𝑡) = 𝜋 𝑚𝑤 (𝑡) ≥ 1 − 𝛿.
+(9)
+Here, 𝜋 𝑚𝑤 (𝑡) is the max-weight scheduling decision given
+by (5), while 𝜋 𝐹𝑟 𝑒𝑠ℎ−𝐶𝑆 𝑀 𝐴 (𝑡) is the scheduling decision
+made by Fresh-CSMA.
+Proof: We divide the proof into two parts.
+
+
+Case 1: The expression argmax 𝑤 𝑗 𝐴2𝑗 (𝑡)
+
+maximum. Let this maximum be the source 1 without loss
+of generality. Then, the max-weight decision is to schedule
+source 1. Since we have assumed all the weights 𝑤 𝑖 to be
+positive integers and the AoIs 𝐴𝑖 (𝑡) are integers by definition,
+so the quantities 𝑤 𝑖 𝐴𝑖2 (𝑡) are also positive integers and the
+following must hold:
+𝑤 1 𝐴12 (𝑡) − 𝑤 𝑖 𝐴𝑖2 (𝑡) ≥ 1, ∀𝑖 ≠ 1.
+
+𝑗=1
+
+1
+1+
+
+𝑖=2 𝛼
+
+𝑘+
+
+Í𝑁
+
+𝑖=𝑘+1 𝛼
+
+𝑤𝑖 𝐴2𝑖 (𝑡 ) −𝑤1 𝐴21 (𝑡 )
+
+(13)
+
+1
+1 + (𝑁 − 𝑘)𝛼 −1
+≥ 1 − 𝛿.
+≥
+
+As before, the first inequality follows by using (12) while the
+second inequality follows due to the fact that 𝛼 ≥ (𝑁 − 1) 1−𝛿 𝛿 .
+This completes the proof.
+Next, we show that our idealized Fresh-CSMA protocol has
+the same theoretical long-term performance guarantees as the
+max-weight policy.
+Theorem 2: Given any set of integer
+weights
+Í𝑁 √ 
+𝑤𝑖
+( 𝑁 −1) 𝑖=1
+√
+, then the
+𝑤 1 , ..., 𝑤 𝑁 , if we set 𝛼 >
+min 𝑗 𝑤 𝑗
+
+𝑤𝑖 𝐴2𝑖 (𝑡 ) −𝑤1 𝐴21 (𝑡 )
+
+¯ 𝑐𝑠𝑚𝑎
+𝑖=1 𝑤 𝑖 𝐴𝑖
+≤ 2.
+¯ 𝑜 𝑝𝑡
+𝑖=1 𝑤 𝑖 𝐴𝑖
+
+Í𝑁
+
+Í𝑁
+
+(14)
+
+Here, 𝐴¯ 𝑖𝑐𝑠𝑚𝑎 is the average AoI for source 𝑖 under the
+Fresh-CSMA policy while 𝐴¯ 𝑖𝑜 𝑝𝑡 is the average AoI of
+source 𝑖 under an optimal policy 𝜋 𝑜 𝑝𝑡 that solves the age
+minimization problem (3).
+
+(10)
+
+Note that in the special case of 𝑤 𝑖 = 1, ∀𝑖, (10) holds when
+the AoIs across the different sources are unique.
+Now, applying Lemma 1, we can calculate the following
+probability
+
+
+2
+𝛼 𝑤1 𝐴1 (𝑡 )
+P 𝜋 𝐹𝑟 𝑒𝑠ℎ−𝐶𝑆 𝑀 𝐴 (𝑡) = 1 =
+𝑁
+2
+Í
+𝛼 𝑤 𝑗 𝐴 𝑗 (𝑡 )
+
+Í𝑁
+
+=
+
+following holds:
+has a unique
+
+𝑗∈[𝑁 ]
+
+=
+
+𝑘
+
+(11)
+
+1
+1 + (𝑁 − 1)𝛼 −1
+≥ 1 − 𝛿.
+≥
+
+The first inequality follows by using (10) while the second
+inequality follows due to the fact that 𝛼 ≥ (𝑁 − 1) 1−𝛿 𝛿 .
+
+Proof: Consider the linear Lyapunov function as defined
+below:
+𝑁
+∑︁
+√
+𝑤 𝑖 𝐴𝑖 (𝑡).
+(15)
+𝐿(𝑡) ≜
+𝑖=1
+
+We can define the one-slot Lyapunov drift Δ(𝑡) ≜ 𝐿(𝑡 +
+1) − 𝐿 (𝑡). The main challenge in proving the performance
+bound above, is to first show an intermediate result relating
+the Lyapunov drift of the Fresh-CSMA policy to that of the
+optimal stationary randomized policy described by (4).
+Lemma 2: Consider any At = {𝐴1 , ..., 𝐴 𝑁 (𝑡)}. Let
+Δ𝑐𝑠𝑚𝑎 (𝑡) be the one-slot Lyapunov drift of the Fresh-CSMA
+policy and Δ𝑠𝑟 (𝑡) be the one-slot Lyapunov drift of the optimal
+stationary randomized policy. Then, the following holds:
+
+
+
+
+E Δ𝑐𝑠𝑚𝑎 (𝑡) At ≤ E Δ𝑠𝑟 (𝑡) At , ∀At.
+(16)
+
+5
+
+Proof: We first calculate an expression for the drift of the
+Fresh-CSMA
+policy. Recall that 𝑟 𝑗 (𝑡) ≜ P 𝜋 𝐴𝑜𝐼 −𝐶 𝑀𝑆 𝐴 (𝑡) =
+
+𝑗 and is given by (7).
+
+
+E Δ𝑐𝑠𝑚𝑎 (𝑡) At
+=
+
+𝑁
+∑︁
+
+
+𝑟 𝑗 (𝑡)
+
+√
+
+∑︁ √
+
+𝑤𝑗 +
+
+𝑁
+∑︁
+√
+
+𝑤 𝑖 ( 𝐴𝑖 (𝑡) + 1) −
+
+𝑁
+∑︁
+√
+
+𝑖≠ 𝑗
+
+𝑗=1
+
+=
+
+
+
+𝑤𝑗 −
+
+𝑁
+∑︁
+
+𝑤 𝑗 𝐴 𝑗 (𝑡) (17)
+
+𝑗=1
+
+Next, we define the following quantities
+
+ ∑︁
+𝑁
+
+√ √
+√
+𝑤 𝑖 𝑤 𝑖 𝐴𝑖 (𝑡) − 𝑤 𝑗 𝐴 𝑗 (𝑡) .
+𝛾𝑗 ≜
+
+Í𝑁 √
+Using (22), it is easy to see that 𝛾1 ≤ −0.5 𝑖=1
+𝑤 𝑖 . We will
+bound the rest of the values 𝛾𝑖 in comparison to 𝛾1 .
+
+ ∑︁
+𝑁
+
+√ √
+√
+𝛾𝑗 =
+𝑤 𝑖 𝑤 𝑖 𝐴𝑖 (𝑡) − 𝑤 𝑗 𝐴 𝑗 (𝑡)
+
+√
+𝑟 𝑗 (𝑡) 𝑤 𝑗 𝐴 𝑗 (𝑡).
+
+ 𝑖=1
+√
+√
+√
+≤ 𝑤 1 ( 𝑤 1 𝐴1 (𝑡) − 𝑤 𝑗 𝐴 𝑗 (𝑡))
+
+𝑗=1
+
+𝑗=1
+
+Repeating the above steps for the optimal stationary randomized policy, we get:
+ ∑︁
+
+𝑁
+𝑁
+∑︁
+√
+√
+𝜋 ∗𝑗 𝑤 𝑗 𝐴 𝑗 (𝑡).
+E Δ𝑠𝑟 (𝑡) At =
+𝑤𝑗 −
+(18)
+𝑗=1
+
++
+
++
+
+𝑗=1
+
+Recall that
+are scheduling probabilities for the optimal
+stationary randomized policy, given by (4).
+Consider the difference between (17) and (18)
+
+
+E Δ
+
+𝑐𝑠𝑚𝑎
+
+=
+
+𝑁
+∑︁
+
+
+
+ √
+𝑤 𝑗 𝐴 𝑗 (𝑡)
+
+𝑤𝑗
+
+𝑁 √
+Í
+𝑖=1
+
+𝑗=1
+
+=
+
+2
+
+ ∑︁
+𝑁
+
+𝑗=1
+
+𝑖=1
+
+𝑁
+∑︁
+
+ ∑︁
+𝑁
+
+𝑗=1
+
+2
+
+𝛼 𝑤 𝑗 𝐴 𝑗 (𝑡 )
+
+𝑤 𝑖 𝐴𝑖 (𝑡) − 𝑤 𝑗 𝐴 𝑗 (𝑡)
+
+
+
+
+(24)
+
+
+𝑤𝑖 √
+
+√
+
+
+√
+𝑤 1 𝐴1 (𝑡) − 𝑤 𝑗 𝐴 𝑗 (𝑡)
+𝑤𝑗
+
+∑︁ √ √
+
+√
++
+𝑤 𝑖 𝑤 1 𝐴1 (𝑡) − 𝑤 𝑖 𝐴𝑖 (𝑡)
+≤
+
+(19)
+
+𝑤𝑖
+
+𝛼
+−
+𝑁
+Í
+
+𝑤 𝑗 𝐴2𝑗 (𝑡 )
+
+√
+
+𝑤𝑗
+
+2
+
+𝑖=1
+
+𝑗=1
+
+𝑖=1
+
+√
+𝑤 𝑖 𝐴𝑖 (𝑡) − 𝑤 𝑗 𝐴 𝑗 (𝑡)
+
+𝑖=1 𝑤 𝑖
+𝛾1 , ∀ 𝑗 ≠ 1.
+√
+min 𝑗 𝑤 𝑗
+
+Using this result, (21) and the definition of 𝛾𝑖 we get
+ ∑︁
+
+𝑁
+𝑁
+∑︁
+
+2
+√ √
+√
+𝛼 𝑤 𝑗 𝐴 𝑗 (𝑡 )
+𝑤 𝑖 𝑤 𝑖 𝐴𝑖 (𝑡) − 𝑤 𝑗 𝐴 𝑗 (𝑡)
+
+
+
+𝛼 𝑤𝑖 𝐴𝑖 (𝑡 )
+
+𝑖=1
+
+𝛼 𝑤 𝑗 𝐴 𝑗 (𝑡 )
+
+√
+
+Í𝑁 √
+
+Note that we are only interested in the sign of (19), so we
+can instead look at
+
+
+𝑁
+𝑁
+𝑁
+∑︁
+∑︁
+∑︁
+√
+√
+√
+𝑤 𝑗 𝐴2𝑗 (𝑡 )
+𝑤𝑖 𝐴2𝑖 (𝑡 )
+𝛼
+𝑤 𝑗 𝐴 𝑗 (𝑡) 𝑤 𝑗 (
+)−𝛼
+𝑤𝑖 )
+(
+
+=
+
+√
+
+𝑖≠ 𝑗
+
+
+𝑤 𝑗 𝐴 𝑗 (𝑡) 𝜋 ∗𝑗 − 𝑟 𝑗 (𝑡)
+
+𝑗=1
+
+𝑁
+∑︁
+
+
+√
+𝑤 1 𝐴1 (𝑡) − 𝑤 𝑗 𝐴 𝑗 (𝑡)
+
+𝑤𝑖
+
+𝑖=1
+
+≤
+
+
+
+𝑗=1
+
+=
+
+𝑁
+∑︁
+√
+
+Í𝑁 √
+
+(𝑡) At − E Δ (𝑡) At
+
+𝑁
+∑︁
+√
+
+√
+𝑤𝑖
+
+𝑖= 𝑗
+
+𝑠𝑟
+
+√
+
+𝑗 −1
+∑︁
+√
+𝑖=2
+
+𝜋 ∗𝑗
+
+
+
+(23)
+
+𝑖=1
+
+𝑁
+∑︁
+
+
+
+√
+
+𝑖=1
+
+
+
+𝛾1 +
+
+√
+𝑤𝑖
+
+
+√
+𝑤 𝑖 𝐴𝑖 (𝑡) − 𝑤 𝑗 𝐴 𝑗 (𝑡)
+
+𝛼
+
+𝑤2 𝐴22 (𝑡 )
+
+Í𝑁 √
+
+(25)
+
+Clearly, choosing
+
+𝑤𝑖
+
+𝑖=1
+
+√
+
+𝑁
+∑︁
+
+𝑖=1 𝑤 𝑖
+𝛾1
+√
+min
+𝑗 𝑤𝑗
+𝑖=2
+Í𝑁 √ 
+
+𝑤1 𝐴21 (𝑡 )
+−1 (𝑁 − 1) 𝑖=1 𝑤 𝑖
+≤𝛼
+𝛾1 − 1 + 𝛼
+.
+√
+min 𝑗 𝑤 𝑗
+
+≤𝛼
+
+𝑤1 𝐴21 (𝑡 )
+
+
+𝛼>
+
+
+
+𝑖=1
+
+(20)
+Consider without loss of generality that sources are num√
+√
+√
+bered such that 𝑤 1 𝐴1 (𝑡) ≥ 𝑤 2 𝐴2 (𝑡) ≥ ... ≥ 𝑤 𝑁 𝐴 𝑁 (𝑡).
+This automatically implies that source 1 has the largest value
+√
+of 𝑤 𝑗 𝐴 𝑗 (𝑡) among all sources.
+Case 1: First we consider the case when Source 1 is
+the unique
+max-weight
+scheduling decision, i.e. 𝜋 𝑚𝑤 (𝑡) =
+
+
+argmax 𝑤 𝑗 𝐴2𝑗 (𝑡) = 1. Since we have assumed weights
+𝑗∈[𝑁 ]
+
+Í𝑁 √ 
+𝑤𝑖
+(𝑁 − 1) 𝑖=1
+√
+min 𝑗 𝑤 𝑗
+
+(26)
+
+is sufficient to guarantee that (25) is negative and hence (19)
+is negative. Thus, for this choice of 𝛼, we observe that
+
+
+
+
+𝐶𝑆 𝑀 𝐴
+𝑆𝑅
+E Δ
+(𝑡) At ≤ E Δ (𝑡) At , ∀At.
+(27)
+Case 2: Sources 1, ..., 𝑘 are all solutions to the following
+maximization
+
+
+𝜋 𝑚𝑤 (𝑡) = argmax 𝑤 𝑗 𝐴2𝑗 (𝑡) ∈ {1, ..., 𝑘 }.
+(28)
+𝑗∈[𝑁 ]
+
+𝑤 𝑖 ∈ Z+ and AoIs 𝐴𝑖 (𝑡) are also positive integers, the above
+equation implies that
+
+We can repeat the exact same analysis as Case 1, but starting
+with
+
+𝑤 1 𝐴12 (𝑡) − 𝑤 𝑖 𝐴𝑖2 (𝑡) ≥ 1, ∀𝑖 ≠ 1.
+
+𝑤 1 𝐴12 (𝑡) − 𝑤 𝑖 𝐴𝑖2 (𝑡) ≥ 1, ∀𝑖 ∈ {𝑘 + 1, ..., 𝑁 }.
+
+(21)
+
+2
++
+This is because
+√ 𝑤 𝑖 𝐴𝑖 (𝑡) ∈ Z for all sources 𝑖. Further, note
+that 𝑓 (𝑥) = 𝑥 is Lipschitz for 𝑥 ∈ [1, ∞) with the Lipschitz
+constant 0.5. Applying this fact to (21), we get
+√
+√
+𝑤 1 𝐴1 (𝑡) − 𝑤 𝑖 𝐴𝑖 (𝑡) ≥ 0.5, ∀𝑖 ≠ 1.
+(22)
+
+(29)
+
+2
++
+This is because
+√ 𝑤 𝑖 𝐴𝑖 (𝑡) ∈ Z for all sources 𝑖. Further, note
+
+that 𝑓 (𝑥) = 𝑥 is Lipschitz for 𝑥 ∈ [1, ∞) with the Lipschitz
+constant 0.5. Applying this fact to (21), we get
+√
+√
+𝑤 1 𝐴1 (𝑡) − 𝑤 𝑖 𝐴𝑖 (𝑡) ≥ 0.5, ∀𝑖 ∈ {𝑘 + 1, ..., 𝑁 }.
+(30)
+
+6
+
+Using these inequalities above, we obtain
+Í𝑁 √
+𝑤𝑖
+𝛾 𝑗 ≤ 𝑖=1 √
+𝛾1 , ∀ 𝑗 ∈ {𝑘 + 1, ..., 𝑁 }.
+min 𝑗 𝑤 𝑗
+
+(31)
+
+Finally putting all of the inequalities together, we get
+
+ ∑︁
+𝑁
+𝑁
+∑︁
+
+2
+√ √
+√
+𝛼 𝑤 𝑗 𝐴 𝑗 (𝑡 )
+𝑤 𝑖 𝑤 𝑖 𝐴𝑖 (𝑡) − 𝑤 𝑗 𝐴 𝑗 (𝑡)
+𝑗=1
+
+𝑖=1
+
+𝑁
+ ∑︁
+2
+2
+𝛼 𝑤𝑘+1 𝐴𝑘+1 (𝑡 )
+≤ 𝑘𝛼 𝑤1 𝐴1 (𝑡 ) 𝛾1 +
+
+Í𝑁 √
+
+𝑤𝑖
+𝛾1
+min 𝑗 𝑤 𝑗
+𝑖=𝑘+1
+Í𝑁 √ 
+
+(𝑁 − 𝑘) 𝑖=1
+𝑤𝑖
+2
+≤ 𝛼 𝑤1 𝐴1 (𝑡 ) 𝛾1 − 𝑘 + 𝛼 −1
+.
+√
+min 𝑗 𝑤 𝑗
+𝑖=1
+
+√
+
+(32)
+
+Again, choosing
+Í𝑁 √ 
+(𝑁 − 1) 𝑖=1
+𝑤𝑖
+𝛼>
+√
+min 𝑗 𝑤 𝑗
+
+
+(33)
+
+is sufficient to guarantee that (32) is negative and hence (19)
+is negative. This completes the proof of Lemma 2.
+Next, we proceed to the proof of Theorem 2. The one-slot
+drift for the optimal stationary randomized policy is given by
+
+
+𝑠𝑟
+E Δ (𝑡) At
+=
+
+𝑁
+∑︁
+
+𝜋 ∗𝑗
+
+
+
+√
+
+𝑤𝑗 +
+
+𝑁
+∑︁
+√
+
+
+𝑤 𝑖 ( 𝐴𝑖 (𝑡) + 1) −
+
+𝑖≠ 𝑗
+
+𝑗=1
+
+=
+
+∑︁ √
+
+𝑤𝑗 −
+
+𝑗=1
+
+𝑁
+∑︁
+
+𝑁
+∑︁
+√
+
+𝑤 𝑗 𝐴 𝑗 (𝑡)
+
+(34)
+
+𝑗=1
+
+√
+𝜋 ∗𝑗 𝑤 𝑗 𝐴 𝑗 (𝑡).
+
+Putting together (16) and (34), we get
+
+ ∑︁
+𝑁
+𝑁
+∑︁
+√
+√
+E Δ𝑐𝑠𝑚𝑎 (𝑡) At ≤
+𝑤𝑗 −
+𝜋 ∗𝑗 𝑤 𝑗 𝐴 𝑗 (𝑡).
+𝑗=1
+
+(35)
+
+𝑗=1
+
+Summing (35) for 𝑡 = 1, ..., 𝑇 and taking expectation, we get
+
+
+E 𝐿(𝑇 + 1) − 𝐿 (1) ≤
+𝑇
+
+𝑗=1
+
+Now, we observe that the average AoI of a source 𝑗 under the
+1
+optimal stationary randomized policy is given by 𝐴¯ 𝑠𝑟
+𝑗 = 𝜋 ∗𝑗 ,
+as shown in [4]. Using this fact and taking limsup as 𝑇 goes
+to infinity in the equation above, we get
+𝑁
+∑︁
+
+𝑤 𝑗 𝐴¯ 𝑐𝑠𝑚𝑎
+(𝑡) ≤
+𝑗
+
+𝑗=1
+
+𝑁
+∑︁
+
+𝑤 𝑗 𝐴¯ 𝑠𝑟
+𝑗 .
+
+(39)
+
+𝑗=1
+
+We also know from [4] that stationary randomized policies
+can be at most a factor of two away from optimal. Thus, we
+get
+Í𝑁
+Í𝑁
+¯ 𝑠𝑟
+¯ 𝑐𝑠𝑚𝑎
+𝑖=1 𝑤 𝑖 𝐴𝑖
+𝑖=1 𝑤 𝑖 𝐴𝑖
+≤
+≤ 2.
+(40)
+Í𝑁
+Í
+𝑜
+𝑝𝑡
+𝑁
+¯
+¯ 𝑜 𝑝𝑡
+𝑖=1 𝑤 𝑖 𝐴𝑖
+𝑖=1 𝑤 𝑖 𝐴𝑖
+This completes the proof.
+
+𝑗=1
+
+𝑁
+∑︁
+√
+
+Fig. 2: Events within frame 𝑡 in the near-realistic multiple access model. Four sources choose backoff timers
+𝐷 1 (𝑡), ..., 𝐷 4 (𝑡). Source 1’s timer runs out first, after which it
+transmits its update for 𝑀 minislots.
+
+ ∑︁
+
+𝑁
+𝑇
+∑︁
+√
+∗
+𝑤𝑗 −
+E
+𝑤 𝑗 𝜋 𝑗 𝐴 𝑗 (𝑡) .
+𝑗=1
+
+(36)
+
+𝑡=1
+
+Substituting the expression for 𝜋 ∗𝑗 from (4), rearranging and
+dividing by 𝑇, we get
+ ∑︁
+
+𝑇 ∑︁
+𝑁
+1
+𝑤 𝑗 𝐴 𝑗 (𝑡) ≤
+Í𝑁 √  E
+𝑇
+𝑗=1 𝑤 𝑗
+𝑡=1 𝑗=1
+(37)
+
+
+𝑁
+∑︁
+1
+√
+𝑤 𝑗 − E 𝐿(𝑇 + 1) − 𝐿 (1) .
+𝑇
+𝑗=1
+Í √
+√
+𝑤
+Since 𝐿 (𝑇 + 1) ≥ 0 and 𝜋 ∗𝑗 = 𝑤 𝑗 ( 𝑁𝑗=1 𝑤 𝑗 ), we can further
+𝑗
+simplify the equaiton above to
+ 𝑇 𝑁
+ ∑︁
+𝑁
+𝑤 𝑗 E[𝐿 (1)]
+1 ∑︁ ∑︁
+E
+𝑤 𝑗 𝐴 𝑗 (𝑡) ≤
++
+.
+(38)
+𝑇
+𝜋 ∗𝑗
+𝑇
+𝑡=1 𝑗=1
+𝑗=1
+
+The factor of two optimality guarantee that we have derived
+is the same performance guarantee as the one shown for
+the max-weight policy in [28] and better than the factor
+of four bound derived in [4], [11]. Viewing Theorems 1
+and 2 together, we conclude that the idealized Fresh-CSMA
+policy can replicate the behavior of the max-weight policy,
+both at each time-slot with high probability and in terms
+of long-term
+average AoI over the entire time-horizon if
+
+Í √
+( 𝑁 −1) 𝑁 𝑤𝑖
+𝛼 > max (𝑁 − 1) 1−𝛿 𝛿 , min 𝑗 √𝑖=1
+. In Section VI, we will
+𝑤𝑗
+see via simulations that this holds true even for small values
+of 𝛼, i.e. 𝛼 doesn’t need to be very large for Fresh-CSMA to
+be able to mimic the max-weight policy.
+IV. N EAR -R EALISTIC M ULTIPLE ACCESS M ODEL
+Until now, we have looked at distributed multiple access
+with idealized assumptions. In this section, we discuss the
+Fresh-CSMA protocol under a more realistic version of multiple access.
+Our discussion is based on the IEEE 802.11 standard
+for wireless LAN [29]. This standard defines a distributed
+coordination function (DCF) for sharing access to the wireless
+medium based on a CSMA/CA style protocol. The 802.11
+standard divides time into the basic units of mini-slots, where
+each mini-slot is the duration of time needed by a source
+
+7
+
+to detect packet transmission from any another source, i.e.
+perform channel sensing. A typical value for the mini-slot
+duration in IEEE 802.11 g/n/ac protocols is 9𝜇𝑠.
+Fig. 2 describes the key elements of our near-realistic model.
+First, we consider that the backoff timers for source 𝑖 at frame
+𝑡, denoted by 𝐷 𝑖 (𝑡), can only run in multiples of minislot
+durations. This relaxes Assumptions 1 and 2, since the timers
+are now discrete, with finite precision and limited by the
+amount of time required to do channel sensing. Further, since
+timers are no longer continuous, the probability of collision is
+also non-zero and has an effect on the average age.
+As before, we assume that backoff timers for each source
+begin at the beginning of each frame and the source/sources
+whose timers run out first get to transmit an entire application
+layer update. Thus, we have not relaxed Assumption 3 in this
+1
+units of time.
+model. We assume that a mini-slot takes 𝑀
+So, transmitting an entire update takes 𝑀 mini-slots. We will
+discuss in Section VI that for typical values of update sizes
+and transmission rates 𝑀 tends to be large (around 10000).
+Finally, we also relax Assumption 4 and consider the
+amount of time that the channel remains idle in each frame.
+Consider the example frame depicted in Fig. 2 with four
+backoff timers 𝐷 1 (𝑡), ..., 𝐷 4 (𝑡). The timer of source 1, denoted
+by 𝐷 1 (𝑡), runs out first. Then, source 1 transmits its update for
+𝑀 minislots. Thus the total duration of frame 𝑡 is 𝐷 1 (𝑡) + 𝑀
+1 (𝑡 )
+minislots or alternatively 1+ 𝐷𝑀
+. However, for the first 𝐷 1 (𝑡)
+minislots in frame 𝑡, the channel remained idle. We term this
+the backoff overhead. In general, given 𝐷 (𝑡) ≜ min 𝐷 𝑖 (𝑡),
+𝑖∈[𝑁 ]
+
+Algorithm 3: Near-Realistic Fresh-CSMA
+Input : parameters 𝛼 > 1, 𝛽 > 1, 𝐵 ∈ Z+
+1 while 𝑡 ∈ 1, ..., 𝑇 do
+2
+At every source 𝑖 ∈ 1, ..., 𝑁 do
+3
+Generate a random
+variable
+
+
+2
+
+𝑍𝑖 (𝑡) ∼ exp 𝛼 𝑤𝑖 𝐴𝑖 (𝑡 ) .
+
+4
+
+Map it to a non-negative
+integer timer,
+
+
+
+
+𝐷 𝑖 (𝑡) = max 𝐵 + log𝛽 𝑍𝑖 (𝑡) , 0 .
+
+5
+
+while 𝜏 < 𝐷 𝑖 (𝑡) do
+Stay silent
+end
+if Channel is free then
+Transmit
+end
+
+6
+7
+8
+9
+10
+11
+12
+
+end
+
+analyzes the probability of the event that two sources 𝑖 and 𝑗
+choose different backoff timers at time 𝑡.
+Theorem 3: Let the AoIs at time 𝑡 be given by
+2
+𝐴1 (𝑡), ..., 𝐴 𝑁 (𝑡) and 𝜆𝑖 ≜ 𝛼 𝑤𝑖 𝐴𝑖 (𝑡 ) . Then probability that
+any two sources 𝑖 and 𝑗 choose different backoff timers
+𝐷 𝑖 (𝑡) and 𝐷 𝑗 (𝑡) can be lower bounded as follows
+
+
+
+
+P 𝐷 𝑖 (𝑡) ≠ 𝐷 𝑗 (𝑡) ≥ 𝜓 𝐵, 𝛽, 𝜆 𝑖 , 𝜆 𝑗 + 𝜓 𝐵, 𝛽, 𝜆 𝑗 , 𝜆𝑖
+
+frame 𝑡 takes 𝑀 + 𝐷 (𝑡) mini-slots or alternatively 1 + 𝐷𝑀(𝑡 )
+units of time to complete. Compared to the idealized setting,
+the time 𝐷𝑀(𝑡 ) is the backoff overhead of the protocol, since
+it is the time that the channel must remain idle before any
+source starts transmitting. We take this overhead into account
+while calculating AoIs.
+Our new model thus relaxes Assumptions 1, 2 and 4, while
+allowing us to study the effect of collision probabilities and
+backoff overheads on the AoI. For this near-realistic multiple
+access model, we provide a modified version of the FreshCSMA protocol below. As before, We use 𝑡 to denote the
+discrete frames and 𝜏 to denote time within each frame,
+denoting the number of minislots that have passed within this
+frame.
+The key difference between the protocol described in Alg. 3
+and Alg. 2 is mapping the continuous random variables 𝑍𝑖 (𝑡)
+to the discrete variables 𝐷 𝑖 (𝑡) ∈ {0 ∪ Z+ }, which denote
+the number of mini-slots source 𝑖 should count down before
+transmitting.
+
+Proof: Consider the exponential random variables generated by the two sources 𝑍𝑖 (𝑡) ∼ exp(𝜆𝑖 ) and 𝑍 𝑗 (𝑡) ∼ exp(𝜆 𝑗 ),
+2
+where 𝜆𝑖 = 𝛼 𝑤𝑖 𝐴𝑖 (𝑡 ) , ∀𝑖. Suppose that the following inequality
+holds:
+(
+𝛽𝑍𝑖 (𝑡), if 𝑍𝑖 (𝑡) > 𝛽 −𝐵
+𝑍 𝑗 (𝑡) >
+(42)
+𝛽 −𝐵+1 ,
+otherwise.
+
+A. Collisions
+
+Then it is easy to see that
+
+Note that when using the protocol above, a packet collision
+happens if two sources 𝑖 and 𝑗 choose the same discrete
+backoff timers 𝐷 𝑖 (𝑡) and 𝐷 𝑗 (𝑡) at frame 𝑡 whilealso being
+the
+
+
+
+
+ 
+ 
+max 𝐵 + log𝛽 𝑍𝑖 (𝑡) , 0 < max 𝐵 + log𝛽 𝑍 𝑗 (𝑡) , 0
+
+first timers to count down to zero, i.e. argmin 𝐷 𝑗 (𝑡) is not
+𝑗∈[𝑁 ]
+
+unique. When a collision happens, we assume that the base
+station fails to receive an update from any of the transmitting
+sources and the entire frame is wasted. The following theorem
+
+(41)
+where, the function 𝜓(·) is given by:
+−𝐵
+
+ 𝜆𝑖 𝑒 −𝛽 (𝜆𝑖 +𝛽𝜆 𝑗 )
+𝜓 𝐵, 𝛽, 𝜆 𝑖 , 𝜆 𝑗 =
+𝜆𝑖 + 𝛽𝜆 𝑗
+
+
+−𝐵
+−𝐵
++ 𝑒 𝜆𝑖 𝛽 − 1 𝑒 −𝛽 (𝜆𝑖 +𝛽𝜆 𝑗 ) .
+
+which in turn implies that 𝐷 𝑖 (𝑡) < 𝐷 𝑗 (𝑡). Switching 𝑖 and 𝑗
+in the inequality (42), we get 𝐷 𝑖 (𝑡) > 𝐷 𝑗 (𝑡). Note that the
+two events are disjoint.
+Thus, we can lower-bound our probability of interest as
+
+8
+
+follows:
+
+
+P(𝐷 𝑖 (𝑡) ≠ 𝐷 𝑗 (𝑡)) ≥ P 𝑍 𝑗 (𝑡) > min{𝛽𝑍𝑖 (𝑡), 𝛽 −𝐵+1 }
+
+
+−𝐵+1
++ P 𝑍𝑖 (𝑡) > min{𝛽𝑍 𝑗 (𝑡), 𝛽
+}
+
+that the channel must remain idle before any source starts
+transmitting. The following theorem provides an upper-bound
+on the expected backoff overhead in frame 𝑡.
+
+
+(43)
+
+Theorem 4: Let the AoIs at time 𝑡 be 𝐴1 (𝑡), ..., 𝐴 𝑁 (𝑡)
+2
+and 𝜆𝑖 ≜ 𝛼 𝑤𝑖 𝐴𝑖 (𝑡 ) . Then, the expected idle-time of the
+Fresh-CSMA protocol at time 𝑡 can be upper-bounded by
+
+
+1 Γ 0, 𝜆𝛽 −𝐵
+1 
+E 𝐷 (𝑡) ≤
++
+.
+(48)
+𝑀
+𝑀
+𝑀 log(𝛽)
+
+Simplifying the first term on the RHS, we get
+
+
+−𝐵+1
+P 𝑍 𝑗 (𝑡) > min{𝛽𝑍𝑖 (𝑡), 𝛽
+}
+∫ 𝛽 −𝐵
+=
+
+𝜆𝑖 𝑒 −𝜆𝑖 𝑥 𝑒 −𝜆 𝑗 𝛽
+
+−𝐵+1
+
+∫ ∞
+𝑑𝑥 +
+
+=
+
+𝜆𝑖 𝑒
+
+𝜆𝑖 𝑒 −𝜆𝑖 𝑥 𝑒 −𝜆 𝑗 𝛽𝑥 𝑑𝑥
+
+𝛽 −𝐵
+
+0
+−𝛽 −𝐵 (𝜆𝑖 +𝛽𝜆 𝑗 )
+
+𝜆𝑖 + 𝛽𝜆 𝑗
+
+≜𝜓 𝐵, 𝛽, 𝜆 𝑖 , 𝜆 𝑗 .
+
+
++ 𝑒 𝜆𝑖 𝛽
+
+−𝐵
+
+
+
+− 1 𝑒 −𝛽
+
+(44)
+
+−𝐵 (𝜆 +𝛽𝜆 )
+𝑖
+𝑗
+
+By the same argument, the
+ second term on the RHS of (43)
+is equal to 𝜓 𝐵, 𝛽, 𝜆 𝑗 , 𝜆𝑖 . Thus, we get
+
+
+P(𝐷 𝑖 (𝑡) ≠ 𝐷 𝑗 (𝑡)) ≥ 𝜓 𝐵, 𝛽, 𝜆 𝑖 , 𝜆 𝑗 + 𝜓 𝐵, 𝛽, 𝜆 𝑗 , 𝜆𝑖 . (45)
+This completes the proof.
+As a corollary of this proof, note that
+
+𝜕
+𝜓 𝐵, 𝛽, 𝜆 𝑖 , 𝜆 𝑗
+𝜕𝐵
+
+
+= 𝜆 𝑗 𝛽 −𝐵+1 log(𝛽) 𝑒 𝜆𝑖 𝛽
+
+−𝐵
+
+− 1 𝑒 −𝛽
+
+−𝐵 (𝜆 +𝛽𝜆 )
+𝑖
+𝑗
+
+(46)
+
+≥ 0.
+The last inequality follows since 𝛽 > 1 and 𝜆𝑖 > 0. Thus, the
+probability that two sources choose different backoff timers
+increases with the parameter 𝐵. In the limit as 𝐵 → ∞, we
+get
+lim P(𝐷 𝑖 (𝑡) ≠ 𝐷 𝑗 (𝑡)) ≥
+
+𝐵→∞
+
+HereÍΓ(·, ·) is the upper incomplete gamma function and
+𝜆 ≜ 𝑖 ∈ [ 𝑁 ] 𝜆𝑖 .
+
+𝜆𝑗
+𝜆𝑖
++
+.
+𝜆𝑖 + 𝛽𝜆 𝑗 𝜆 𝑗 + 𝛽𝜆 𝑖
+
+(47)
+
+Thus, when 𝐵 is large, the probability that two sources
+occupy different mini-slots decreases with 𝛽. Putting the two
+observations together, we should choose a large value for 𝐵
+and a small value for 𝛽 (close to 1) to reduce collisions.
+However, for finite 𝐵, (47) does not hold and the value of 𝛽
+cannot be too small, since in that case, all the discrete timers
+will map to the first minislot leading to collisions in almost
+every frame.
+In the analysis above, we used the probability of two sources
+occupying different backoff timers as a proxy for analyzing the
+collision probability directly, since a tight bound for the actual
+collision probability is too involved to compute. In Section VI,
+we will see via simulations how the actual collision probability
+varies with the parameters 𝐵 and 𝛽.
+B. Backoff Timer Overhead
+Next, we analyze the overhead of the backoff timers in
+the Fresh-CSMA protocol in the near-realistic model. This is
+unlike the idealized setting where we ignored the time taken
+by the backoff timers to count down, during which the channel
+remains idle.
+Recall that the quantity 𝐷𝑀(𝑡 ) is what we defined as the
+backoff overhead of a protocol at time 𝑡, since it is the time
+
+Proof: Let 𝑍 (𝑡) = min𝑖 ∈ [ 𝑁 ] 𝑍𝑖 (𝑡). Since 𝑍 (𝑡) is the minimum of 𝑁 independent exponential random variables, it is also
+Í
+exponentially distributed with the parameter 𝜆 = 𝑖 ∈ [ 𝑁 ] 𝜆𝑖 .
+Using this, we provide an upper bound for E[𝐷 (𝑡)] below.
+
+
+
+
+
+E 𝐷 (𝑡) = E min 𝐷 𝑖 (𝑡)
+𝑖∈[𝑁 ]
+
+
+
+
+ 
+= E min max 𝐵 + log𝛽 𝑍𝑖 (𝑡) , 0
+𝑖∈[𝑁 ]
+
+
+
+
+≤ 𝐵 + 1 + E max log𝛽 min 𝑍𝑖 (𝑡) , −𝐵
+(49)
+𝑖∈[𝑁 ]
+
+
+
+
+≤ 𝐵 + 1 + E max log𝛽 𝑍 (𝑡) , −𝐵
+
+Γ 0, 𝜆𝛽 −𝐵
+.
+≤ 1+
+log(𝛽)
+The
+last inequality follows from  the fact that
+
+E max(log(𝑍 (𝑡)), −𝐵) = −𝐵 + Γ 0, 𝜆𝛽 −𝐵 , where Γ(·, ·) is
+the upper incomplete gamma function given by
+∫ ∞
+𝑡 𝑠−1 𝑒 −𝑡 𝑑𝑡.
+(50)
+Γ(𝑠, 𝑥) =
+𝑥
+
+Note that the function Γ(0, 𝑥) is given by
+∫ ∞
+Γ(0, 𝑥) =
+𝑡 −1 𝑒 −𝑡 𝑑𝑡.
+
+(51)
+
+𝑥
+
+From (51), note that Γ(0, 𝑥) is decreasing in 𝑥. Thus, for
+a fixed value of 𝛽, the expected idle time increases as 𝐵
+increases. The exact dependence on 𝛽 is more tricky to
+evaluate, so we again consider the case of large 𝐵 as an
+alternative. First, we make the following observation for the
+gamma function of large values of 𝐵
+Γ(0, 𝜆𝛽 −𝐵 ) ≈ 𝐵 log(𝛽) − 𝑙𝑜𝑔(𝜆) − 𝛾,
+
+(52)
+
+where 𝛾 ≈ 0.58 is the Euler-Mascheroni constant. Using this,
+it is easy to see that for large values of 𝐵, the expected idle
+time upper bound is approximately equal to 1 + 𝐵 − log𝛽 (𝜆).
+Thus, the backoff overhead also increases with 𝛽, given a fixed
+large value of 𝐵.
+Together this implies that we need to choose a relatively
+small value of 𝐵 and a small value of 𝛽 (close to 1) to reduce
+idle time. Importantly, there is a tradeoff between the collision
+probability and the backoff overhead depending on the choice
+
+9
+
+of the parameter 𝐵. A larger value of 𝐵 reduces the probability
+of collision but at the cost of higher backoff overhead.
+Theorem 4 also allows us to compute an approximate upperbound for the average idle time over the entire horizon. Suppose the average AoI of source 𝑖 under the Fresh-CSMA policy
+in the near-realistic model is denoted by 𝐴¯ 𝑖 . Using the average
+Í 𝑁 𝑤𝑖 𝐴¯ 2
+AoIs, we define the following quantity: 𝜆¯ ≜ 𝑖=1
+𝛼 𝑖 . Then,
+an approximate upper-bound of the average backoff overhead
+per frame over the entire time-horizon 𝐷¯ 𝑢𝑏 can be obtained
+as follows:
+
+¯ −𝐵
+1 Γ 0, 𝜆𝛽
+𝑢𝑏
+¯
++
+.
+(53)
+𝐷 ≈
+𝑀
+𝑀 log(𝛽)
+In Section VI, we will see via simulations that this is a good
+bound for the average backoff overhead in the near-realistic
+setting.
+V. G OING B EYOND AGE OF I NFORMATION
+While Age of Information has been used as a proxy for
+optimizing monitoring and control costs in real-time settings
+over the past decade, a recent line of work starting with [30]
+has proposed a new and more general metric to measure the
+impact of stale information on underlying real-time monitoring
+tasks. This metric is called the Age of Incorrect Information
+(AoII), and it has been used to study the monitoring of Markov
+sources in various kinds of settings [30]–[33].
+The key idea behind the AoII metric is that takes into
+account the actual error or distortion between the estimate
+of the process being monitored at the remote monitor and the
+actual value of the process at present. More precisely, suppose
+that 𝑋 (𝑡) represents the state of the process that needs to
+be monitored and let 𝑋ˆ (𝑡) be the estimate of the process at
+time 𝑡 at the remote monitor. Let the function 𝑔(𝑋 (𝑡), 𝑋ˆ (𝑡))
+measure the distortion or error between the actual process and
+its remote estimate and let 𝑓 (·) be a monotone increasing
+function. Let 𝑉 (𝑡) represent the most recent time instant up to
+the current time 𝑡 at which this distortion was zero. The AoII
+is then defined as
+
+𝐴𝑜𝐼 𝐼 (𝑡) ≜ 𝑓 𝑡 − 𝑉 (𝑡) 𝑔(𝑋 (𝑡), 𝑋ˆ (𝑡)).
+(54)
+Note that if the actual process and its estimate stay the same
+for some time despite no new updates being delivered to the
+monitor, the AoII remains zero while the AoI keeps increasing.
+Thus, the AoII can be viewed as a more accurate metric to
+measure information uncertainty at the monitor.
+Now, consider a setting with 𝑁 sources, sending updates to
+the base station, where only one source can talk to the base
+station at any given time. Unlike the setting we have analyzed
+until now, we will now look at minimizing the sum of AoIIs
+instead of weighted AoIs. Each source is tracking a process
+𝑋𝑖 (𝑡), 𝑖 ∈ {1, ..., 𝑁 } and the base station maintains estimates
+for each process 𝑋ˆ 𝑖 (𝑡), 𝑖 ∈ {1, ..., 𝑁 }. Using these estimates
+and 54, we can compute the AoIIs for each source, denoted
+by 𝐴𝑜𝐼 𝐼𝑖 (𝑡), 𝑖 ∈ {1, ..., 𝑁 }. We want to design a scheduling
+policy that minimizes the long term time-average of the AoIIs,
+i.e.
+
+
+
+𝑇 𝑁
+1 1 ∑︁ ∑︁
+𝐴𝑜𝐼 𝐼𝑖 (𝑡) .
+(55)
+argmin lim sup
+𝑇 𝑁 𝑡=1 𝑖=1
+𝜋
+𝑇→∞
+
+A good candidate policy to solve this problem would be to
+schedule the source with the highest AoII at each time-slot.
+
+
+(56)
+𝜋 𝑚𝑎𝑥− 𝐴𝑜𝐼 𝐼 (𝑡) = argmax 𝐴𝑜𝐼 𝐼 𝑗 (𝑡) .
+𝑗∈[𝑁 ]
+
+However, a crucial drawback of the AoII metric is the fact
+that its computation requires knowledge of the actual current
+state of the process 𝑋 (𝑡). Thus, AoIIs cannot be computed at
+the base station beforehand and a centralized multiple source
+scheduling policy like (56) cannot be implemented in reality,
+since the base station does not know the actual current states
+of each process. The CSMA based protocols we develop in
+this work provide a way out of this dilemma. Sources can
+compute their own AoIIs, since they have access to 𝑋 (𝑡), 𝑋ˆ (𝑡),
+𝑡 and 𝑉 (𝑡). Then, a CSMA style policy that uses AoIIs instead
+of the AoIs can be implemented to pick the source that has
+the highest AoII and get better monitoring performance. We
+illustrate how to incorporate AoII into a CSMA style policy
+using the idealized version of Fresh-CSMA in Alg. 4. The
+near-realistic version follows immediately, by replacing the
+weighted AoI with the AoII.
+Algorithm 4: Idealized Fresh-CSMA with AoIIs
+Input : parameters 𝛼 > 1, 𝛿 ≪ 1
+1 while 𝑡 ∈ 1, ..., 𝑇 do
+2
+At every source 𝑖 ∈ 1, ..., 𝑁 do
+3
+Generate a random
+timer
+
+
+𝑍𝑖 (𝑡) ∼ exp 𝛼 𝐴𝑜𝐼 𝐼𝑖 (𝑡 ) .
+
+while 𝜏 < 𝛿𝑍𝑖 (𝑡) do
+Stay silent
+end
+if Channel is free then
+Transmit
+end
+
+4
+5
+6
+7
+8
+9
+10
+11
+
+end
+
+For the setting involving monitoring Markov sources, the
+following choice of the functions 𝑓 (·) and 𝑔(·) is typically
+considered in literature
+
+𝐴𝑜𝐼 𝐼 (𝑡) = 𝑡 − 𝑉 (𝑡) 1 {𝑋 (𝑡 )≠𝑋ˆ (𝑡 ) } .
+(57)
+For this specific AoII metric, we can show a result similar to
+Theorem 1 in the case of weighted AoI.
+Theorem 5: Given any 𝛿
+∈
+(0, 1) and
+𝐴𝑜𝐼 𝐼1 (𝑡), ..., 𝐴𝑜𝐼 𝐼 𝑁 (𝑡) evolving according to 57; if
+we set 𝛼 ≥ (𝑁 − 1) 1−𝛿 𝛿 , then the following holds
+
+
+𝐶𝑆 𝑀 𝐴− 𝐴𝑜𝐼 𝐼
+𝑚𝑎𝑥− 𝐴𝑜𝐼 𝐼
+P 𝜋
+(𝑡) = 𝜋
+(𝑡) ≥ 1 − 𝛿.
+(58)
+Here, 𝜋 𝑚𝑎𝑥− 𝐴𝑜𝐼 𝐼 (𝑡) is the scheduling decision given by
+(56), while 𝜋𝐶𝑆 𝑀 𝐴− 𝐴𝑜𝐼 𝐼 (𝑡) is the scheduling decision
+made by the idealized Fresh-CSMA policy that utilizes
+AoIIs (Alg. 4)
+
+10
+
+Proof: The proof is identical to that of Theorem 1 - all
+we need to do is replace the weighted AoIs with the AoIIs.
+The evolution of AoII according to 57 ensures that all the AoII
+values are integers. As before, we divide the proof into two
+parts.
+
+
+Case 1: The expression argmax 𝐴𝑜𝐼 𝐼 𝑗 (𝑡) has a unique
+𝑗∈[𝑁 ]
+
+maximum. Let this maximum be the source 1 without loss of
+generality. Then, the max-AoII decision is to schedule source
+1. Since we know that AoIIs are integers by (57), so the
+following must hold:
+𝐴𝑜𝐼 𝐼1 (𝑡) − 𝐴𝑜𝐼 𝐼𝑖 (𝑡) ≥ 1, ∀𝑖 ≠ 1.
+
+(59)
+
+Now, applying Lemma 1, we can calculate the following
+probability
+
+
+𝛼 𝐴𝑜𝐼 𝐼1 (𝑡 )
+P 𝜋𝐶𝑆 𝑀 𝐴− 𝐴𝑜𝐼 𝐼 (𝑡) = 1 =
+𝑁
+Í
+𝛼 𝐴𝑜𝐼 𝐼 𝑗 (𝑡 )
+
+Fig. 3: Normalized average AoI vs system size (𝑁) for
+symmetric weights.
+
+𝑗=1
+
+=
+
+1
+1+
+
+Í𝑁
+𝑖=2
+
+𝛼 𝐴𝑜𝐼 𝐼𝑖 (𝑡 ) − 𝐴𝑜𝐼 𝐼1 (𝑡 )
+
+(60)
+
+1
+1 + (𝑁 − 1)𝛼 −1
+≥ 1 − 𝛿.
+
+≥
+
+The first inequality follows by using (59) while the second
+1− 𝛿
+inequality follows due to the fact that
+ 𝛼 ≥ (𝑁 − 1) 𝛿 .
+Case 2: The expression argmax 𝐴𝑜𝐼 𝐼 𝑗 (𝑡)
+
+has multiple
+
+𝑗∈[𝑁 ]
+
+maxima. Suppose that the set of maxima is given by the
+nodes {1, ..., 𝑘 }. Then, the max-AoII policy will choose one
+of these sources to be scheduled. We want to lower bound the
+probability that Fresh-CSMA with AoIIs chooses a node from
+within this set. To do so, we first make a similar observation
+as in the case above.
+𝐴𝑜𝐼 𝐼1 (𝑡) − 𝐴𝑜𝐼 𝐼 𝑗 (𝑡) ≥ 1, ∀ 𝑗 = 𝑘 + 1, ..., 𝑁.
+
+(61)
+
+𝑗=1
+
+𝑘
+𝑘+
+
+Í𝑁
+𝑖=𝑘+1
+
+𝛼 𝐴𝑜𝐼 𝐼𝑖 (𝑡 ) − 𝐴𝑜𝐼 𝐼1 (𝑡 )
+
+suggests that in certain settings distributed policies that utilize
+monitoring error can outperform centralized policies that have
+to make scheduling decisions while being oblivious to the
+actual processes.
+VI. N UMERICAL R ESULTS
+
+Using Lemma 1, we calculate the probability of interest
+
+
+𝑘𝛼 𝐴𝑜𝐼 𝐼1 (𝑡 )
+P 𝜋𝐶𝑆 𝑀 𝐴− 𝐴𝑜𝐼 𝐼 (𝑡) ∈ {1, ..., 𝑘 } =
+𝑁
+Í
+𝛼 𝐴𝑜𝐼 𝐼 𝑗 (𝑡 )
+=
+
+Fig. 4: Normalized average AoI vs system size (𝑁) for unequal
+weights.
+
+(62)
+
+1
+1 + (𝑁 − 𝑘)𝛼 −1
+≥ 1 − 𝛿.
+≥
+
+As before, the first inequality follows by using (61) while the
+second inequality follows due to the fact that 𝛼 ≥ (𝑁 − 1) 1−𝛿 𝛿 .
+This completes the proof.
+Theorem 5 shows that on a per-time-slot basis, Fresh-CSMA
+based on AoII matches the scheduling decisions made by the
+hypothetical centralized max-AoII policy (56), which cannot
+be implemented in reality. In Section VI, we will show via
+simulations that the Fresh-CSMA policy based on AoII can
+achieve lower time-average AoII across the network than even
+the centralized max-weight policy that utilizes only AoIs. This
+
+To verify the theoretical results developed in earlier sections, we now provide numerical results from packet level
+simulations of all the policies. Throughout this section, we
+assume that the minislot is 9𝜇𝑠 long (a typical value in IEEE
+802.11 implementations [29]) and an update packet from a
+each source is roughly 600 kB.
+Thus, at a data rate of 54 Mbps (which is the highest data
+rate for IEEE 802.11g in the 2.4 GHz band [29]), it takes
+10000 minislots to finish sending an update. This, in turn,
+implies that we set 𝑀 = 10000 for our simulations, i.e. each
+packet takes 10000 minislots to transmit.
+Each experiment involves calculating the time-average of
+AoI, AoII, collision probabilities or backoff timer overheads.
+All of these time-averages are reported for experiments that
+involve 100000 application layer update packets being transmitted. Unless otherwise specified, we set 𝛼 = 1 + Í 1𝑤𝑖 ,
+𝑖
+𝛽 = 1.1 + max(log(log(𝑁)), 0), and 𝐵 = 250 + 𝑁 for the nearrealistic CSMA implementation.
+First, we consider the weighted sum average age minimization problem in the setting with equal weights, i.e. 𝑤 𝑖 = 1, ∀𝑖.
+
+11
+
+Fig. 6: Probability of collisions vs 𝛽
+Fig. 5: Normalized average AoI vs 𝛼.
+Fig. 3 plots the performance of two centralized policies the optimal stationary randomized policy and the max-weight
+policy, as well as two distributed policies - the idealized FreshCSMA protocol and the near-realistic Fresh-CSMA protocol,
+as the the number of sources in the system 𝑁 increases. We
+Í
+plot the normalized weighted sum average age, i.e. 𝑁1 𝑖 𝑤 𝑖 𝐴¯ 𝑖
+for each policy. We observe that the idealized Fresh-CSMA
+protocol matches the performance of the max-weight policy
+almost exactly, as expected from Theorems 1 and 2. Further,
+the near-realistic Fresh-CSMA protocol has only a small
+performance gap to the max-weight policy (due to collisions
+and backoff overheads) but still significantly outperforms the
+optimal stationary randomized policy.
+Next, we consider the same setting but √
+with asymmetric
+√
+weights. We set the weight for source 𝑘 to be 𝑘, i.e. 𝑤 𝑘 = 𝑘,
+and plot the normalized average age as the system size 𝑁
+increases in Fig. 4. We make the same observations regarding
+the performance of the policies as in the case of symmetric
+weights and further note that while our theoretical results
+needed weights 𝑤 𝑖 to be integers, that assumption is not
+required to get good performance in practice.
+Next, we consider how the performance of our proposed
+protocols depends on the parameter 𝛼. Theorems 1 and 2
+suggest that 𝛼 needs to be very large to guarantee performance
+of Fresh-CSMA close to max-weight. However, we find that
+Fresh-CSMA starts performing very similarly to max-weight
+even at very small values of 𝛼, as show in Fig. 5 for a
+symmetric system with 𝑁 = 10 sources. This is important in
+practice since large values of 𝛼 could lead to integer overflows.
+As expected, the performance gap narrows as 𝛼 increases.
+Next, we look at the near-realistic Fresh-CSMA protocol
+in detail. In Fig. 6, we plot the collision probability for this
+protocol in a symmetric system with 𝑁 = 10 sources as 𝛽 is
+varied, while fixing all other parameters. We observe that for
+𝛽 < 1.05, the collision probability is 1 since all timers map to
+the first mini-slot. However, as we increase 𝛽 beyond 1.05, we
+observe that the collision probability first drops to 0.01 and
+then gradually increases to 0.06. In Fig. 7, we plot the collision
+probability as 𝐵 is varied, while fixing all other parameters.
+For small values of 𝐵, the collision probability is almost 1,
+
+Fig. 7: Probability of collisions vs 𝐵
+but as 𝐵 increases beyond a threshold, the collision probability
+stays roughly constant at around 0.015. These results are in
+line with what we expected from Theorem 3.
+Next, we look at the average overhead of near-realistic
+Fresh-CSMA. Fig. 8 and Fig. 9 plot the average overhead (in
+number of minislots) as the parameters 𝛽 and 𝐵 are varied,
+respectively. As expected from Theorem 4, the overhead
+increases with both 𝛽 and 𝐵. We note that our approximate
+expression for the overhead (53) is a good upper-bound that
+can be used in practice for system design. Also, we observe
+that the overhead remains relatively small (2-3%) compared
+
+Fig. 8: Average backoff overhead vs 𝛽
+
+12
+
+Fig. 9: Average backoff overhead vs 𝐵
+
+Fig. 10: Symmetric two-state Markov chain representing the
+𝑖th source.
+
+Fig. 11: Normalized average AoII vs system size 𝑁 when
+symmetric Markov sources
+
+to the update size, which takes 10000 minislots.
+Finally, we consider the AoII metric discussed in Section V.
+In this context, we look at the setting where each source is
+a symmetric two-state Markov chain, evolving independently
+over time (see Fig. 10). We set the transition probability 𝑞 𝑖
+for each source to be 0.05 and implement the following three
+policies - centralized max-weight that uses AoI, distributed
+idealized Fresh-CSMA that uses AoII and distributed nearrealistic Fresh-CSMA that uses AoII. For the CSMA implementations, we set the parameters as follows 𝛼 = 2.1, 𝛽 =
+1.05 + log(log(𝑁)) and 𝐵 = 250 + ⌊𝑁/4⌋.
+Fig. 11 plots the time-average AoII performance of the three
+policies as we increase the number of sources in the system
+𝑁. Here AoII is computed using (57). Clearly, the distributed
+CSMA versions deliver much better AoII performance than the
+centralized policy that is only able to utilize AoIs. Specifically,
+for 93 source, the idealized Fresh-CSMA with AoII performs
+about 45% better than AoI max-weight and the near-realistic
+version of Fresh-CSMA with AoII performs about 35% better
+than AoI max-weight. This suggests that our CSMA based
+design is general and can easily accommodate other kinds of
+information freshness and distortion metrics.
+Interestingly, the gain in AoII performance comes at the cost
+of higher AoIs. In Fig. 12, we plot the long-term time-average
+AoIs for the same three policies while monitoring Markov
+sources as the number of source 𝑁 is increased. We observe
+that the distributed CSMA versions have higher AoIs than
+the centralized AoI max-weight. So, Fresh-CSMA based on
+AoII trades off better monitoring performance/error measured
+in terms of AoII with worse performance in terms of standard
+AoI.
+VII. C ONCLUSION
+In this work, we designed a distributed CSMA protocol
+to minimize weighted sum Age of Information in single-hop
+wireless networks. We showed that under idealized assumptions, our proposed protocol can closely replicate the behavior
+of centralized policies known to be nearly optimal. We also
+analyzed our protocol under a near-realistic medium access
+model and showed how system parameter choices affect packet
+collisions and overhead. Our simulation results confirm that
+our protocol works well in practice and that the performance
+gap between the idealized version and the near-realistic version
+of Fresh-CSMA is small. We have also extended some of our
+results to AoII, a more general information freshness metric.
+Two important directions of work involve further analysis
+of our protocols beyond AoI and AoII to metrics such as
+monitoring error or real-time control costs, and implementing
+the protocol in real systems to compare performance against
+standard WiFi.
+R EFERENCES
+
+Fig. 12: Normalized average AoI vs system size 𝑁 when
+monitoring symmetric Markov sources
+
+[1] S. Kaul, R. Yates, and M. Gruteser, “Real-time status: How often should
+one update?,” in Proc. IEEE INFOCOM, pp. 2731–2735, 2012.
+[2] C. Kam, S. Kompella, and A. Ephremides, “Age of information under
+random updates,” in Proc. IEEE Int. Symp. Inf. Theory (ISIT), pp. 66–70,
+2013.
+[3] Y. Sun, E. Uysal-Biyikoglu, R. D. Yates, C. E. Koksal, and N. B. Shroff,
+“Update or wait: How to keep your data fresh,” IEEE Trans. Inf. Theory,
+vol. 63, pp. 7492–7508, Nov. 2017.
+
+13
+
+[4] I. Kadota, A. Sinha, E. Uysal-Biyikoglu, R. Singh, and E. Modiano,
+“Scheduling policies for minimizing age of information in broadcast
+wireless networks,” IEEE/ACM Trans. Netw., vol. 26, no. 6, pp. 2637–
+2650, 2018.
+[5] I. Kadota, A. Sinha, and E. Modiano, “Scheduling algorithms for
+optimizing age of information in wireless networks with throughput
+constraints,” IEEE/ACM Trans. Netw., vol. 27, no. 4, pp. 1359–1372,
+2019.
+[6] R. Talak, S. Karaman, and E. Modiano, “Optimizing information
+freshness in wireless networks under general interference constraints,”
+in Proc. ACM Int. Symp. Mobile Ad Hoc Netw. Comput. (MobiHoc),
+pp. 61–70, 2018.
+[7] A. Maatouk, S. Kriouile, M. Assad, and A. Ephremides, “On the
+optimality of the whittle’s index policy for minimizing the age of
+information,” IEEE Trans. Wireless Commun., vol. 20, no. 2, pp. 1263–
+1277, 2020.
+[8] C. Li, S. Li, and Y. T. Hou, “A general model for minimizing age of
+information at network edge,” in Proc. IEEE INFOCOM, pp. 118–126,
+2019.
+[9] P. R. Jhunjhunwala and S. Moharir, “Age-of-information aware scheduling,” in Proc. IEEE SPCOM, 2018.
+[10] V. Tripathi and E. Modiano, “A whittle index approach to minimizing
+functions of age of information,” in Proc. 57th Allerton Conf. Commun.
+Control Comput., pp. 1160–1167, IEEE, 2019.
+[11] R. Talak, S. Karaman, and E. Modiano, “Distributed scheduling algorithms for optimizing information freshness in wireless networks,”
+in Proc. IEEE Int. Workshop Signal Process. Adv. Wireless Commun.
+(SPAWC), pp. 1–5, 2018.
+[12] Z. Jiang, B. Krishnamachari, S. Zhou, and Z. Niu, “Can decentralized
+status update achieve universally near-optimal age-of-information in
+wireless multiaccess channels?,” in Proc. IEEE ITC, vol. 1, pp. 144–
+152, 2018.
+[13] X. Chen, K. Gatsis, H. Hassani, and S. S. Bidokhti, “Age of information
+in random access channels,” IEEE Trans. Inf. Theory, 2022.
+[14] X. Chen, X. Liao, and S. S. Bidokhti, “Real-time sampling and estimation on random access channels: Age of information and beyond,” in
+Proc. IEEE INFOCOM, pp. 1–10, 2021.
+[15] O. T. Yavascan and E. Uysal, “Analysis of age-aware slotted aloha,” in
+Proc. IEEE Globecom Wkshps., pp. 1–6, 2020.
+[16] O. T. Yavascan and E. Uysal, “Analysis of slotted aloha with an age
+threshold,” IEEE J. Sel. Areas Commun., vol. 39, no. 5, pp. 1456–1470,
+2021.
+[17] A. Maatouk, M. Assaad, and A. Ephremides, “On the age of information
+in a csma environment,” IEEE/ACM Trans. Netw., vol. 28, no. 2, pp. 818–
+831, 2020.
+[18] A. Baiocchi and I. Turcanu, “Age of information of one-hop broadcast
+communications in a csma network,” IEEE Commun. Lett., vol. 25, no. 1,
+pp. 294–298, 2020.
+[19] M. Wang and Y. Dong, “Broadcast age of information in csma/ca based
+wireless networks,” in Proc. IEEE Int. Wireless Commun. Mob. Comp.
+Conf. (IWCMC), pp. 1102–1107, 2019.
+[20] A. M. Bedewy, Y. Sun, R. Singh, and N. B. Shroff, “Optimizing
+information freshness using low-power status updates via sleep-wake
+scheduling,” in Proc. ACM Int. Symp. Mobile Ad Hoc Netw. Comput.
+(MobiHoc), pp. 51–60, 2020.
+[21] A. M. Bedewy, Y. Sun, R. Singh, and N. B. Shroff, “Low-power status
+updates via sleep-wake scheduling,” IEEE/ACM Trans. Netw., vol. 29,
+no. 5, pp. 2129–2141, 2021.
+[22] L. Kleinrock and F. Tobagi, “Packet switching in radio channels:
+Part i-carrier sense multiple-access modes and their throughput-delay
+characteristics,” IEEE Trans. Commun., vol. 23, no. 12, pp. 1400–1416,
+1975.
+[23] G. Bianchi, “Performance analysis of the ieee 802.11 distributed coordination function,” IEEE J. Sel. Areas Commun., vol. 18, no. 3, pp. 535–
+547, 2000.
+[24] L. Jiang and J. Walrand, “A distributed csma algorithm for throughput
+and utility maximization in wireless networks,” IEEE/ACM Trans. Netw.,
+vol. 18, no. 3, pp. 960–972, 2009.
+[25] L. Jiang, M. Leconte, J. Ni, R. Srikant, and J. Walrand, “Fast mixing of
+parallel glauber dynamics and low-delay csma scheduling,” IEEE Trans.
+Inf. Theory, vol. 58, no. 10, pp. 6541–6555, 2012.
+[26] J. Ni, B. Tan, and R. Srikant, “Q-csma: Queue-length-based csma/ca
+algorithms for achieving maximum throughput and low delay in wireless
+networks,” IEEE/ACM Trans. Netw., vol. 20, no. 3, pp. 825–836, 2011.
+[27] B. Li and A. Eryilmaz, “Optimal distributed scheduling under timevarying conditions: A fast-csma algorithm with applications,” IEEE
+Trans. Wireless Commun., vol. 12, no. 7, pp. 3278–3288, 2013.
+
+[28] Y. Sun, I. Kadota, R. Talak, and E. Modiano, “Age of information: A new
+metric for information freshness,” Synthesis Lectures on Communication
+Networks, vol. 12, no. 2, pp. 1–224, 2019.
+[29] “IEEE Standard for Information Technology–Telecommunications and
+Information Exchange between Systems - Local and Metropolitan Area
+Networks–Specific Requirements - Part 11: Wireless LAN Medium
+Access Control (MAC) and Physical Layer (PHY) Specifications,” IEEE
+Std 802.11-2020 (Revision of IEEE Std 802.11-2016), pp. 1–4379, 2020.
+[30] A. Maatouk, S. Kriouile, M. Assaad, and A. Ephremides, “The age of
+incorrect information: A new performance metric for status updates,”
+IEEE/ACM Transactions on Networking, vol. 28, no. 5, pp. 2215–2228,
+2020.
+[31] C. Kam, S. Kompella, and A. Ephremides, “Age of incorrect information
+for remote estimation of a binary markov source,” in IEEE INFOCOM
+2020-IEEE Conference on Computer Communications Workshops (INFOCOM WKSHPS), pp. 1–6, IEEE, 2020.
+[32] S. Kriouile and M. Assaad, “Minimizing the age of incorrect information for real-time tracking of markov remote sources,” in 2021 IEEE
+International Symposium on Information Theory (ISIT), pp. 2978–2983,
+IEEE, 2021.
+[33] A. Maatouk, M. Assaad, and A. Ephremides, “The age of incorrect information: An enabler of semantics-empowered communication,” IEEE
+Transactions on Wireless Communications, 2022.
+
+
