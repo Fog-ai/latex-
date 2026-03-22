@@ -9,7 +9,14 @@
 
 \subsection{系统模型}
 
-本章考虑一个由单个接入点（Access Point, AP）和 $N$ 个终端组成的无线网络，该网络采用时隙化 ALOHA 的接入方式，所有终端在公共信道上竞争传输机会。
+本章考虑一个由单个接入点（Access Point, AP）和 $N$ 个终端组成的无线网络，该网络采用时隙化 ALOHA 的接入方式，所有终端在公共信道上竞争传输机会，其系统模型如图\ref{fig:cp3_system_model}所示。
+
+\begin{figure}[htbp]
+    \centering
+    \input{figure/cp3/system_model_aloha_tikz.tex}
+    \caption{系统模型图}
+    \label{fig:cp3_system_model}
+\end{figure}
 
 在经典时隙 ALOHA 中，时间被划分为等长的离散时隙，每个终端在时隙的起始处以固定概率 $p_0$ 接入信道并发送数据。若同一时隙内存在两个及以上的终端同时发送，则认为发生碰撞，发送失败。为降低连续碰撞带来的信道拥塞，系统在传输失败后为发生碰撞的终端分配一个退避计时器。随着时隙推进，该计时器将逐时隙递减，只有当计时器减至零时，终端才能够重新接入信道。
 
@@ -71,15 +78,7 @@ b_i(t) - 1, & \text{if } b_i(t) \neq 0.
     \item 终端成功发送更新包。此时 AoI 被重置为 1，退避计时器被置为 $z$，即状态从 $(0,k)$ 转移到 $(z,1)$，转移概率为 $p_s=p_0(1-p_{cl})$。
 \end{enumerate}
 
-由于成功发送后的终端必须等待 $z$ 个时隙，因此系统存在一条确定性的状态链
-\[
-(z,1)\to(z-1,2)\to\cdots\to(1,z)\to(0,z+1).
-\]
-这意味着在稳态下，终端重新进入可竞争状态时，其 AoI 必然不小于 $z+1$。基于上述转移规则，可以得到完整的二维马尔可夫链，如图\ref{fig:cp3_aloha_system_tran_photo}所示。为简化书写，令
-\[
-p=(1-p_0)+\frac{p_0p_{cl}}{w},
-\]
-并记 $\omega$ 为预设的 AoI 门限。
+由于成功发送后的终端必须等待 $z$ 个时隙，因此系统存在一条确定性的状态链 $(z,1)\to\cdots\to(0,z+1)$。这意味着在稳态下，终端重新进入可竞争状态时，其 AoI 必然不小于 $z+1$。基于上述转移规则，可以得到完整的二维马尔可夫链，如图\ref{fig:cp3_aloha_system_tran_photo}所示。为简化书写，下文记 $p=(1-p_0)+\frac{p_0p_{cl}}{w}$，并记 $\omega$ 为预设的 AoI 门限。
 \begin{figure}[h]
     \centering
     \includegraphics[width=1.2\textwidth]{figure/cp3/系统的状态转移图.pdf}
@@ -155,22 +154,13 @@ p=(1-p_0)+\frac{p_0p_{cl}}{w},
 \begin{equation}
     F(0)=-f(0)=-\left[1-\left(1-\frac{p_0}{1+zp_0}\right)^{N-1}\right]<0.
 \end{equation}
-另一方面，由于
-\[
-\tau(1)=\frac{p_0}{1+zp_0+p_0\left(\frac{w-1}{2}-z\right)}
-=\frac{p_0}{1+\frac{p_0(w-1)}{2}}\in(0,1),
-\]
-因此
+另一方面，由于 $\tau(1)=\frac{p_0}{1+zp_0+p_0\left(\frac{w-1}{2}-z\right)}=\frac{p_0}{1+\frac{p_0(w-1)}{2}}\in(0,1)$，因此
 \begin{equation}
     F(1)=1-f(1)=\left(1-\tau(1)\right)^{N-1}>0.
 \end{equation}
 又因为 $\tau(x)$ 与 $f(x)$ 在闭区间 $[0,1]$ 上连续，所以 $F(x)$ 在 $[0,1]$ 上也连续。由介值定理可知，至少存在一个 $x^\star\in(0,1)$ 使得 $F(x^\star)=0$，即稳态方程\eqref{cp3_pcl}在 $[0,1]$ 上至少存在一个解。
 
-进一步考察唯一性所需的单调性条件。记
-\[
-D(x)=1+zp_0+p_0x\left(\frac{w-1}{2}-z\right),
-\]
-则
+进一步考察唯一性所需的单调性条件。记 $D(x)=1+zp_0+p_0x\left(\frac{w-1}{2}-z\right)$，则
 \begin{equation}
     \tau'(x)= -\frac{p_0^2\left(\frac{w-1}{2}-z\right)}{[D(x)]^2}.
 \end{equation}
@@ -186,31 +176,11 @@ D(x)=1+zp_0+p_0x\left(\frac{w-1}{2}-z\right),
 
 注意到 $D(x)>0$ 对任意 $x\in[0,1]$ 恒成立，因此 $\tau'(x)$ 的符号完全由 $\frac{w-1}{2}-z$ 决定。这意味着等待窗口 $z$ 与随机退避窗口 $w$ 的相对大小，将直接影响 $f'(x)$ 的取值。
 
-当 $w\ge 2z+1$ 时，有
-\begin{equation}
-    \frac{w-1}{2}\ge z,
-\end{equation}
-则有 $\tau'(x)\le 0$，于是
-\begin{equation}
-    f'(x)\le 0,\qquad x\in[0,1].
-\end{equation}
-也就是说，$f(x)$ 在 $[0,1]$ 上单调不增。由此立即得到
-\begin{equation}
-    F'(x)=1-f'(x)\ge 1>0,
-\end{equation}
-即 $F(x)$ 在 $[0,1]$ 上严格单调递增。
+当 $w\ge 2z+1$ 时，即 $\frac{w-1}{2}\ge z$，则有 $\tau'(x)\le 0$，于是 $f'(x)\le 0$，$x\in[0,1]$。也就是说，$f(x)$ 在 $[0,1]$ 上单调不增。由此立即得到 $F'(x)=1-f'(x)\ge 1>0$，即 $F(x)$ 在 $[0,1]$ 上严格单调递增。
 
-结合前述结论 $F(0)<0$ 与 $F(1)>0$，可知 $F(x)$ 只能与横轴相交一次，因此方程\eqref{cp3_pcl}在区间 $[0,1]$ 上存在唯一解。换言之，当随机退避窗口满足
-\begin{equation}
-    w\ge 2z+1
-\end{equation}
-时，等待 ALOHA 的稳态碰撞概率被唯一确定。
+结合前述结论 $F(0)<0$ 与 $F(1)>0$，可知 $F(x)$ 只能与横轴相交一次，因此方程\eqref{cp3_pcl}在区间 $[0,1]$ 上存在唯一解。换言之，当随机退避窗口满足 $w\ge 2z+1$ 时，等待 ALOHA 的稳态碰撞概率被唯一确定。
 
-相对地，当 $w<2z+1$ 时，
-\begin{equation}
-    \frac{w-1}{2}<z,
-\end{equation}
-则 $\tau'(x)>0$，进而 $f'(x)>0$。此时 $f(x)$ 随 $x$ 增大而增大，$F'(x)=1-f'(x)$ 未必始终为正。虽然方程仍然因连续性而至少存在一个解，但仅凭上述分析已无法保证解的唯一性。特别是在网络规模 $N$ 较大时，因子 $(N-1)$ 会放大 $f'(x)$ 的数值，使得 $f'(x)$ 超过 1 的可能性显著增加，进而导致 $F(x)$ 失去单调性。因此，$w<2z+1$ 时不能直接推出唯一解的结论。
+相对地，当 $w<2z+1$ 时，即 $\frac{w-1}{2}<z$，则 $\tau'(x)>0$，进而 $f'(x)>0$。此时 $f(x)$ 随 $x$ 增大而增大，$F'(x)=1-f'(x)$ 未必始终为正。虽然方程仍然因连续性而至少存在一个解，但仅凭上述分析已无法保证解的唯一性。特别是在网络规模 $N$ 较大时，因子 $(N-1)$ 会放大 $f'(x)$ 的数值，使得 $f'(x)$ 超过 1 的可能性显著增加，进而导致 $F(x)$ 失去单调性。因此，$w<2z+1$ 时不能直接推出唯一解的结论。
 
 综上所述，在满足 $w\ge 2z+1$ 的条件下，函数 $F(x)$ 在 $[0,1]$ 上连续且严格递增，并满足 $F(0)<0<F(1)$。因此，二分法可以稳定求得唯一根 $p_{cl}^\star$，其步骤如下：
 \begin{enumerate}[wide]
@@ -283,10 +253,7 @@ D(x)=1+zp_0+p_0x\left(\frac{w-1}{2}-z\right),
             &= \left( U^2 - \frac{w^2-1}{12} \right) + k \left[ \frac{1-p_0}{p_0^2} + \frac{w^2-1}{12} + 2UV \right] + k^2 V^2
         \end{aligned}
     \end{equation}
-    其中，
-    \[
-    U=z-\frac{w-1}{2},\qquad V=\frac{1}{p_0}+\frac{w-1}{2}.
-    \]
+    其中，$U=z-\frac{w-1}{2}$，$V=\frac{1}{p_0}+\frac{w-1}{2}$。
 
     与式\eqref{cp3_alpha_expression}联立，最终得到
     \begin{equation}\label{cp3_EY2}
@@ -302,12 +269,12 @@ D(x)=1+zp_0+p_0x\left(\frac{w-1}{2}-z\right),
         E[Y^2] = z^2 + \left[ \frac{2 + p_{cl} p_0 (w-1)}{p_0 (1-p_{cl})} \right] z + C_0
     \end{equation}
     其中
-    \begin{equation*}
+    \begin{equation}\label{cp3_C0}
         \begin{split}
             C_0 &= \frac{1}{(1-p_{cl})^2} \Bigg\{ \frac{p_{cl}(p_{cl}+2)}{6} w^2 - \frac{p_{cl} [ p_0(1+p_{cl}) - 4 ]}{2 p_0} w \\
                 &\quad + \frac{p_{cl}(2p_{cl}+1)}{6} - \frac{p_{cl}+1}{p_0} + \frac{2}{p_0^2} \Bigg\}
         \end{split}
-    \end{equation*}
+    \end{equation}
 \end{enumerate}
 
 最后，将式\eqref{cp3_EY}、式\eqref{cp3_EY2result}与式\eqref{cp3_avg_aoi}联立即可得到平均 AoI 的闭式表达式
@@ -330,29 +297,19 @@ D(x)=1+zp_0+p_0x\left(\frac{w-1}{2}-z\right),
 
 从构成上来看，$Y$ 由几何分布控制的重传次数、几何分布的接入等待以及均匀分布的退避时长共同叠加而成。原则上通过卷积可以获得其精确分布，但相应的表达式将会是分段且难以用于后续解析的复杂形式。为兼顾物理的可解释性与计算的可操作性，本文采用矩匹配方法对 $Y$ 的分布进行近似。
 
-考虑到 $Y$ 必然取正值，且在碰撞与退避作用下通常呈现右偏和长尾的特征，因此采用移位指数分布作为近似模型更为自然。设
-\[
-Y\sim c+\mathrm{Exp}(\lambda),
-\]
-则其概率密度函数为
+考虑到 $Y$ 必然取正值，且在碰撞与退避作用下通常呈现右偏和长尾的特征，因此采用移位指数分布作为近似模型更为自然。设 $Y\sim c+\mathrm{Exp}(\lambda)$，则其概率密度函数为
 \begin{equation} \label{cp3_fy}
     f_Y(y; c, \lambda) = \lambda e^{-\lambda(y-c)}, \quad y \ge c
 \end{equation}
 其中，$c\ge0$ 为位置参数，用于描述成功更新后强制等待带来的最小时延下界；$\lambda>0$ 为尺度参数，用于刻画尾部的衰减速度。
 
-根据移位指数分布的统计特性，有
-\begin{equation}
-    E[Y] = c + \frac{1}{\lambda},\quad D[Y] = E[Y^2] - (E[Y])^2 = \frac{1}{\lambda^2}
-\end{equation}
+根据移位指数分布的统计特性，有 $E[Y] = c + \frac{1}{\lambda}$，以及 $D[Y] = E[Y^2] - (E[Y])^2 = \frac{1}{\lambda^2}$。
 联立式\eqref{cp3_EY}和式\eqref{cp3_EY2result}，可解得
 \begin{equation}\label{cp3_lambdaandc}
     c = E[Y] - \frac{1}{\lambda} = E[Y] - \sqrt{D[Y]},\quad \lambda = \frac{1}{\sqrt{D[Y]}}
 \end{equation}
 
-由图\ref{fig:cp3_aoi_evolution_with limit}可知，峰值 AoI 为 $1+Y$，故违规量为
-\[
-J=\max(0,1+Y-\omega).
-\]
+由图\ref{fig:cp3_aoi_evolution_with limit}可知，峰值 AoI 为 $1+Y$，故违规量为 $J=\max(0,1+Y-\omega)$。
 记 $H=\omega-1$，则
 \begin{equation}\label{cp3_EJ}
 \begin{aligned}
@@ -360,11 +317,7 @@ J=\max(0,1+Y-\omega).
     &= \int_{H}^{\infty} (y-H)\lambda e^{-\lambda(y-c)}dy
 \end{aligned}
 \end{equation}
-化简可得
-\begin{equation}
-    E[J]  = \frac{1}{\lambda} e^{-\lambda(H-c)}
-\end{equation}
-与式\eqref{cp3_lambdaandc}联立，得到
+化简可得 $E[J]  = \frac{1}{\lambda} e^{-\lambda(H-c)}$。与式\eqref{cp3_lambdaandc}联立，得到
 \begin{equation}\label{cp3_EJresult}
     E[J] = \sqrt{D[Y]} \exp\left( -\frac{\omega - 1 - \mathbb{E}[Y]}{\sqrt{D[Y]}} - 1 \right)
 \end{equation}
@@ -380,10 +333,7 @@ J=\max(0,1+Y-\omega).
 
 \subsection{理论分析与性能洞察}
 
-在得到平均 AoI 与 AoI 违规概率的闭式表达式后，本节将进一步讨论等待 ALOHA 的性能表现。为简化书写，记
-\[
-\mu_Y = E[Y] = z + M,\qquad \sigma_Y^2 = D[Y] = C_0 - M^2.
-\]
+在得到平均 AoI 与 AoI 违规概率的闭式表达式后，本节将进一步讨论等待 ALOHA 的性能表现。为简化书写，记 $\mu_Y = E[Y] = z + M$，$\sigma_Y^2 = D[Y] = C_0 - M^2$。
 其中，$M$ 由式\eqref{cp3_M}给出。
 
 \subsubsection{平均 AoI 的方差惩罚效应}

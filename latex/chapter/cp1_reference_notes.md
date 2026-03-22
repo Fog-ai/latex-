@@ -15,7 +15,7 @@
 - `sun2017update`：用于支撑“零等待并不总能最小化 AoI”这一论断。原文可核对摘要中关于 zero-wait policy not always optimal 的结论。DOI：10.1109/TIT.2017.2735804
 - `zhang2023aoi`：用于说明除了平均 AoI 之外，AoI 违规概率同样重要。原文可核对题目与摘要中关于 violation probabilities、PDF 以及多源 IoT 状态更新系统的表述。DOI：10.1109/JIOT.2023.3297617
 - `berioli2016modern`：用于说明随机接入在短包、突发业务和大规模接入中的工程价值。原文可核对题目与导论摘要中关于现代随机接入协议的广泛应用背景与碰撞处理思想。DOI：10.1561/1300000047
-- `bianchi2002performance`：在 1.1 中用于说明 IEEE 802.11 DCF 是典型的载波侦听型随机接入框架。原文可核对题目与摘要中对 IEEE 802.11 DCF 的解析建模对象说明。DOI：10.1109/49.840210
+- `bianchi2002performance`：在 1.1 中用于说明标准 CSMA 的经典解耦分析框架。原文可核对题目与摘要中对载波侦听型随机接入解析建模对象的说明。DOI：10.1109/49.840210
 
 ## 1.2 国内外研究现状
 
@@ -50,11 +50,11 @@
 - `maatouk2020age`：用于说明 CSMA 环境下平均 AoI 的闭式分析、回退优化和 SLEEP 模式思路。原文可核对题目与摘要中关于 average age in a CSMA environment、closed-form result 和 SLEEP mode 的描述。DOI：10.1109/TNET.2020.2971350
 - `baiocchi2020age`：用于说明一跳广播 CSMA 网络与部分感知条件下的 AoI 分析。原文可核对题目与摘要中关于 one-hop broadcast communications、CSMA network 和 vehicular beacon use case 的描述。DOI：10.1109/LCOMM.2020.3022090
 - `tripathi2023fresh`：用于说明 Fresh-CSMA 试图以分布式方式逼近最大权重调度，并讨论现实碰撞与开销。原文可核对题目与摘要中关于 distributed protocol for minimizing age of information、max-weight mimicry 以及 collisions/overhead 的描述。DOI：10.23919/JCN.2023.000032
-- `wang2024analytical`：用于说明更实用的 802.11 类 CSMA 网络中，可以把碰撞概率显式纳入 SHS 模型。原文可核对摘要中关于 practical CSMA、finite buffer、SHS model 和 collision probability 的描述。DOI：10.1109/INFOCOM52122.2024.10621330
+- `wang2024analytical`：用于说明更实用的标准 CSMA 网络中，可以把碰撞概率显式纳入 SHS 模型。原文可核对摘要中关于 practical CSMA、finite buffer、SHS model 和 collision probability 的描述。DOI：10.1109/INFOCOM52122.2024.10621330
 
 ## 1.2.3 性能分析的研究现状
 
-- `bianchi2002performance`：用于说明 IEEE 802.11 DCF 经典解耦分析框架，即通过发送概率与碰撞概率的自洽关系建立稳态模型。原文可核对摘要中关于 simple and accurate analytical model、finite number of stations 和 throughput evaluation 的描述。DOI：10.1109/49.840210
+- `bianchi2002performance`：用于说明标准 CSMA 的经典解耦分析框架，即通过发送概率与碰撞概率的自洽关系建立稳态模型。原文可核对摘要中关于 simple and accurate analytical model、finite number of stations 和 throughput evaluation 的描述。DOI：10.1109/49.840210
 - `yates2018age`：用于说明 SHS 已成为 AoI 分析的重要方法论工具。原文可核对题目与摘要中关于 SHS-based age analysis for multiple sources 的描述。DOI：10.1109/TIT.2018.2871079
 - `maatouk2020age`：用于举例说明 SHS/混合系统方法在 CSMA 平均 AoI 闭式分析中的使用。原文可核对摘要中关于 closed-form average age 的表述。DOI：10.1109/TNET.2020.2971350
 - `wang2024analytical`：用于举例说明 SHS 被推进到更实际的 CSMA/802.11 类场景。原文可核对摘要中关于 practical CSMA network 和 SHS model 的表述。DOI：10.1109/INFOCOM52122.2024.10621330

@@ -10,8 +10,8 @@
 \begin{enumerate} [wide]
     \item \textbf{设计面向大规模接入场景的等待机制。}针对现有研究未充分考虑大规模接入场景下持续碰撞所带来的影响这一问题，本文设计了一种基于等待的随机接入退避机制，该机制将碰撞行为纳入考虑范围，通过规划节点在成功更新以及遭遇碰撞后的不同退避行为，有效缓解了信道的过度竞争，从而弥补了现有机制在拥塞处理方面的空缺。
     \item \textbf{将所提机制引入时隙 ALOHA 框架中并进行性能分析。} 针对大规模网络中节点状态耦合、系统难以解析的难题，本文通过稳态解耦的近似方法，将高维复杂的全局状态降维成单节点的马尔可夫链模型，在此基础上建立了系统的稳态方程并对其求解。随后，基于求得的稳态特征，推导出平均 AoI 及 AoI 违规概率的闭式表达式，并深入分析了关键的系统参数对信息时效性的影响。
-    \item \textbf{将所提机制引入标准 CSMA 框架中并进行性能分析。} 针对大规模网络中节点状态耦合与 CSMA 框架中载波侦听、退避冻结等机制导致的系统时隙变长两个难题，本文通过稳态解耦的近似方法，将高维复杂的全局状态降维成单节点的马尔可夫链模型。在考虑变长时隙的前提下，基于马尔可夫链模型建立了系统的稳态方程并对其求解。随后，将求得的稳态特征与变长时隙的统计特性相结合，推导出平均 AoI 及 AoI 违规概率的闭式表达式，并深入分析了关键的系统参数对信息时效性的影响。
-    \item \textbf{验证理论模型并揭示等待机制的性能演化规律。}通过仿真实验，充分验证了本文所推导的闭式表达式的准确性。进一步的对比分析表明，在中高负载尤其是海量设备接入的场景下，适度等待并不会损害信息新鲜度。相反，它能够减少信道中的竞争，降低碰撞概率，从而同时改善平均 AoI 与 AoI 违规概率。
+    \item \textbf{将所提机制引入标准 CSMA 框架中并进行性能分析。} 针对大规模网络中节点状态耦合，以及 CSMA 框架中由于载波侦听、退避冻结等机制导致的系统时隙变长两个难题，本文通过稳态解耦的近似方法，将高维复杂的全局状态降维成单节点的马尔可夫链模型。在考虑变长时隙的前提下，基于马尔可夫链模型建立了系统的稳态方程并对其求解。随后，将求得的稳态特征与变长时隙的统计特性相结合，推导出平均 AoI 及 AoI 违规概率的闭式表达式，并深入分析了关键的系统参数对信息时效性的影响。
+    \item \textbf{验证理论模型并揭示等待机制的性能演化规律。}本文通过仿真实验验证了理论表达式的准确性，并与多种代表性的随机接入机制进行了对比。结果表明，在中高负载尤其是海量设备接入的场景下，适度等待并不会损害信息新鲜度。相反，它能够减少信道中的竞争，降低碰撞概率，从而同时改善平均 AoI 与 AoI 违规概率。
 \end{enumerate}
 
 综上所述，本文的研究不仅丰富了面向信息年龄的随机接入理论分析体系，也为未来大规模物联网状态更新系统的协议设计与优化提供了有价值的理论参考与工程指导。
@@ -39,7 +39,7 @@ However, existing research does not fully consider the impact of continuous coll
 
 \item \textbf{Introducing the proposed mechanism into the standard CSMA framework and analyzing its performance.} In large-scale networks, node states are coupled. Moreover, carrier sensing and backoff freezing mechanisms in the CSMA framework cause variable-length system slots. These two challenges make the system difficult to analyze. To solve this, we use a steady-state decoupling method to simplify the complex system into a single-node Markov chain model. Considering the variable-length slots, we establish and solve steady-state equations based on this model. Then, by combining the obtained steady-state features with the statistical characteristics of variable-length slots, we derive closed-form expressions for the average AoI and AoI violation probability, and deeply analyze the impact of key system parameters on information timeliness.
 
-\item \textbf{Verifying the theoretical model and revealing the performance evolution rules of the waiting mechanism.} Through simulation experiments, we fully verify the accuracy of the derived closed-form expressions. Further comparative analysis shows that, under medium-to-high loads, especially in massive device access scenarios, moderate waiting does not harm information freshness. Instead, it reduces channel competition and lowers the collision probability, thereby improving both the average AoI and the AoI violation probability simultaneously.
+\item \textbf{Verifying the theoretical model and revealing the performance evolution rules of the waiting mechanism.} Through simulation experiments, we verify the accuracy of the theoretical expressions. We also compare our mechanism with several representative random access mechanisms. The results show that under medium-to-high loads, especially in massive device access scenarios, moderate waiting does not harm information freshness. Instead, it reduces channel competition and lowers the collision probability, thereby improving both the average AoI and the AoI violation probability simultaneously.
 \end{enumerate}
 
 In summary, our research not only enriches the theoretical analysis of random access for Age of Information, but also provides valuable theoretical reference and engineering guidance for the protocol design and optimization of future large-scale IoT status update systems.

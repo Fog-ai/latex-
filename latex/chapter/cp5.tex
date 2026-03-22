@@ -10,7 +10,7 @@
 
 本章采用蒙特卡洛方法对系统进行仿真，来分别得到平均 AoI 与 AoI 违规概率的结果，用来与仿真结果进行对比的理论曲线分别由第三章和第四章得到的闭式表达式直接计算获得，其中等待 ALOHA 的理论结果分别对应式\eqref{cp3_AoI_Final}与式\eqref{cp3_violation_prob_simplified}，等待 CSMA 的理论结果分别对应式\eqref{cp4_AoI_Final}与式\eqref{cp4_violation_prob_simplified}。在同一组实验中，除图中横轴所对应的变量外，其余参数均保持不变。
 
-为便于比较，本章将实验分为两类。第一类用于验证理论表达式的准确性，分别考察节点数量 $N$ 和等待窗口 $z$ 变化时理论值与仿真值的一致程度；第二类用于比较不同机制在同一负载条件下的性能表现。ALOHA 类机制的对比对象包括经典时隙 ALOHA 和文献\cite{yavascan2021analysis}提出的阈值 ALOHA；CSMA 类机制的对比对象包括标准 IEEE 802.11 DCF、文献\cite{maatouk2020age}提出的睡眠 CSMA，以及文献\cite{tripathi2023fresh}提出的 Fresh CSMA。节点规模的验证图主要用来观察网络负载提高后理论模型是否仍能贴合仿真结果，等待窗口的验证图则关注等待窗口的变化对 AoI 性能的影响。
+为便于比较，本章将实验分为两类。第一类用于验证理论表达式的准确性，分别考察节点数量 $N$ 和等待窗口 $z$ 变化时理论值与仿真值的一致程度；第二类用于比较不同机制在同一负载条件下的性能表现。ALOHA 类机制的对比对象包括经典时隙 ALOHA 和文献\cite{yavascan2021analysis}提出的阈值 ALOHA；CSMA 类机制的对比对象包括标准 CSMA、文献\cite{maatouk2020age}提出的睡眠 CSMA，以及文献\cite{tripathi2023fresh}提出的 Fresh CSMA。节点规模的验证图主要用来观察网络负载提高后理论模型是否仍能贴合仿真结果，等待窗口的验证图则关注等待窗口的变化对 AoI 性能的影响。
 
 \subsection{理论表达式验证}
 
@@ -111,7 +111,7 @@
 
 \subsubsection{CSMA 类机制对比}
 
-图\ref{fig:cp5_csma_comparison}给出了等待 CSMA、标准 IEEE 802.11 DCF、睡眠 CSMA 以及 Fresh CSMA 的性能对比结果。图\ref{fig:cp5_csma_comparison_aoi}与图\ref{fig:cp5_csma_comparison_violation}分别对应平均 AoI 与违规概率的对比结果。
+图\ref{fig:cp5_csma_comparison}给出了等待 CSMA、标准 CSMA、睡眠 CSMA 以及 Fresh CSMA 的性能对比结果。图\ref{fig:cp5_csma_comparison_aoi}与图\ref{fig:cp5_csma_comparison_violation}分别对应平均 AoI 与违规概率的对比结果。
 
 \begin{figure}[htbp]
     \centering
@@ -126,7 +126,7 @@
     \label{fig:cp5_csma_comparison}
 \end{figure}
 
-从图\ref{fig:cp5_csma_comparison}可以看出，将等待机制引入 802.11 DCF 后，系统在平均 AoI 和 AoI 违规概率两个指标上均有明显改善。标准 DCF 的设计目标更偏向吞吐量和长期接入公平性，并不会主动限制刚完成更新节点的再次竞争，因此在 AoI 视角下并不占优。睡眠 CSMA 通过成功后的休眠来让出信道资源，较标准 DCF 有所改进，但其等待时间由一个指数分布的随机数决定，容易得到一个较短的休眠时间，导致节点迅速地回到信道的竞争中来。Fresh CSMA 在理想化的条件下通过当前时刻的 AoI 来选择最优的退避计时器。但当节点数量过多时，由于无休止的碰撞，绝大部分甚至全部节点都处于较高的 AoI，根据 Fresh CSMA 的设计，节点将选择极短的退避计时器，甚至是0，这非但无法缓解碰撞的现象，反而会进一步加剧碰撞，由此导致 Fresh CSMA 在节点数量增加后 AoI 性能急剧恶化。相比之下，等待 CSMA 在建立系统模型时便将信道的碰撞因素考虑在内，因此在存在碰撞的真实环境下，等待 CSMA 依旧能展现出良好的性能。
+从图\ref{fig:cp5_csma_comparison}可以看出，将等待机制引入标准 CSMA 后，系统在平均 AoI 和 AoI 违规概率两个指标上均有明显改善。标准 CSMA 的设计目标更偏向吞吐量和长期接入公平性，并不会主动限制刚完成更新节点的再次竞争，因此在 AoI 视角下并不占优。睡眠 CSMA 通过成功后的休眠来让出信道资源，较标准 CSMA 有所改进，但其等待时间由一个指数分布的随机数决定，容易得到一个较短的休眠时间，导致节点迅速地回到信道的竞争中来。Fresh CSMA 在理想化的条件下通过当前时刻的 AoI 来选择最优的退避计时器。但当节点数量过多时，由于无休止的碰撞，绝大部分甚至全部节点都处于较高的 AoI，根据 Fresh CSMA 的设计，节点将选择极短的退避计时器，甚至是0，这非但无法缓解碰撞的现象，反而会进一步加剧碰撞，由此导致 Fresh CSMA 在节点数量增加后 AoI 性能急剧恶化。相比之下，等待 CSMA 在建立系统模型时便将信道的碰撞因素考虑在内，因此在存在碰撞的真实环境下，等待 CSMA 依旧能展现出良好的性能。
 
 综合图\ref{fig:cp5_aloha_comparison}与图\ref{fig:cp5_csma_comparison}可以看出，等待随机接入机制并不依赖某一种特定的底层 MAC 框架。无论是在等长时隙的 ALOHA 环境中，还是在具备载波侦听和变长系统时隙的 CSMA 环境中，适度限制成功节点的再次接入，并对碰撞后的节点进行处理，都是改善 AoI 性能的有效思路。
 

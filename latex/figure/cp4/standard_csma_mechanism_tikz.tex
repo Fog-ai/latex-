@@ -1,0 +1,75 @@
+\begin{tikzpicture}[
+    x=1cm,
+    y=1cm,
+    >=Latex,
+    state/.style={
+        draw,
+        rounded corners=2pt,
+        minimum width=1.20cm,
+        minimum height=0.70cm,
+        fill=blue!4,
+        font=\small
+    },
+    frozen/.style={
+        draw,
+        rounded corners=2pt,
+        minimum width=2.30cm,
+        minimum height=0.70cm,
+        fill=gray!14,
+        font=\small,
+        align=center
+    },
+    slotidle/.style={
+        draw,
+        rounded corners=1.5pt,
+        minimum width=1.20cm,
+        minimum height=0.82cm,
+        fill=gray!5,
+        font=\small,
+        align=center
+    },
+    slotbusy/.style={
+        draw,
+        rounded corners=1.5pt,
+        minimum width=2.30cm,
+        minimum height=0.82cm,
+        fill=red!6,
+        font=\small,
+        align=center
+    },
+    note/.style={font=\small, align=center},
+    flow/.style={-Latex, line width=0.85pt, gray!70},
+    tx/.style={-Latex, line width=1pt, red!75!black}
+]
+
+\node[note, anchor=west] at (-5.60,1.30) {目标终端退避:};
+\node[state] (c3) at (-3.70,1.30) {$3$};
+\node[state] (c2) at (-2.05,1.30) {$2$};
+\node[frozen] (cf) at (0.55,1.30) {冻结};
+\node[state] (c1) at (3.05,1.30) {$1$};
+\node[state] (c0) at (5.50,1.30) {$0$};
+
+\draw[flow] (c3.east) -- (c2.west);
+\draw[flow] (c2.east) -- (cf.west);
+\draw[flow] (cf.east) -- (c1.west);
+\draw[flow] (c1.east) -- (c0.west);
+
+\node[note, anchor=west] at (-5.60,0.00) {信道状态:};
+\node[slotidle] (s1) at (-3.70,0.00) {空闲\\微时隙};
+\node[slotidle] (s2) at (-2.05,0.00) {空闲\\微时隙};
+\node[slotbusy] (sb1) at (0.55,0.00) {忙碌\\系统时隙};
+\node[slotidle] (s3) at (3.05,0.00) {空闲\\微时隙};
+\node[slotbusy] (sb2) at (5.50,0.00) {忙碌\\系统时隙};
+
+\node[note] at (-3.70,-0.88) {减$1$};
+\node[note] at (-2.05,-0.88) {减$1$};
+\node[note, text=gray!70!black] at (0.55,-0.88) {冻结};
+\node[note] at (3.05,-0.88) {恢复};
+\node[note, text=red!75!black] at (5.50,-0.88) {归零发送};
+
+\node[note, text=red!75!black] (other) at (0.55,2.25) {其他终端发送};
+\draw[tx] (other.south) -- (sb1.north);
+
+\node[note, text=red!75!black] (self) at (5.50,2.25) {目标终端发送};
+\draw[tx] (self.south) -- (sb2.north);
+\end{tikzpicture}

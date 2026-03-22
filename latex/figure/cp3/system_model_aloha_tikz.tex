@@ -1,0 +1,69 @@
+\begin{tikzpicture}[
+    x=1cm,
+    y=1cm,
+    >=Latex,
+    ap/.style={
+        draw,
+        rounded corners=2pt,
+        minimum width=2.4cm,
+        minimum height=0.95cm,
+        fill=gray!10,
+        font=\small\bfseries,
+        align=center
+    },
+    dev/.style={
+        draw,
+        rounded corners=2pt,
+        minimum width=1.05cm,
+        minimum height=0.72cm,
+        fill=blue!4,
+        font=\small
+    },
+    slot/.style={
+        draw,
+        rounded corners=1.5pt,
+        minimum width=2.0cm,
+        minimum height=0.72cm,
+        fill=gray!5,
+        font=\small
+    },
+    note/.style={font=\small, align=center},
+    faint/.style={-Latex, line width=0.8pt, dashed, gray!55},
+    tx/.style={-Latex, line width=0.95pt, blue!70!black},
+    coltx/.style={-Latex, line width=1pt, red!75!black}
+]
+
+\node[ap] (ap) at (0,2.25) {AP};
+
+\node[dev] (u1) at (-4.8,0.35) {终端1};
+\node[dev] (u2) at (-2.7,0.35) {终端2};
+\node[note] at (-1.05,0.35) {$\cdots$};
+\node[dev] (ui) at (0.55,0.35) {终端i};
+\node[note] at (2.15,0.35) {$\cdots$};
+\node[dev] (un) at (4.25,0.35) {终端N};
+
+\draw[coltx] (u1.north) .. controls (-4.35,1.25) and (-1.70,1.75) .. (ap.south west);
+\draw[coltx] (ui.north) .. controls (0.55,1.16) and (0.34,1.42) .. ($(ap.south)+(0.34,0)$);
+\draw[tx] (un.north) .. controls (4.00,1.25) and (1.55,1.75) .. (ap.south east);
+
+\node[note, text=red!75!black, fill=white, inner sep=1.5pt] at (-4.45,1.98) {时隙 $t$ 内\\多终端同时发送};
+\node[note, text=blue!70!black, fill=white, inner sep=1.5pt] at (4.45,1.98) {时隙 $t+1$ 内\\单终端发送};
+
+\draw[decorate, decoration={brace, mirror, amplitude=5pt}]
+    (-5.35,-0.35) -- (4.85,-0.35)
+    node[midway, below=7pt, font=\small] {$N$ 个终端};
+
+\node[note, anchor=west] at (-5.65,-1.90) {同步等长时隙:};
+\node[slot] (s1) at (-1.75,-1.95) {时隙 $t-1$};
+\node[slot] (s2) at (0.35,-1.95) {时隙 $t$};
+\node[slot] (s3) at (2.45,-1.95) {时隙 $t+1$};
+
+\draw[coltx] (-0.20,-1.25) -- (-0.20,-1.58);
+\draw[coltx] (0.12,-1.25) -- (0.12,-1.58);
+\node[note, text=red!75!black] at (0.35,-2.62) {碰撞};
+
+\draw[tx] (2.45,-1.25) -- (2.45,-1.58);
+\node[note, text=blue!70!black] at (2.45,-2.62) {成功更新};
+
+\node[note] at (0.35,-3.25) {};
+\end{tikzpicture}

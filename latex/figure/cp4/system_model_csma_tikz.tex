@@ -1,0 +1,76 @@
+\begin{tikzpicture}[
+    x=1cm,
+    y=1cm,
+    >=Latex,
+    ap/.style={
+        draw,
+        rounded corners=2pt,
+        minimum width=2.4cm,
+        minimum height=0.95cm,
+        fill=gray!10,
+        font=\small\bfseries,
+        align=center
+    },
+    dev/.style={
+        draw,
+        rounded corners=2pt,
+        minimum width=1.05cm,
+        minimum height=0.72cm,
+        fill=blue!4,
+        font=\small
+    },
+    slotidle/.style={
+        draw,
+        rounded corners=1.5pt,
+        minimum width=1.55cm,
+        minimum height=0.78cm,
+        fill=gray!5,
+        font=\small,
+        align=center
+    },
+    slotbusy/.style={
+        draw,
+        rounded corners=1.5pt,
+        minimum width=1.75cm,
+        minimum height=0.78cm,
+        fill=red!6,
+        font=\small,
+        align=center
+    },
+    note/.style={font=\small, align=center},
+    sense/.style={line width=0.8pt, dashed, gray!60},
+    tx/.style={-Latex, line width=1pt, red!75!black}
+]
+
+\node[ap] (ap) at (0,2.55) {AP};
+
+\node[dev] (u1) at (-4.7,0.20) {终端1};
+\node[dev] (u2) at (-2.65,0.20) {终端2};
+\node[note] at (-1.05,0.20) {$\cdots$};
+\node[dev] (ui) at (0.55,0.20) {终端$i$};
+\node[note] at (2.10,0.20) {$\cdots$};
+\node[dev] (un) at (4.15,0.20) {终端$N$};
+
+\draw[sense] (u1.north) .. controls (-4.35,0.95) and (-2.30,1.70) .. (ap.south west);
+\draw[sense] (u2.north) .. controls (-2.55,0.95) and (-1.40,1.65) .. (ap.south west);
+\draw[tx] (ui.north) .. controls (0.55,1.00) and (0.08,1.78) .. (ap.south);
+\draw[sense] (un.north) .. controls (3.95,0.95) and (1.90,1.70) .. (ap.south east);
+
+\node[note, text=gray!70!black, fill=white, inner sep=1.5pt] at (-3.55,1.88) {其余终端载波侦听};
+\node[note, text=red!75!black, fill=white, inner sep=1.5pt, anchor=west] at (0.48,1.68) {终端$i$发送更新包};
+
+\draw[decorate, decoration={brace, mirror, amplitude=5pt}]
+    (-5.25,-0.48) -- (4.70,-0.48)
+    node[midway, below=7pt, font=\small] {$N$ 个终端};
+
+\node[note, anchor=west] at (-5.55,-2.12) {系统时隙:};
+\node[slotidle] (s1) at (-1.75,-2.16) {空闲\\微时隙};
+\node[slotidle] (s2) at (0.00,-2.16) {空闲\\微时隙};
+\node[slotbusy] (s3) at (1.95,-2.16) {忙碌\\系统时隙};
+\node[slotidle] (s4) at (3.95,-2.16) {空闲\\微时隙};
+
+\node[note] at (-1.75,-2.96) {退避减$1$};
+\node[note] at (0.00,-2.96) {退避减$1$};
+\node[note, text=gray!70!black] at (1.95,-2.96) {计时器冻结};
+\node[note] at (3.95,-2.96) {恢复倒计时};
+\end{tikzpicture}
