@@ -98,58 +98,14 @@
 %\usepackage[hidelinks]{hyperref}
 
 %引用
-\let\szuorigcite\cite
 \ExplSyntaxOn
-\clist_new:N \l__szu_upcite_keys_clist
-\clist_new:N \l__szu_upcite_new_clist
-\tl_new:N \l__szu_upcite_pages_tl
-
-\cs_new_protected:Npn \szu_upcite_mark_seen:n #1
+% Repeated citations should carry the source page number explicitly,
+% rather than the page number where the citation first appears here.
+\NewDocumentCommand{\upcite}{O{}m}
   {
-    \global\expandafter\let\csname szu@cite@seen@#1\endcsname\empty
-    \label{upcite-first-#1}
-  }
-
-\cs_new_protected:Npn \szu_upcite_render:nn #1#2
-  {
-    \textsuperscript{\szuorigcite{#1}\tl_if_empty:nF {#2} {\,#2}}
-  }
-
-\cs_new_protected:Npn \szu_upcite_single:n #1
-  {
-    \cs_if_exist:cTF {szu@cite@seen@#1}
-      { \szu_upcite_render:nn {#1} {\pageref{upcite-first-#1}} }
-      {
-        \szu_upcite_render:nn {#1} {}
-        \szu_upcite_mark_seen:n {#1}
-      }
-  }
-
-\cs_new_protected:Npn \szu_upcite_multi:n #1
-  {
-    \clist_set:Nn \l__szu_upcite_keys_clist {#1}
-    \clist_clear:N \l__szu_upcite_new_clist
-    \tl_clear:N \l__szu_upcite_pages_tl
-    \clist_map_inline:Nn \l__szu_upcite_keys_clist
-      {
-        \cs_if_exist:cTF {szu@cite@seen@##1}
-          {
-            \tl_if_empty:NF \l__szu_upcite_pages_tl
-              { \tl_put_right:Nn \l__szu_upcite_pages_tl {,} }
-            \tl_put_right:Nx \l__szu_upcite_pages_tl { \pageref{upcite-first-##1} }
-          }
-          { \clist_put_right:Nn \l__szu_upcite_new_clist {##1} }
-      }
-    \szu_upcite_render:nn {#1} { \tl_use:N \l__szu_upcite_pages_tl }
-    \clist_map_inline:Nn \l__szu_upcite_new_clist
-      { \szu_upcite_mark_seen:n {##1} }
-  }
-
-\NewDocumentCommand{\upcite}{m}
-  {
-    \tl_if_in:nnTF {#1}{,}
-      { \szu_upcite_multi:n {#1} }
-      { \szu_upcite_single:n {#1} }
+    \cite{#2}%
+    \tl_if_blank:nF {#1}
+      { \textsuperscript{#1} }
   }
 \ExplSyntaxOff
 
