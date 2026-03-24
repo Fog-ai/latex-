@@ -26,7 +26,7 @@
 \renewcommand{\thetable}{\arabic{table}}   %图表的计数方式
 
 
-\renewcommand{\contentsname}{\heiti\zihao{3}{\textbf{目~录}\vspace{1\baselineskip}}}
+\renewcommand{\contentsname}{\heiti\zihao{3}{\textbf{目~录}\vspace{6pt}}}
 
 \renewcommand\refname{\heiti\zihao{-3}{\textbf{参~考~文~献}}}
 
@@ -101,9 +101,10 @@
 }
 
 
-%中文摘要
+% 中文摘要
 \newenvironment{abstractCN}{
 	\newpage
+%	\vspace{0pt}
     \pagenumbering{Roman}
 	\thispagestyle{fancy}
 	\fancyhead[C]{\songti\zihao{5}{\titleCN}}
@@ -112,15 +113,23 @@
         \phantomsection % 添加超链接的目标位置
 	\hypertarget{abstractCN}{} % 设置超链接的目标位置
 	\addcontentsline{toc}{\newContects}{\songti\textbf{摘~要}} % 在目录中显示摘要
-	\vspace{1\baselineskip}
-	\begin{center}
-        % {\heiti\zihao{3}
-		\heiti\zihao{3}{\textbf{~\\}}
-		\heiti\zihao{3}{\textbf{摘~~要}}
-	\end{center}
-	\vspace{1\baselineskip}
+%	\vspace{1\baselineskip}
+%	\vspace*{5pt}
+%	\begin{center}
+%        % {\heiti\zihao{3}
+%		\heiti\zihao{3}{\textbf{~\\}}
+%		\heiti\zihao{3}{\textbf{摘~~要}}
+%	\end{center}
+%	\vspace{1\baselineskip}
+
+\heiti\zihao{3}{\textbf{~\\}}
+{\centering\linespread{1.0}\heiti\zihao{3}{\textbf{摘~~要}}\par
+}
+\vspace{18pt}
+
 	\songti\zihao{-4}
 }{}
+
 
 %中文关键词
 \newenvironment{keywordCN}{
@@ -144,12 +153,18 @@
 	\hypertarget{abstractEN}{} % 设置超链接的目标位置
 	%\addcontentsline{toc}{\newContects}{\textbf{ABSTRACT}} %\zihao{-4}% 在目录中显示摘要
 	\addcontentsline{toc}{\newContects}{\textbf{\textrm{ABSTRACT}}} %
-	\vspace{1\baselineskip}	
-	\begin{center}
-		\songti\zihao{3}{\textbf{~\\}}
-		\setmainfont{Arial}{\zihao{3}{\textbf{ABSTRACT}} }	
-	\end{center}
-	\vspace{1\baselineskip}
+%	\vspace{1\baselineskip}	
+%	\begin{center}
+%		\songti\zihao{3}{\textbf{~\\}}
+%		\setmainfont{Arial}{\zihao{3}{\textbf{ABSTRACT}} }	
+%	\end{center}
+%	\vspace{1\baselineskip}
+
+\heiti\zihao{3}{\textbf{~\\}}
+{\centering\linespread{1.0}\setmainfont{Arial}{\zihao{3}{\textbf{ABSTRACT}} }\par
+}
+\vspace{18pt}
+
 	\songti\zihao{-4}
 }{}
 
@@ -167,20 +182,25 @@
 % 定义符号和缩略语说明
 \newenvironment{signAndABC}{
 	\newpage
-	% \thispagestyle{fancy}
-	%含有this样式仅当前页，表格跨页后页眉消失，改为去掉this后续页页眉正常显示
-	\pagestyle{fancy}
+	\thispagestyle{fancy}
 	\fancyhead[C]{\songti\zihao{5}{符号和缩略语说明}}
 	\fancyfoot[C]{\songti\zihao{5}{\thepage}}
      \phantomsection % 添加超链接的目标位置
 	\hypertarget{signAndABC}{} % 设置超链接的目标位置
 	\addcontentsline{toc}{\newContects}{\textbf{符号和缩略语说明}} % 在目录中显示摘要\zihao{-4}
-	\vspace{1\baselineskip}	
-	\begin{center}
-		\songti\zihao{3}{\textbf{~\\}}
-		{\heiti\zihao{3}{\textbf{符号和缩略语说明}} }	
-	\end{center}
-	\vspace{1\baselineskip}
+	
+%	\vspace{1\baselineskip}	
+%	\begin{center}
+%		\songti\zihao{3}{\textbf{~\\}}
+%		{\heiti\zihao{3}{\textbf{符号和缩略语说明}} }	
+%	\end{center}
+%	\vspace{1\baselineskip}
+	
+	\heiti\zihao{3}{\textbf{~\\}}
+	{\centering\linespread{1.0}\heiti\zihao{3}{\textbf{符号和缩略语说明}}\par
+	}
+	\vspace{18pt}
+
 	\songti\zihao{-4}
 }{\newpage}
 
@@ -191,13 +211,19 @@
        \phantomsection % 添加超链接的目标位置
 	\hypertarget{szuAppendix}{} % 设置超链接的目标位置
 	\addcontentsline{toc}{\newContects}{\textbf{致~谢}} % 在目录中显示附录 \zihao{-4}
-	\vspace{1\baselineskip}	
-	\begin{center}
-        \songti\zihao{3}{\textbf{~\\}}
-        \heiti\bfseries\zihao{3}{#1}
-	\end{center}
- 
-	\vspace{0.5\baselineskip}
+	
+%	\vspace{1\baselineskip}	
+%	\begin{center}
+%        \songti\zihao{3}{\textbf{~\\}}
+%        \heiti\bfseries\zihao{3}{#1}
+%	\end{center}
+%	\vspace{0.5\baselineskip}
+
+	\heiti\zihao{3}{\textbf{~\\}}
+	{\centering\linespread{1.0}\heiti\bfseries\zihao{3}{#1}\par
+	}
+	\vspace{18pt}
+	
 	\songti\zihao{5}
 }{}
 
@@ -213,15 +239,22 @@
       \phantomsection % 添加超链接的目标位置
 	\hypertarget{szuAppendixB}{} % 设置超链接的目标位置
 	\addcontentsline{toc}{\newContects}{\textcolor{black}{\textbf{#1}}} % 在目录中显示附\zihao{-4}
-	\vspace{1\baselineskip}	
-	\begin{center}
-        \songti\zihao{3}{\textbf{~\\}}
-        \heiti\bfseries\zihao{3}{#1}
-	\end{center}
- 
-	\vspace{0.5\baselineskip}
+	
+%	\vspace{1\baselineskip}	
+%	\begin{center}
+%        \songti\zihao{3}{\textbf{~\\}}
+%        \heiti\bfseries\zihao{3}{#1}
+%	\end{center}
+%	\vspace{0.5\baselineskip}
+	
+	\heiti\zihao{3}{\textbf{~\\}}
+	{\centering\linespread{1.0}\heiti\bfseries\zihao{3}{#1}\par
+	}
+	\vspace{18pt}
+	
 	\songti\zihao{5}
 }{}
+
 
 
 
