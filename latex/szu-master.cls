@@ -228,8 +228,6 @@
 }{}
 
 
-
-%定义附录环境  攻读硕士学位期间研究成果
 \newenvironment{szuAppendixB}[1]{
 
 	\newpage 

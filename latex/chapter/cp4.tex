@@ -1,6 +1,8 @@
 \clearpage
 
-\section{等待 CSMA 的设计及分析}
+\vspace*{-1\baselineskip}
+\section{等待CSMA的设计及分析}
+\vspace{6pt}
 
 第三章已经在时隙 ALOHA 中引入了等待随机接入退避机制，并给出了相应的理论分析。若进一步将这一思路推广到标准 CSMA 网络中的话，问题就不仅只是“是否发送”，而且还要处理载波侦听、退避计时器冻结与恢复等机制带来的影响。换言之，等待机制仍然用于改善信息时效性，但其协议形式和分析方法都需要结合标准 CSMA 的竞争规则重新建立。
 
@@ -179,7 +181,7 @@ s_0 \left[ \dfrac{(1-p)(z+w-l)}{w} + \dfrac{p(w-l)}{w} \right], & \text{if } z \
 
 在确定稳态碰撞概率 $p$ 后，便可进一步分析等待 CSMA 下的平均 AoI 与 AoI 违规概率。与第三章一样，这里的求解路径仍然是先求离开时间间隔 $Y$ 的一阶矩和二阶矩，再代入第二章的统一公式。不同之处在于，等待 CSMA 中成功更新后的终端并不是简单返回到固定等待状态，而是先等待 $z$ 个时隙，再进入标准 CSMA 的随机退避竞争。同时，系统的时隙长度也会随信道状态而变化，因此 $Y$ 的构成方式与第三章并不相同。
 
-\subsubsection{平均 AoI 的闭式推导}
+\subsubsection{平均AoI的闭式推导}
 
 在按需生成的采样机制下，每次成功更新后 AoI 都被重置为 1，因此平均 AoI 的计算公式仍可重写为
 \begin{equation}\label{cp4_avg_aoi}
@@ -301,7 +303,7 @@ E\left[Y_k^2\right] &= \phi^2 + zp(1 - p) \frac{(M - 1)^2}{M^2} + 2k\phi(1 + \ga
 \begin{equation}\label{cp4_AoI_Final}
     \Delta = 1 + \frac{\left( \phi + \frac{1+\gamma}{1-p} \right)^2 + C_1}{2\left( \phi + \frac{1+\gamma}{1-p} \right)}.
 \end{equation}
-\subsubsection{AoI 违规概率的闭式推导}
+\subsubsection{AoI违规概率的闭式推导}
 
 与第三章类似，AoI 违规概率的求解仍从违规量 $J=\max(0,1+Y-\omega)$ 出发。由于接收端观察到的 AoI 曲线仍保持锯齿状结构，矩匹配与移位指数分布近似的方法仍然适用。与第三章不同的地方只在于 $Y$ 的矩表达式不同，而求解步骤本身保持一致。
 
@@ -336,7 +338,7 @@ E\left[Y_k^2\right] &= \phi^2 + zp(1 - p) \frac{(M - 1)^2}{M^2} + 2k\phi(1 + \ga
 
 在得到平均 AoI 与 AoI 违规概率的闭式表达式后，本节进一步讨论等待 CSMA 的性能表现。为简化书写，记 $\mu_Y = E[Y] = \phi + \frac{1+\gamma}{1-p}$，$\sigma_Y^2 = D[Y] = C_1$。
 
-\subsubsection{平均 AoI 的方差惩罚效应}
+\subsubsection{平均AoI的方差惩罚效应}
 
 将 $\mu_Y$ 与 $\sigma_Y^2$ 代入式\eqref{cp4_AoI_Final}，平均 AoI 可改写为
 \begin{equation}\label{cp4_aoi_deconstructed}
@@ -369,7 +371,7 @@ E\left[Y_k^2\right] &= \phi^2 + zp(1 - p) \frac{(M - 1)^2}{M^2} + 2k\phi(1 + \ga
 
 与第三章相比，本章中的 $\sigma_Y$ 不仅包含重传与随机退避所带来的不确定性，还包含空闲系统时隙与忙碌系统时隙交替变化所带来的时长波动。载波侦听可以减少盲目碰撞，但如果网络中忙碌系统时隙占比持续升高，离开时间间隔的物理长度仍然会被拉长，尾部衰减速度也会随之减慢。因此，在等待 CSMA 中，违规概率的改善既依赖于竞争强度的下降，也依赖于系统时隙结构本身是否足够平稳。
 
-\subsubsection{确定性等待窗口 \texorpdfstring{$z$}{z} 的参数权衡效应}
+\subsubsection{确定性等待窗口\texorpdfstring{$z$}{z}的参数权衡效应}
 
 在等待 CSMA 中，参数 $z$ 仍然是最主要的设计参数。增大 $z$ 会直接延长成功更新后的等待过程，因此从单个终端的角度看，平均离开时间间隔 $\mu_Y$ 会随之增大。与此同时，较大的 $z$ 会让刚完成更新的终端在更多系统时隙内退出竞争，从而降低单位时隙内处于活跃状态的终端数，缓解竞争压力。
 

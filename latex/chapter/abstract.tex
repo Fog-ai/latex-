@@ -5,18 +5,17 @@
 
 然而，现有研究没有充分考虑大规模接入场景下持续碰撞所带来的影响，而且大多都将重点放在平均 AoI，对 AoI 违规概率的关注较少。对于工业控制等时间敏感型业务，仅考察平均 AoI 不足以判断系统的可靠性。针对上述问题，本文充分考虑了大规模接入场景下持续碰撞所带来的负面影响，先是设计了一种基于等待的随机接入退避机制，并在此基础上，围绕时隙 ALOHA 和标准 CSMA 两类随机接入框架来构建相应的理论分析模型，推导出平均 AoI 与 AoI 违规概率的闭式表达式。本文的主要工作如下：
 
-\begin{enumerate} [wide]
-    \item \textbf{设计面向大规模接入场景的等待机制。}针对现有研究对持续碰撞关注不足的问题，本文设计了一种基于等待的随机接入退避机制，通过规划节点在成功更新以及遭遇碰撞后的不同退避行为，缓解信道拥塞。
-    \item \textbf{将所提机制引入时隙 ALOHA 框架中并进行性能分析。} 针对节点状态耦合的难题，本文通过解耦的近似方法，将高维复杂的全局状态降维成单节点的马尔可夫链模型，在此基础上建立并求解系统的稳态方程。随后，基于求得的稳态特征，推导出平均 AoI 及 AoI 违规概率的闭式表达式，并分析系统参数对性能的影响。
-    \item \textbf{将所提机制引入标准 CSMA 框架中并进行性能分析。} 针对节点状态耦合，以及由于载波侦听、退避冻结导致的系统时隙变长两个难题，本文通过解耦的近似方法，构建单节点的马尔可夫链模型，在此基础上建立并求解系统的稳态方程。随后，将稳态特征与变长时隙的统计特性相结合，推导出平均 AoI 及 AoI 违规概率的闭式表达式，并分析系统参数对性能的影响。
-    \item \textbf{验证理论模型并揭示等待机制的性能演化规律。}本文通过仿真验证了理论表达式的准确性，并与多种随机接入机制进行了对比。结果表明，在中高负载尤其是海量设备接入的场景下，适度等待并不会损害信息新鲜度。相反，它能够减少信道中的竞争，从而同时改善平均 AoI 与 AoI 违规概率。
-\end{enumerate}
+1. \textbf{设计面向大规模接入场景的等待机制。}针对现有研究对持续碰撞关注不足的问题，本文设计了一种基于等待的随机接入退避机制，通过规划节点在成功更新以及遭遇碰撞后的不同退避行为，缓解信道拥塞。
+
+2. \textbf{将所提机制引入时隙 ALOHA 框架中并进行性能分析。} 针对节点状态耦合的难题，本文通过解耦的近似方法，将高维复杂的全局状态降维成单节点的马尔可夫链模型，在此基础上建立并求解系统的稳态方程。随后，基于求得的稳态特征，推导出平均 AoI 及 AoI 违规概率的闭式表达式，并分析系统参数对性能的影响。
+
+3. \textbf{将所提机制引入标准 CSMA 框架中并进行性能分析。} 针对节点状态耦合，以及由于载波侦听、退避冻结导致的系统时隙变长两个难题，本文通过解耦的近似方法，构建单节点的马尔可夫链模型，在此基础上建立并求解系统的稳态方程。随后，将稳态特征与变长时隙的统计特性相结合，推导出平均 AoI 及 AoI 违规概率的闭式表达式，并分析系统参数对性能的影响。
+
+4. \textbf{验证理论模型并揭示等待机制的性能演化规律。}本文通过仿真验证了理论表达式的准确性，并与多种随机接入机制进行了对比。结果表明，在中高负载尤其是海量设备接入的场景下，适度等待并不会损害信息新鲜度。相反，它能够减少信道中的竞争，从而同时改善平均 AoI 与 AoI 违规概率。
 
 本文的研究不仅丰富了面向信息年龄的随机接入理论分析体系，也为未来状态更新系统的协议设计与优化提供了有价值的理论参考与工程指导。
 
 \end{abstractCN}
-
-
 \begin{keywordCN}
 随机接入，信息年龄，性能分析
 \end{keywordCN}
@@ -28,20 +27,17 @@ With the development of the Internet of Things (IoT), status update services con
 
 However, existing research does not fully consider the impact of continuous collisions in large-scale access scenarios, and most studies focus on the average AoI, paying less attention to the AoI violation probability. For time-sensitive services such as industrial control, considering only the average AoI is not enough to determine system reliability. To address these problems, this thesis fully considers the negative impact of continuous collisions in large-scale access scenarios. First, we design a waiting-based random access backoff mechanism. Based on this, we build corresponding theoretical analysis models for two random access frameworks: slotted ALOHA and standard CSMA, and derive closed-form expressions for the average AoI and the AoI violation probability. The main contributions of this thesis are as follows:
 
-\begin{enumerate} [wide]
-\item \textbf{Designing a waiting mechanism for large-scale access scenarios.} To address the problem that existing research pays insufficient attention to continuous collisions, we design a waiting-based random access backoff mechanism. By planning different backoff behaviors for nodes after successful updates and collisions, this mechanism effectively relieves channel congestion.
+1. \textbf{Designing a waiting mechanism for large-scale access scenarios.} To address the problem that existing research pays insufficient attention to continuous collisions, we design a waiting-based random access backoff mechanism. By planning different backoff behaviors for nodes after successful updates and collisions, this mechanism effectively relieves channel congestion.
 
-\item \textbf{Introducing the proposed mechanism into the slotted ALOHA framework and analyzing its performance.} To solve the challenge of coupled node states, we use a decoupling approximation method to simplify the complex system into a single-node Markov chain model. Based on this, we establish and solve steady-state equations of the system. Based on the obtained steady-state features, we derive closed-form expressions for the average AoI and AoI violation probability, and analyze the impact of system parameters on performance.
+2. \textbf{Introducing the proposed mechanism into the slotted ALOHA framework and analyzing its performance.} To solve the challenge of coupled node states, we use a decoupling approximation method to simplify the complex system into a single-node Markov chain model. Based on this, we establish and solve steady-state equations of the system. Based on the obtained steady-state features, we derive closed-form expressions for the average AoI and AoI violation probability, and analyze the impact of system parameters on performance.
 
-\item \textbf{Introducing the proposed mechanism into the standard CSMA framework and analyzing its performance.} To address the challenges of coupled node states and variable-length slots caused by carrier sensing and backoff freezing, we use a decoupling approximation method to build a single-node Markov chain model. Based on this, we establish and solve the steady-state equations of the system. Then, by combining the steady-state features with the statistical characteristics of the variable-length slots, we derive closed-form expressions for the average AoI and the AoI violation probability, and analyze the impact of system parameters on performance.
+3. \textbf{Introducing the proposed mechanism into the standard CSMA framework and analyzing its performance.} To address the challenges of coupled node states and variable-length slots caused by carrier sensing and backoff freezing, we use a decoupling approximation method to build a single-node Markov chain model. Based on this, we establish and solve the steady-state equations of the system. Then, by combining the steady-state features with the statistical characteristics of the variable-length slots, we derive closed-form expressions for the average AoI and the AoI violation probability, and analyze the impact of system parameters on performance.
 
-\item \textbf{Verifying the theoretical model and revealing the performance evolution rules of the waiting mechanism.} Through simulation experiments, we verify the accuracy of the theoretical expressions. We also compare our mechanism with several random access mechanisms. The results show that under medium-to-high loads, especially in massive device access scenarios, moderate waiting does not harm information freshness. Instead, it reduces channel competition, thereby improving both the average AoI and the AoI violation probability simultaneously.
-\end{enumerate}
+4. \textbf{Verifying the theoretical model and revealing the performance evolution rules of the waiting mechanism.} Through simulation experiments, we verify the accuracy of the theoretical expressions. We also compare our mechanism with several random access mechanisms. The results show that under medium-to-high loads, especially in massive device access scenarios, moderate waiting does not harm information freshness. Instead, it reduces channel competition, thereby improving both the average AoI and the AoI violation probability simultaneously.
 
 In summary, our research not only enriches the theoretical analysis of random access for Age of Information, but also provides valuable theoretical reference and engineering guidance for the protocol design and optimization of future status update systems.
 
 \end{abstractEN}
-
 \begin{keywordEN}
 Random access, Age of information, Performance analysis
 \end{keywordEN}

@@ -1,6 +1,8 @@
 \clearpage
 
-\section{等待 ALOHA 的设计及分析}
+\vspace*{-1\baselineskip}
+\section{等待ALOHA的设计及分析}
+\vspace{6pt}
 
 经典时隙 ALOHA 以实现简单、分布式程度高而被广泛采用，但其接入决策主要围绕“是否发送”展开，并未区分不同终端状态信息的新鲜程度。在 AoI 约束下，这一处理方式存在明显不足：刚完成更新的终端仍可立即回到竞争过程，而未更新的终端却可能因长时间未接入信道，导致其在接收端的状态信息严重老化。为缓解这一问题，本章在传统 ALOHA 框架中引入成功传输后的确定性等待机制，构造一种面向信息时效性的等待 ALOHA 协议。
 
@@ -181,15 +183,17 @@ b_i(t) - 1, & \text{if } b_i(t) \neq 0.
 相对地，当 $w<2z+1$，即 $\frac{w-1}{2}<z$ 时，有 $\tau'(x)>0$，则 $f'(x)>0$。此时 $f(x)$ 随 $x$ 增大而增大，$F'(x)=1-f'(x)$ 未必始终为正。虽然方程仍然因连续性而至少存在一个解，但仅凭上述分析已无法保证解的唯一性。特别是在网络规模 $N$ 较大时，因子 $(N-1)$ 会放大 $f'(x)$ 的数值，使得 $f'(x)$ 超过 1 的可能性显著增加，进而导致 $F(x)$ 失去单调性。因此，$w<2z+1$ 时不能直接推出唯一解的结论。
 
 综上所述，在满足 $w\ge 2z+1$ 的条件下，函数 $F(x)$ 在 $[0,1]$ 上连续且严格递增，并满足 $F(0)<0<F(1)$。因此，二分法可以稳定求得唯一根 $p_{cl}^\star$，其步骤如下：
-\begin{enumerate}[wide]
-    \item 初始化：取左右端点 $l_0=0$、$r_0=1$，并给定收敛阈值 $\epsilon>0$；
-    \item 区间折半：在第 $t$ 轮迭代中计算中点 $m_t=(l_t+r_t)/2$，并求取 $F(m_t)$；
-    \item 区间更新：若 $F(m_t)=0$，则 $m_t$ 即为所求；若 $F(m_t)<0$，则令 $l_{t+1}=m_t,\ r_{t+1}=r_t$；否则令 $l_{t+1}=l_t,\ r_{t+1}=m_t$；
-    \item 停止准则：当 $|r_t-l_t|<\epsilon$ 时停止迭代，并以区间中点作为 $p_{cl}^\star$ 的数值近似。
-\end{enumerate}
+
+1. 初始化：取左右端点 $l_0=0$、$r_0=1$，并给定收敛阈值 $\epsilon>0$；
+
+2. 区间折半：在第 $t$ 轮迭代中计算中点 $m_t=(l_t+r_t)/2$，并求取 $F(m_t)$；
+
+3. 区间更新：若 $F(m_t)=0$，则 $m_t$ 即为所求；若 $F(m_t)<0$，则令 $l_{t+1}=m_t,\ r_{t+1}=r_t$；否则令 $l_{t+1}=l_t,\ r_{t+1}=m_t$；
+
+4. 停止准则：当 $|r_t-l_t|<\epsilon$ 时停止迭代，并以区间中点作为 $p_{cl}^\star$ 的数值近似。
 
 \subsection{信息时效性指标的理论解析}
-\subsubsection{平均 AoI 的闭式推导}
+\subsubsection{平均AoI的闭式推导}
 
 第二章已经给出了平均 AoI 的计算公式\eqref{cp2_avg_aoi}。由于本章系统中每个时隙的长度均为 1，故平均 AoI 的计算公式可重写为
 \begin{equation}\label{cp3_avg_aoi}
@@ -282,7 +286,7 @@ b_i(t) - 1, & \text{if } b_i(t) \neq 0.
 \end{equation}
 
 
-\subsubsection{AoI 违规概率的闭式推导}
+\subsubsection{AoI违规概率的闭式推导}
 
 图\ref{fig:cp3_aoi_evolution_with limit}给出了门限为 $\omega$ 时的 AoI 演化示意图。根据第二章中 AoI 违规概率的计算公式\eqref{cp2_aoi_violation_expression}，在本章模型下，求解违规概率的关键在于求解违规量 $J=\max(0,1+Y-\omega)$ 的期望，即 $E[J]$。
 \begin{figure}[htbp]
@@ -333,7 +337,7 @@ b_i(t) - 1, & \text{if } b_i(t) \neq 0.
 在得到平均 AoI 与 AoI 违规概率的闭式表达式后，本节将进一步讨论等待 ALOHA 的性能表现。为简化书写，记 $\mu_Y = E[Y] = z + M$，$\sigma_Y^2 = D[Y] = C_0 - M^2$。
 其中，$M$ 由式\eqref{cp3_M}给出。
 
-\subsubsection{平均 AoI 的方差惩罚效应}
+\subsubsection{平均AoI的方差惩罚效应}
 
 将 $\mu_Y$ 与 $\sigma_Y^2$ 代入式\eqref{cp3_AoI_Final}，可将平均 AoI 改写为
 \begin{equation}\label{cp3_aoi_deconstructed}
@@ -363,7 +367,7 @@ b_i(t) - 1, & \text{if } b_i(t) \neq 0.
 
 因此，等待 ALOHA 对违规概率的改进并不只体现为平均意义上的 AoI 降低，更体现在对尾部风险的抑制。特别是在高负载场景下，若不对竞争行为进行额外约束，碰撞引发的连续退避会迅速拉长右尾，导致 AoI 违规概率显著上升。
 
-\subsubsection{确定性等待窗口 \texorpdfstring{$z$}{z} 的参数权衡效应}
+\subsubsection{确定性等待窗口\texorpdfstring{$z$}{z}的参数权衡效应}
 
 在所提出的等待 ALOHA 中，参数 $z$ 是最关键的设计。增大 $z$ 会直接拉长成功更新后的等待时间，因此从单个终端视角看，它会增大平均离开时间间隔 $\mu_Y$。但从系统视角看，较大的 $z$ 意味着刚成功更新的终端将在后续的若干时隙中退出竞争，从而降低单位时隙内处于活跃状态的终端数，以此来缓解信道的碰撞。
 

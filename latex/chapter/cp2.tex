@@ -1,6 +1,8 @@
 \clearpage
 
+\vspace*{-1\baselineskip}
 \section{相关理论与技术}
+\vspace{6pt}
 
 \subsection{AoI相关概述与通用计算框架}
 在深入探讨具体的协议之前，本节将首先对 AoI 这一核心评价指标进行详细的介绍，并利用几何分析与随机过程理论，推导出一套适用于后续各类具体退避算法的通用性能计算框架。
@@ -49,43 +51,42 @@ X_{k} + S_{k} - T_{k-1}, & \text{if } X_{k} > T_{k-1}
 \subsubsection{AoI的相关指标}
 仅给出 AoI 的定义尚不足以支撑协议的性能比较，为了在后续章节中对等待 ALOHA 和等待 CSMA 等具体协议进行定量的理论评估，接下来将引入 AoI 的相关指标，并将其统一表达为更新周期统计量的函数。
 
-\begin{enumerate}[wide]
-    \item 平均AoI
-    
-    平均 AoI 用于刻画系统在长期稳态下的整体信息新鲜度，是 AoI 分析中最常用的指标。其定义为瞬时 AoI 在观测区间上的时间平均值，即
-    \begin{equation} \label{avg_AoI}
-        \Delta = \lim_{T \to +\infty} \frac{1}{T} \int_{0}^{T} \Delta(t) dt
-    \end{equation}
+1. 平均AoI
 
-    \begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.8\textwidth]{figure/cp2/2.3.pdf}
-    \caption{AoI曲线的面积分解示意图}
-    \label{fig:AoI_evolution_mianjihuafen}
-    \end{figure}
+平均 AoI 用于刻画系统在长期稳态下的整体信息新鲜度，是 AoI 分析中最常用的指标。其定义为瞬时 AoI 在观测区间上的时间平均值，即
+\begin{equation} \label{avg_AoI}
+    \Delta = \lim_{T \to +\infty} \frac{1}{T} \int_{0}^{T} \Delta(t) dt
+\end{equation}
 
-    由图\ref{fig:AoI_evolution_mianjihuafen}可知，平均 AoI 可通过几何面积分解进行求解。将总观测时间 $T$ 划分为 $N$ 个连续更新周期，每个周期由两次相邻的成功接收时刻 $t'_{n-1}$ 和 $t'_n$ 确定。记第 $n$ 个更新周期中 AoI 曲线下方的面积为 $Q_n$，则该面积对应一个梯形，其底边长度为 $Y_n=t'_n-t'_{n-1}$，左端高度为 $T_{n-1}$，右端高度为 $T_{n-1}+Y_n$。据此有
-     \begin{equation}
-        \begin{aligned}
-        Q_n &= \frac{1}{2} Y_n \big(T_{n-1} + (T_{n-1} + Y_n)\big) \\
-        &= \frac{1}{2} Y_n \big(2T_{n-1} + Y_n\big) \\
-        &= Y_n T_{n-1} + \frac{1}{2} Y_n^2
-        \end{aligned}
-     \end{equation}
-     因而，在总观测时间 $T$ 内，AoI 曲线的总面积可表示为所有更新周期的面积之和，平均 AoI 可改写为
-     \begin{equation}\label{aoitoarea}
-         \Delta =  \lim_{T \to +\infty} \frac{1}{T} \sum_{n=1}^{N} Q_n
-     \end{equation}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.8\textwidth]{figure/cp2/2.3.pdf}
+\caption{AoI曲线的面积分解示意图}
+\label{fig:AoI_evolution_mianjihuafen}
+\end{figure}
 
-     若系统满足平稳遍历条件，则依据更新报酬定理，可将时间平均转化为周期平均，即 $\frac{1}{N}\sum_{n=1}^{N}Q_n \to E[Q]$，且 $\frac{T}{N} \to E[Y]$。记稳态下的随机变量 $Y$ 和 $T$ 分别表示离开时间间隔与系统时间，则平均 AoI 的统一表达式为
-     \begin{equation}\label{cp2_avg_aoi}
-         \Delta = \frac{E[Q]}{E[Y]} = \frac{E\left[Y_n T_{n-1} + \frac{1}{2} Y_n^2\right]}{E[Y]}=\frac{E[Y T] + \frac{1}{2} E[Y^2]}{E[Y]}
-     \end{equation}
-     式\eqref{cp2_avg_aoi}给出了后续章节求解平均 AoI 的基本思路。对于任意给定的随机接入机制，只要求得离开时间间隔的一阶矩、二阶矩以及交叉项期望 $E[YT]$，即可得到对应的平均 AoI 闭式结果。
-    
-    \item 峰值AoI
-    
-    相比于平均 AoI，峰值 AoI 更关注每个更新周期末端的最差状态。设 $t_k$ 为第 $k$ 次成功接收时刻，则第 $k$ 个峰值 AoI 定义为该次接收发生前的瞬时 AoI 值：
+由图\ref{fig:AoI_evolution_mianjihuafen}可知，平均 AoI 可通过几何面积分解进行求解。将总观测时间 $T$ 划分为 $N$ 个连续更新周期，每个周期由两次相邻的成功接收时刻 $t'_{n-1}$ 和 $t'_n$ 确定。记第 $n$ 个更新周期中 AoI 曲线下方的面积为 $Q_n$，则该面积对应一个梯形，其底边长度为 $Y_n=t'_n-t'_{n-1}$，左端高度为 $T_{n-1}$，右端高度为 $T_{n-1}+Y_n$。据此有
+\begin{equation}
+\begin{aligned}
+Q_n &= \frac{1}{2} Y_n \big(T_{n-1} + (T_{n-1} + Y_n)\big) \\
+&= \frac{1}{2} Y_n \big(2T_{n-1} + Y_n\big) \\
+&= Y_n T_{n-1} + \frac{1}{2} Y_n^2
+\end{aligned}
+\end{equation}
+因而，在总观测时间 $T$ 内，AoI 曲线的总面积可表示为所有更新周期的面积之和，平均 AoI 可改写为
+\begin{equation}\label{aoitoarea}
+    \Delta =  \lim_{T \to +\infty} \frac{1}{T} \sum_{n=1}^{N} Q_n
+\end{equation}
+
+若系统满足平稳遍历条件，则依据更新报酬定理，可将时间平均转化为周期平均，即 $\frac{1}{N}\sum_{n=1}^{N}Q_n \to E[Q]$，且 $\frac{T}{N} \to E[Y]$。记稳态下的随机变量 $Y$ 和 $T$ 分别表示离开时间间隔与系统时间，则平均 AoI 的统一表达式为
+\begin{equation}\label{cp2_avg_aoi}
+    \Delta = \frac{E[Q]}{E[Y]} = \frac{E\left[Y_n T_{n-1} + \frac{1}{2} Y_n^2\right]}{E[Y]}=\frac{E[Y T] + \frac{1}{2} E[Y^2]}{E[Y]}
+\end{equation}
+式\eqref{cp2_avg_aoi}给出了后续章节求解平均 AoI 的基本思路。对于任意给定的随机接入机制，只要求得离开时间间隔的一阶矩、二阶矩以及交叉项期望 $E[YT]$，即可得到对应的平均 AoI 闭式结果。
+
+2. 峰值AoI
+
+相比于平均 AoI，峰值 AoI 更关注每个更新周期末端的最差状态。设 $t_k$ 为第 $k$ 次成功接收时刻，则第 $k$ 个峰值 AoI 定义为该次接收发生前的瞬时 AoI 值：
     \begin{equation}
         \text{PA}_k = \lim_{t \to t_k^-} \Delta(t) = \Delta(t_k^-) = T_{k-1} + Y_k
     \end{equation}
@@ -101,32 +102,31 @@ X_{k} + S_{k} - T_{k-1}, & \text{if } X_{k} > T_{k-1}
     \end{equation}
     由此可见，平均峰值 AoI 的求解同样可以归结为系统时间和离开时间间隔的统计刻画，因此与平均 AoI 共用一套分析基础。
     
-    \item 信息年龄的违规概率
-    
-    在许多实际系统中，仅考察 AoI 的均值仍不足以描述性能约束。例如，当业务对信息新鲜度设置了明确门限时，更需要关注 AoI 超过给定阈值的时间占比。基于这一考虑，定义 AoI 的违规概率为
-    \begin{equation}
-        \Pr\{\Delta > \omega\} = \lim_{T \to +\infty} \frac{1}{T} \int_{0}^{T} \mathbf{1}_{\{\Delta(t) > \omega\}} dt
-    \end{equation}
-    其中，$\mathbf{1}_{\{\Delta(t) > \omega\}}$ 为指示函数，当 $\Delta(t) > \omega$ 时取 1，否则取 0。该指标刻画了系统在长期运行过程中违反 AoI 门限约束的时间比例。
+3. AoI的违规概率
 
-    \begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.8\textwidth]{figure/cp2/2.4.pdf}
-    \caption{具有$\omega$限制的AoI演化图}
-    \label{fig:AoI_evolution_with_limit}
-    \end{figure}
+在许多实际系统中，仅考察 AoI 的均值仍不足以描述性能约束。例如，当业务对信息新鲜度设置了明确门限时，更需要关注 AoI 超过给定阈值的时间占比。基于这一考虑，定义 AoI 的违规概率为
+\begin{equation}
+    \Pr\{\Delta > \omega\} = \lim_{T \to +\infty} \frac{1}{T} \int_{0}^{T} \mathbf{1}_{\{\Delta(t) > \omega\}} dt
+\end{equation}
+其中，$\mathbf{1}_{\{\Delta(t) > \omega\}}$ 为指示函数，当 $\Delta(t) > \omega$ 时取 1，否则取 0。该指标刻画了系统在长期运行过程中违反 AoI 门限约束的时间比例。
 
-    为了将该连续时间指标转化为便于分析的离散形式，记 $J(k)$ 为第 $k$ 个更新周期 $[t'_{k-1}, t'_k]$ 内 AoI 高于阈值 $\omega$ 的持续时间，如图\ref{fig:AoI_evolution_with_limit}所示。由于在单个更新周期内 AoI 单调递增，因此是否出现违规以及违规持续多久，仅由该周期内的峰值 AoI 与阈值的相对大小决定。因此有
-    \begin{equation}\label{J_expression}
-        J(k) = \max(0, \text{PA}_k - \omega)
-    \end{equation}
-  
-    在观测时间 $T$ 内，若系统共经历 $N$ 个更新周期，则总违规时长为 $\sum_{k=1}^{N}J(k)$。在平稳遍历条件下，AoI 违规概率可进一步写为
-    \begin{equation}\label{cp2_aoi_violation_expression}
-    \Pr\!\big(\Delta(t) > \omega\big) = \lim_{T \to +\infty} \frac{1}{T} \sum_{k=1}^{N} J(k) = \lim_{T \to +\infty} \frac{N}{T} \frac{1}{N} \sum_{k=1}^{N} J(k) = \frac{E[J]}{E[Y]}
-    \end{equation}
-    该结果表明，违规概率同样可以被归结为更新周期层面的统计量，从而与平均 AoI 形成统一的分析路径。
-\end{enumerate}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.8\textwidth]{figure/cp2/2.4.pdf}
+\caption{具有$\omega$限制的AoI演化图}
+\label{fig:AoI_evolution_with_limit}
+\end{figure}
+
+为了将该连续时间指标转化为便于分析的离散形式，记 $J(k)$ 为第 $k$ 个更新周期 $[t'_{k-1}, t'_k]$ 内 AoI 高于阈值 $\omega$ 的持续时间，如图\ref{fig:AoI_evolution_with_limit}所示。由于在单个更新周期内 AoI 单调递增，因此是否出现违规以及违规持续多久，仅由该周期内的峰值 AoI 与阈值的相对大小决定。因此有
+\begin{equation}\label{J_expression}
+    J(k) = \max(0, \text{PA}_k - \omega)
+\end{equation}
+
+在观测时间 $T$ 内，若系统共经历 $N$ 个更新周期，则总违规时长为 $\sum_{k=1}^{N}J(k)$。在平稳遍历条件下，AoI 违规概率可进一步写为
+\begin{equation}\label{cp2_aoi_violation_expression}
+\Pr\!\big(\Delta(t) > \omega\big) = \lim_{T \to +\infty} \frac{1}{T} \sum_{k=1}^{N} J(k) = \lim_{T \to +\infty} \frac{N}{T} \frac{1}{N} \sum_{k=1}^{N} J(k) = \frac{E[J]}{E[Y]}
+\end{equation}
+该结果表明，违规概率同样可以被归结为更新周期层面的统计量，从而与平均 AoI 形成统一的分析路径。
 
 综合上述讨论可以看到，虽然不同的 AoI 指标关注的性能侧面不同，但都可以通过离开时间间隔 $Y$、系统时间 $T$ 的统计特性来表达。后续章节针对具体协议建立分析模型时，关键任务就在于求解这些随机量的稳态统计特性。
 
@@ -179,25 +179,25 @@ X_{k} + S_{k} - T_{k-1}, & \text{if } X_{k} > T_{k-1}
 特别地，有 $P^{(m)}=P^m$。该结论为求解系统长期行为提供了基本代数工具。
 
 \subsubsection{马尔可夫链的核心性质}
-\begin{enumerate}[wide]
-    \item \textbf{齐次性}：若一步转移概率不随时间变化，即对任意时刻 $t$ 和任意状态 $i,j$，均有
+
+1. \textbf{齐次性}：若一步转移概率不随时间变化，即对任意时刻 $t$ 和任意状态 $i,j$，均有
     \begin{equation}
         P(X_{t+1}=j \mid X_t=i) = P(X_2=j \mid X_1=i) = p_{ij}
     \end{equation}
     则称该链具有齐次性。齐次性使得系统能够用固定转移矩阵描述，是后续稳态分析的基本前提。
 
-    \item \textbf{可达性}：若存在某个正整数 $n$ 使得 $p_{ij}^{(n)}>0$，则称状态 $j$ 从状态 $i$ 可达。可达性反映了状态空间内部的连通关系。
+2. \textbf{可达性}：若存在某个正整数 $n$ 使得 $p_{ij}^{(n)}>0$，则称状态 $j$ 从状态 $i$ 可达。可达性反映了状态空间内部的连通关系。
 
-    \item \textbf{不可约性}：若任意两个状态之间都相互可达，则称该马尔可夫链不可约。这意味着从任一状态出发，系统都有可能在有限步内到达其他任意状态。
+3. \textbf{不可约性}：若任意两个状态之间都相互可达，则称该马尔可夫链不可约。这意味着从任一状态出发，系统都有可能在有限步内到达其他任意状态。
 
-    \item \textbf{周期性}：对状态 $i$，定义其周期为
+4. \textbf{周期性}：对状态 $i$，定义其周期为
     \begin{equation}
         d(i) = \gcd\{n \ge 1 : P^{(n)}(i,i) > 0\}
     \end{equation}
     其中，$\gcd$ 表示最大公约数。若 $d(i)=1$，则称状态 $i$ 为非周期状态；若 $d(i)>1$，则状态 $i$ 具有周期。对于不可约的马尔可夫链，所有状态的周期相同。
 
-    \item \textbf{遍历性}：若一条有限状态马尔可夫链同时满足不可约性与非周期性，则其具有遍历性。遍历链存在唯一的稳态分布，且无论初始状态如何，系统的状态分布都将收敛到该稳态分布。
-\end{enumerate}
+5. \textbf{遍历性}：若一条有限状态马尔可夫链同时满足不可约性与非周期性，则其具有遍历性。遍历链存在唯一的稳态分布，且无论初始状态如何，系统的状态分布都将收敛到该稳态分布。
+
 
 \subsubsection{马尔可夫链的稳态分布}
 对于一条满足遍历性的齐次马尔可夫链，当 $n \to \infty$ 时，系统处于各状态的概率将趋于稳定。设
