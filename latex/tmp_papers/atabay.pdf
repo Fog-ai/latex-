@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="tr"><head id="j_idt3">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        
+        <meta name="google-site-verification" content="0dvog55wzQfGVUJhgCTATFyMhqmVMsmr0qKJ777c_z8" />
+        <meta name="apple-mobile-web-app-capable" content="yes" /><link type="text/css" rel="stylesheet" href="/javax.faces.resource/theme.css.xhtml?ln=primefaces-olympia-bluegrey-teal&amp;v=10.0.0-RC1" /><link type="text/css" rel="stylesheet" href="/javax.faces.resource/primeicons/primeicons.css.xhtml?ln=primefaces&amp;v=10.0.0-RC1" /><link type="text/css" rel="stylesheet" href="/javax.faces.resource/fa/font-awesome.css.xhtml?ln=primefaces&amp;v=10.0.0-RC1" /><link type="text/css" rel="stylesheet" href="/javax.faces.resource/components.css.xhtml?ln=primefaces&amp;v=10.0.0-RC1" /><script type="text/javascript" src="/javax.faces.resource/jquery/jquery.js.xhtml?ln=primefaces&amp;v=10.0.0-RC1"></script><script type="text/javascript" src="/javax.faces.resource/jquery/jquery-plugins.js.xhtml?ln=primefaces&amp;v=10.0.0-RC1"></script><script type="text/javascript" src="/javax.faces.resource/core.js.xhtml?ln=primefaces&amp;v=10.0.0-RC1"></script><script type="text/javascript" src="/javax.faces.resource/components.js.xhtml?ln=primefaces&amp;v=10.0.0-RC1"></script><link type="text/css" rel="stylesheet" href="/javax.faces.resource/animate.css.xhtml?ln=css" /><link type="text/css" rel="stylesheet" href="/javax.faces.resource/css/nanoscroller.css.xhtml?ln=olympia-layout" /><link type="text/css" rel="stylesheet" href="/javax.faces.resource/css/layout-bluegrey-teal.css.xhtml?ln=olympia-layout" /><link type="text/css" rel="stylesheet" href="/javax.faces.resource/bbsStyle.css.xhtml?ln=css" /><link type="text/css" rel="stylesheet" href="/javax.faces.resource/core.css.xhtml?ln=css" /><script type="text/javascript">if(window.PrimeFaces){PrimeFaces.settings.locale='en_US';PrimeFaces.settings.viewId='/bitstreamHandle.xhtml';PrimeFaces.settings.contextPath='';PrimeFaces.settings.cookiesSecure=false;}</script>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <link type="application/opensearchdescription+xml" rel="search" href="https://open.metu.edu.tr/open-search/description.xml" title="OpenMETU" />
+
+    <link rel="shortcut icon" href="https://www.metu.edu.tr/sites/all/themes/odtu/favicon.ico" type="image/vnd.microsoft.icon" />
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/solid.css" integrity="sha384-rdyFrfAIC05c5ph7BKz3l5NG5yEottvO/DQ0dCrwD8gzeQDjYBHNr1ucUpQuljos" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/regular.css" integrity="sha384-z3ccjLyn+akM2DtvRQCXJwvT5bGZsspS4uptQKNXNg778nyzvdMqiGcqHVGiAUyY" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/fontawesome.css" integrity="sha384-u5J7JghGz0qUrmEsWzBQkfvc8nK3fUT7DCaQzNQ+q4oEXhGSx+P2OqjWsfIRB8QT" crossorigin="anonymous" />
+        <title>
+            index.pdf
+        </title><script type="text/javascript" src="/javax.faces.resource/js/nanoscroller.js.xhtml?ln=olympia-layout"></script><script type="text/javascript" src="/javax.faces.resource/js/layout.js.xhtml?ln=olympia-layout"></script></head><body id="bodyID">
+
+        <div id="layout-wrapperID" class="layout-wrapper layout-horizontal layout-menu-light layout-topbar-bluegrey">
+    <div id="layout-topbarID" class="layout-topbar">
+        <input id="localestr" type="hidden" value="en" /><a id="layout-topbar-logoID" name="layout-topbar-logoID" href="/" class="layout-topbar-logo"><img id="j_idt21" src="/javax.faces.resource/img/odtu_kisa_logo.png.xhtml?pfdrid_c=true" alt="" class="bbs_odtu_logo" /></a>
+
+        <a id="layout-menu-button" class="layout-menu-button" href="#"><div id="menuButtonOP" class="ui-outputpanel ui-widget">
+                <i id="bbs_menuBarsIconID" class="fa fa-bars bbs_menuBarsIcon"></i></div>
+        </a><div id="menuButtonToolTip" class="ui-tooltip ui-widget ui-tooltip-bottom" role="tooltip"><div class="ui-tooltip-arrow"></div><div class="ui-tooltip-text ui-shadow ui-corner-all">Show/Hide Menu</div></div><script id="menuButtonToolTip_s" type="text/javascript">$(function(){PrimeFaces.cw("Tooltip","widget_menuButtonToolTip",{id:"menuButtonToolTip",showEffect:"blind",hideEffect:"fade",hideDelay:100,target:"menuButtonOP",position:"bottom"});});</script>
+
+        <a id="options-menu-button" href="#"><div id="mobileMenuButtonOP" class="ui-outputpanel ui-widget">
+                <span class="fa fa-ellipsis-h"></span></div>
+        </a><div id="mobileMenuButtonToolTip" class="ui-tooltip ui-widget ui-tooltip-bottom" role="tooltip"><div class="ui-tooltip-arrow"></div><div class="ui-tooltip-text ui-shadow ui-corner-all">Hide/Show Apps</div></div><script id="mobileMenuButtonToolTip_s" type="text/javascript">$(function(){PrimeFaces.cw("Tooltip","widget_mobileMenuButtonToolTip",{id:"mobileMenuButtonToolTip",showEffect:"blind",hideEffect:"fade",hideDelay:100,target:"mobileMenuButtonOP",position:"bottom"});});</script>
+
+
+        <ul id="layout-topbar-usermenuID" class="layout-topbar-usermenu">
+            <li class="layout-topbar-usermenu-header" style="background: url(/javax.faces.resource/backgrounds/bg5.jpg.xhtml?ln=img) ;">
+                <a class="bbs_anasayfa_topbar_name_href" href="/handle/">
+                <i class="fa fa-user bbs_userAvatar"></i>
+                <div class="layout-topbar-usermenu-info">
+                    <div class="layout-topbar-usermenu-name"></div>
+                    <div class="layout-topbar-usermenu-role" style="font-size:11px;"> </div>
+                </div>
+                </a>
+            </li>
+
+            <li><a href="/logout" class="ui-link ui-widget">
+                    <i class="fa fa-sign-out-alt"></i>
+                    <span>Logout</span></a>
+            </li>
+        </ul>
+
+
+
+        <ul class="layout-topbar-icons">
+            <li id="localizationDesktop"><div id="localizationOP" class="ui-outputpanel ui-widget"><a id="j_idt33" href="#" class="ui-commandlink ui-widget" onclick="PrimeFaces.ab({s:&quot;j_idt33&quot;});return false;">
+                        <span class="topbar-item-text bbs_topbar_text">
+                                <span>Türkçe</span>
+                        </span></a></div>
+            </li>
+            <li id="localizationMobile">
+                <div align="center" style="display: inline-block;"><div id="localizationMobileOP" class="ui-outputpanel ui-widget">
+                        <a class="layout-topbar-icon-bbs">
+                            <i class="fas fa-flag"></i>
+                        </a><a id="j_idt41" href="#" class="ui-commandlink ui-widget" onclick="PrimeFaces.ab({s:&quot;j_idt41&quot;});return false;">
+                            <span class="topbar-item-text bbs_topbar_text">
+                                <span>Türkçe</span>
+                            </span><label style="font-weight: bold;"></label></a></div>
+                </div>
+            </li>
+            <li id="searchIconDesktop" class="layout-topbar-search-item"><div id="searchOP" class="ui-outputpanel ui-widget"><a id="searchLink" href="/discover" class="ui-link ui-widget layout-topbar-icon-bbs">
+                        <i class="fas fa-search"></i></a><div id="searchToolTip" class="ui-tooltip ui-widget ui-tooltip-bottom" role="tooltip"><div class="ui-tooltip-arrow"></div><div class="ui-tooltip-text ui-shadow ui-corner-all">Search</div></div><script id="searchToolTip_s" type="text/javascript">$(function(){PrimeFaces.cw("Tooltip","widget_searchToolTip",{id:"searchToolTip",showEffect:"blind",hideEffect:"fade",hideDelay:100,target:"searchOP",position:"bottom"});});</script></div>
+            </li>
+            <li id="searchIconMobile" class="layout-topbar-search-item">
+                <div align="center" style="display: inline-block; width: 150px;"><a href="/discover" class="ui-link ui-widget layout-topbar-icon-bbs">
+                        <i class="fas fa-search"></i></a><a href="/discover" class="ui-link ui-widget">
+                        <span class="topbar-item-text bbs_topbar_text">
+                            <span>Search</span>
+                        </span></a>
+                </div>
+            </li><div id="j_idt55" class="ui-outputpanel ui-widget" style="float: right !important;">
+                <li id="girisIconDesktop"><a id="signInLinkDesktop" href="/myDspace" class="ui-link ui-widget layout-topbar-icon-bbs">
+                        <i class="fas fa-sign-in-alt"></i></a><div id="girisToolTipDesktop" class="ui-tooltip ui-widget ui-tooltip-bottom" role="tooltip"><div class="ui-tooltip-arrow"></div><div class="ui-tooltip-text ui-shadow ui-corner-all">Login</div></div><script id="girisToolTipDesktop_s" type="text/javascript">$(function(){PrimeFaces.cw("Tooltip","widget_girisToolTipDesktop",{id:"girisToolTipDesktop",showEffect:"blind",hideEffect:"fade",hideDelay:100,target:"signInLinkDesktop",position:"bottom"});});</script>
+                </li></div><div id="j_idt60" class="ui-outputpanel ui-widget">
+                <li id="girisIconMobile"><a href="/myDspace" class="ui-link ui-widget layout-topbar-icon-bbs">
+                        <i class="fas fa-sign-in-alt"></i></a><a href="/myDspace" class="ui-link ui-widget">
+                        <span class="topbar-item-text bbs_topbar_text">
+                            <span>Login</span>
+                        </span></a>
+                </li></div>
+            <li id="userDesktop" class="layout-topbar-user">
+            </li>
+            <li id="userMobile" class="layout-topbar-user">
+            </li>
+
+        </ul>
+    </div>
+    <div id="layout-menu-containerID" class="layout-menu-container bbs_menuContainerLayout">
+        <div class="nano">
+            <div class="nano-content menu-scroll-content">
+<form id="anaMenuForm" name="anaMenuForm" method="post" action="/bitstream/handle/11511/70020/index.pdf" enctype="application/x-www-form-urlencoded">
+<input type="hidden" name="anaMenuForm" value="anaMenuForm" />
+<ul id="anaMenuForm:j_idt74" class="layout-menu"><li id="anaMenuForm:openMetuSubMenu" role="menuitem"><a href="#"><i class="fas fa-unlock animated swing layout-menuitem-icon"></i><span class="layout-menuitem-text">OpenMETU</span><i class="fa fa-fw layout-submenu-toggler fa-angle-down"></i></a><div class="layout-menu-tooltip"><div class="layout-menu-tooltip-arrow"></div><div class="layout-menu-tooltip-text">OpenMETU</div></div><ul role="menu"><li id="anaMenuForm:j_idt75" role="menuitem"><a href="/about"><i class="fas fa-newspaper layout-menuitem-icon"></i><span class="layout-menuitem-text">About</span></a><div class="layout-menu-tooltip"><div class="layout-menu-tooltip-arrow"></div><div class="layout-menu-tooltip-text">About</div></div></li><li id="anaMenuForm:j_idt76" role="menuitem"><a href="/opensciencepolicy"><i class="fas fa-flask layout-menuitem-icon"></i><span class="layout-menuitem-text">Open Science Policy</span></a><div class="layout-menu-tooltip"><div class="layout-menu-tooltip-arrow"></div><div class="layout-menu-tooltip-text">Open Science Policy</div></div></li><li id="anaMenuForm:j_idt77" role="menuitem"><a href="/openaccessguideline"><i class="fas fa-book-open layout-menuitem-icon"></i><span class="layout-menuitem-text">Open Access Guideline</span></a><div class="layout-menu-tooltip"><div class="layout-menu-tooltip-arrow"></div><div class="layout-menu-tooltip-text">Open Access Guideline</div></div></li><li id="anaMenuForm:j_idt78" role="menuitem"><a href="/postgraduatethesisguidelines"><i class="fas fa-pen-fancy layout-menuitem-icon"></i><span class="layout-menuitem-text">Postgraduate Thesis Guideline</span></a><div class="layout-menu-tooltip"><div class="layout-menu-tooltip-arrow"></div><div class="layout-menu-tooltip-text">Postgraduate Thesis Guideline</div></div></li></ul></li><li id="anaMenuForm:j_idt79" role="menuitem"><a href="/community-list"><i class="fas fa-sitemap layout-menuitem-icon"></i><span class="layout-menuitem-text">Communities &amp; Collections</span></a><div class="layout-menu-tooltip"><div class="layout-menu-tooltip-arrow"></div><div class="layout-menu-tooltip-text">Communities &amp; Collections</div></div></li><li id="anaMenuForm:help" role="menuitem"><a href="#"><i class="fas fa-info-circle layout-menuitem-icon"></i><span class="layout-menuitem-text">Help</span><i class="fa fa-fw layout-submenu-toggler fa-angle-down"></i></a><div class="layout-menu-tooltip"><div class="layout-menu-tooltip-arrow"></div><div class="layout-menu-tooltip-text">Help</div></div><ul role="menu"><li id="anaMenuForm:j_idt85" role="menuitem"><a href="/faq"><i class="fas fa-question-circle layout-menuitem-icon"></i><span class="layout-menuitem-text">Frequently Asked Questions</span></a><div class="layout-menu-tooltip"><div class="layout-menu-tooltip-arrow"></div><div class="layout-menu-tooltip-text">Frequently Asked Questions</div></div></li><li id="anaMenuForm:videoSubMenu" role="menuitem"><a href="#"><i class="fas fa-film layout-menuitem-icon"></i><span class="layout-menuitem-text">Guides</span><i class="fa fa-fw layout-submenu-toggler fa-angle-down"></i></a><div class="layout-menu-tooltip"><div class="layout-menu-tooltip-arrow"></div><div class="layout-menu-tooltip-text">Guides</div></div><ul role="menu"><li id="anaMenuForm:j_idt86" role="menuitem"><a href="/thesisvideo"><span class="layout-menuitem-text">Thesis submission</span></a><div class="layout-menu-tooltip"><div class="layout-menu-tooltip-arrow"></div><div class="layout-menu-tooltip-text">Thesis submission</div></div></li><li id="anaMenuForm:j_idt90" role="menuitem"><a href="https://open.metu.edu.tr/bitstream/handle/11511/92036/Term%20Project%20Upload%20Guide.pdf"><span class="layout-menuitem-text">MS without thesis term project submission</span></a><div class="layout-menu-tooltip"><div class="layout-menu-tooltip-arrow"></div><div class="layout-menu-tooltip-text">MS without thesis term project submission</div></div></li><li id="anaMenuForm:j_idt91" role="menuitem"><a href="/publicationdoivideo"><span class="layout-menuitem-text">Publication submission with DOI</span></a><div class="layout-menu-tooltip"><div class="layout-menu-tooltip-arrow"></div><div class="layout-menu-tooltip-text">Publication submission with DOI</div></div></li><li id="anaMenuForm:j_idt92" role="menuitem"><a href="/publicationvideo"><span class="layout-menuitem-text">Publication submission</span></a><div class="layout-menu-tooltip"><div class="layout-menu-tooltip-arrow"></div><div class="layout-menu-tooltip-text">Publication submission</div></div></li></ul></li><li id="anaMenuForm:supinfoMenu" role="menuitem"><a href="#"><i class="fas fa-info-circle layout-menuitem-icon"></i><span class="layout-menuitem-text">Supporting Information</span><i class="fa fa-fw layout-submenu-toggler fa-angle-down"></i></a><div class="layout-menu-tooltip"><div class="layout-menu-tooltip-arrow"></div><div class="layout-menu-tooltip-text">Supporting Information</div></div><ul role="menu"><li id="anaMenuForm:j_idt93" role="menuitem"><a href="/generalinfo"><span class="layout-menuitem-text">General Information</span></a><div class="layout-menu-tooltip"><div class="layout-menu-tooltip-arrow"></div><div class="layout-menu-tooltip-text">General Information</div></div></li><li id="anaMenuForm:j_idt94" role="menuitem"><a href="/copyright"><span class="layout-menuitem-text">Copyright, Embargo and License</span></a><div class="layout-menu-tooltip"><div class="layout-menu-tooltip-arrow"></div><div class="layout-menu-tooltip-text">Copyright, Embargo and License</div></div></li></ul></li><li id="anaMenuForm:j_idt95" role="menuitem"><a href="/contact"><i class="fas fa-envelope layout-menuitem-icon"></i><span class="layout-menuitem-text">Contact us</span></a><div class="layout-menu-tooltip"><div class="layout-menu-tooltip-arrow"></div><div class="layout-menu-tooltip-text">Contact us</div></div></li></ul></li></ul><script id="anaMenuForm:j_idt74_s" type="text/javascript">$(function(){PrimeFaces.cw("Olympia","widget_anaMenuForm_j_idt74",{id:"anaMenuForm:j_idt74"});});</script><input type="hidden" name="javax.faces.ViewState" id="j_id1:javax.faces.ViewState:0" value="545037212896729947:5974966919696764127" autocomplete="off" />
+</form>
+            </div>
+
+        </div>
+    </div>
+    <style>
+    .layout-menuitem-icon {
+        min-width: 16px;
+        text-align: center;
+    }
+
+    </style>
+
+            <div id="layout-mainID" class="layout-main">
+                <div id="header">
+                </div>
+                <div id="content" class="layout-content bbs_contentLayout">
+                </div>
+                <div id="configDiv" class="layout-config">
+                </div>
+            </div>
+
+            <div class="layout-footer bbs_footer">
+
+    <div class="ui-g">
+        <div class="ui-g-6"><div id="destekOP" class="ui-outputpanel ui-widget">
+                <span style="display: block;">METU IIS - Integrated Information Service</span>
+                <a href="mailto:open@metu.edu.tr" target="_blank">
+                    <span>open@metu.edu.tr</span>
+                </a></div><div id="destekToolTip" class="ui-tooltip ui-widget ui-tooltip-top" role="tooltip"><div class="ui-tooltip-arrow"></div><div class="ui-tooltip-text ui-shadow ui-corner-all">You can transmit your request, problems about OpenMETU.</div></div><script id="destekToolTip_s" type="text/javascript">$(function(){PrimeFaces.cw("Tooltip","widget_destekToolTip",{id:"destekToolTip",showEffect:"blind",hideEffect:"fade",hideDelay:100,target:"destekOP",position:"top"});});</script>
+        </div>
+    </div>
+            </div>
+        </div><div id="j_idt108" class="bbs_spinner"><div id="j_idt108_start" style="display:none"><img src="/javax.faces.resource/loading_spinner.gif.xhtml?ln=img" class="bbs_spinnerImage" /></div><div id="j_idt108_complete" style="display:none"></div></div><script id="j_idt108_s" type="text/javascript">$(function(){PrimeFaces.cw("AjaxStatus","widget_j_idt108",{id:"j_idt108",delay:0});});</script></body>
+
+    <script type="text/javascript">
+        function scrollToElement(elementId) {
+            var elmnt = document.getElementById(elementId);
+            var headerHeight = 100; // layout-main stylelinin 90px lik padding degerini notrlemek icin kullaniliyor
+            // scroll to your element
+            elmnt.scrollIntoView(true);
+            // now account for fixed header
+            var scrolledY = window.scrollY;
+            if (scrolledY) {
+                window.scroll(0, scrolledY - headerHeight);
+            }
+        }
+
+        
+        var _paq = window._paq || [];
+        _paq.push(['trackPageView']);
+        _paq.push(['enableLinkTracking']);
+        (function() {
+            var u="//ainos.cc.metu.edu.tr:9443/";
+            _paq.push(['setTrackerUrl', u+'matomo.php']);
+            _paq.push(['setSiteId', '1']);
+            var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+            g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+        })();
+        
+    </script>
+</html>

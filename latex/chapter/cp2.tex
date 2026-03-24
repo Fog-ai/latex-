@@ -30,7 +30,7 @@
     \label{fig:AoI_evolution}
 \end{figure}
 
-为便于后续分析，接下来对关键的随机变量进行定义。记第 $k$ 个分组与第 $k-1$ 个分组生成时刻之间的间隔为 $X_k$，第 $k$ 个分组的排队等待时间为 $W_k$，服务时间为 $S_k$，系统时间为 $T_k$，相邻两次成功更新之间的离开时间间隔为 $Y_k$。则有
+为便于后续的分析，接下来将对关键的随机变量进行定义。记第 $k$ 个分组与第 $k-1$ 个分组生成时刻之间的间隔为 $X_k$，第 $k$ 个分组的排队等待时间为 $W_k$，服务时间为 $S_k$，系统时间为 $T_k$，相邻两次成功更新之间的离开时间间隔为 $Y_k$。则有
 \begin{equation}
     T_k = W_k + S_k
 \end{equation}
@@ -46,6 +46,7 @@ S_{k}, & \text{if } X_{k} \leq T_{k-1} \\
 X_{k} + S_{k} - T_{k-1}, & \text{if } X_{k} > T_{k-1}
 \end{cases}
 \end{equation}
+
 上述关系表明，AoI 的统计特性并不只由分组传输时延决定，还受到分组生成过程、排队过程以及服务器空闲过程的共同影响。后续对随机接入协议的分析，本质上也是围绕这些随机量之间的耦合关系展开。
 
 \subsubsection{AoI的相关指标}
@@ -87,20 +88,20 @@ Q_n &= \frac{1}{2} Y_n \big(T_{n-1} + (T_{n-1} + Y_n)\big) \\
 2. 峰值AoI
 
 相比于平均 AoI，峰值 AoI 更关注每个更新周期末端的最差状态。设 $t_k$ 为第 $k$ 次成功接收时刻，则第 $k$ 个峰值 AoI 定义为该次接收发生前的瞬时 AoI 值：
-    \begin{equation}
-        \text{PA}_k = \lim_{t \to t_k^-} \Delta(t) = \Delta(t_k^-) = T_{k-1} + Y_k
-    \end{equation}
-    该指标反映了系统在两次相邻成功更新之间所达到的最大信息陈旧度。在时效要求较严格的控制与感知场景中，峰值 AoI 常用于补充平均 AoI 无法揭示的局部极值信息。
+\begin{equation}
+    \text{PA}_k = \lim_{t \to t_k^-} \Delta(t) = \Delta(t_k^-) = T_{k-1} + Y_k
+\end{equation}
+该指标反映了系统在两次相邻成功更新之间所达到的最大信息陈旧度。在时效要求较严格的控制与感知场景中，峰值 AoI 常用于补充平均 AoI 无法揭示的局部极值信息。
 
-    与平均 AoI 类似，通常进一步考察其长期统计均值，即平均峰值 AoI：
-    \begin{equation}\label{avg_peak_aoi}
-        \overline{\text{PA}} = \lim_{K \to +\infty} \frac{1}{K} \sum_{k=1}^{K} \text{PA}_k =  \lim_{K \to +\infty} \frac{1}{K} \sum_{k=1}^{K} (T_{k-1} + Y_k)
-    \end{equation}
-    在平稳遍历条件下，上式可写为
-    \begin{equation}
-        \overline{\text{PA}} =  E[T] + E[Y]
-    \end{equation}
-    由此可见，平均峰值 AoI 的求解同样可以归结为系统时间和离开时间间隔的统计刻画，因此与平均 AoI 共用一套分析基础。
+与平均 AoI 类似，通常进一步考察其长期统计均值，即平均峰值 AoI：
+\begin{equation}\label{avg_peak_aoi}
+    \overline{\text{PA}} = \lim_{K \to +\infty} \frac{1}{K} \sum_{k=1}^{K} \text{PA}_k =  \lim_{K \to +\infty} \frac{1}{K} \sum_{k=1}^{K} (T_{k-1} + Y_k)
+\end{equation}
+在平稳遍历条件下，上式可写为
+\begin{equation}
+    \overline{\text{PA}} =  E[T] + E[Y]
+\end{equation}
+由此可见，平均峰值 AoI 的求解同样可以归结为系统时间和离开时间间隔的统计刻画，因此与平均 AoI 共用一套分析基础。
     
 3. AoI的违规概率
 
@@ -132,7 +133,6 @@ Q_n &= \frac{1}{2} Y_n \big(T_{n-1} + (T_{n-1} + Y_n)\big) \\
 
 \subsection{马尔可夫链相关概述}
 在后续的章节中，离散时间马尔可夫链（Discrete-time Markov chain, DTMC）是重要的理论分析工具，本小节将对其基本概念与常用结论作简要说明。
-
 \subsubsection{马尔可夫链的定义}
 离散时间马尔可夫链用于描述随机过程 $\{X_n : n=0,1,2,\dots\}$ 在离散时刻上的状态演化。其核心特性是“无后效性”，即给定当前状态，未来演化与过去无关。设状态空间为可数集合 $S$，若对任意 $n$ 及任意 $i_0,i_1,\dots,i_{n+1}\in S$，均有
 \begin{equation}

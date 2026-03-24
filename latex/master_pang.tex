@@ -137,15 +137,22 @@
 
 
 % 定义目录标题样式
-\titlecontents{section}[0em]{\bfseries\fontspec{songti-Bold.otf}\zihao{-4}}{\contentspush{\thecontentslabel\hspace{1em}}}{}{\titlerule*[0.4pc]{.}\contentspage\vspace{1.6pt}}%
+\titlecontents{section}[0em]{\bfseries\fontspec{Times New Roman}\zihao{-4}}{\contentspush{\thecontentslabel\hspace{1em}}}{}{\titlerule*[0.4pc]{.}\contentspage\vspace{1.6pt}}%
 
 %\titlecontents{section}[0em]{\bfseries\zihao{-4}}{\contentspush{\thecontentslabel\hspace{1em}}}{}{\titlerule*[0.4pc]{.}\contentspage\vspace{1.6pt}}%
 
-\titlecontents{subsection}[1em]{\fontspec{simsun.ttc}\zihao{-4}}{{\thecontentslabel}\hspace{1em}}{}{\titlerule*[0.4pc]{.}\contentspage\vspace{1.6pt}}
+\titlecontents{subsection}[1em]{\fontspec{Times New Roman}\zihao{-4}}{{\songti\zihao{-4}\thecontentslabel}\hspace{1em}}{}{\titlerule*[0.4pc]{.}\contentspage\vspace{1.6pt}}
 
-\titlecontents{subsubsection}[1.8em]{\fontspec{simsun.ttc}\zihao{-4}}{\thecontentslabel\hspace{1em}}{}{\titlerule*[0.4pc]{.}\contentspage\vspace{1.6pt}}
+\titlecontents{subsubsection}[1.8em]{\fontspec{Times New Roman}\zihao{-4}}{{\songti\zihao{-4}\thecontentslabel}\hspace{1em}}{}{\titlerule*[0.4pc]{.}\contentspage\vspace{1.6pt}}
 
-
+\makeatletter
+\g@addto@macro\normalsize{%
+  \setlength{\abovedisplayskip}{6bp} % 标准间距
+  \setlength{\belowdisplayskip}{6bp}
+  \setlength{\abovedisplayshortskip}{6bp} % 强制短间距也统一
+  \setlength{\belowdisplayshortskip}{6bp}
+}
+\makeatother
 
 
 %document begin
@@ -224,6 +231,7 @@
 \input{chapter/cp3.tex}
 \input{chapter/cp4.tex}
 \input{chapter/cp5.tex}
+\input{chapter/cp6.tex}
 
 
 \clearpage
