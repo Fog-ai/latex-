@@ -1,11 +1,10 @@
 \documentclass[UTF8,AutoFakeBold]{szu-master}
-\renewcommand{\titleCN}{面向信息年龄的随机接入机制设计及性能分析}
-\renewcommand{\titleEN}{Design and Analysis of AoI-Oriented Random Access Mechanisms}
+\renewcommand{\titleCN}{基于XXX研究}
+\renewcommand{\titleEN}{The Research Base on XXXX}
 
-% 源代码地址： https://github.com/Ftine/SZU_Latex_Master_Template
+% 源代码地址：https://github.com/Cao-Wuhui/SZU_Latex_Master_Template
 
 % 文本
-\usepackage{ctex}
 \usepackage{fancyhdr}
 %可跨页表格引入
 \usepackage{longtable}
@@ -38,7 +37,6 @@
 \usepackage{epsfig,bm}
 \usepackage{slashbox}
 \usepackage{enumitem}
-\usepackage{pifont} % 带圈数字 \ding{172}=① \ding{173}=② 等
 \usepackage{amssymb,amsthm,amssymb}
 \usepackage{graphicx,subfigure}
 \usepackage{graphicx}
@@ -48,6 +46,7 @@
 \usepackage{tabularx}
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta,positioning,calc,decorations.pathreplacing}
+\usepackage{chngcntr}
 \floatsetup[table]{capposition=top}
 \floatsetup[figure]{capposition=bottom}
 \newfloatcommand{capbtabboxTable}{table}[][\FBwidth]
@@ -55,8 +54,34 @@
 \newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
 
 % 脚注样式 ①②③
-\usepackage[perpage]{footmisc} % 加载 footmisc 宏包并设置 perpage 选项
-\renewcommand{\thefootnote}{\textcircled{\arabic{footnote}}} % 重新定义脚注编号格式
+% 自动检测并选择圈号覆盖更全的符号字体（按优先级回退）
+\IfFontExistsTF{Noto Sans Symbols 2}
+  {\newfontfamily\circnumfont{Noto Sans Symbols 2}}
+  {\IfFontExistsTF{Segoe UI Symbol}
+    {\newfontfamily\circnumfont{Segoe UI Symbol}}
+    {\IfFontExistsTF{Symbola}
+      {\newfontfamily\circnumfont{Symbola}}
+      {\IfFontExistsTF{Arial Unicode MS}
+        {\newfontfamily\circnumfont{Arial Unicode MS}}
+        {\newfontfamily\circnumfont{DejaVu Sans}}
+      }%
+    }%
+  }
+  
+\newcommand{\circledfootnotenum}[1]{%
+  {\circnumfont
+    \ifcase#1
+      \or ①\or ②\or ③\or ④\or ⑤\or ⑥\or ⑦\or ⑧\or ⑨\or ⑩%
+      \or ⑪\or ⑫\or ⑬\or ⑭\or ⑮\or ⑯\or ⑰\or ⑱\or ⑲\or ⑳%
+      \or ㉑\or ㉒\or ㉓\or ㉔\or ㉕\or ㉖\or ㉗\or ㉘\or ㉙\or ㉚%
+      \or ㉛\or ㉜\or ㉝\or ㉞\or ㉟\or ㊱\or ㊲\or ㊳\or ㊴\or ㊵%
+      \or ㊶\or ㊷\or ㊸\or ㊹\or ㊺\or ㊻\or ㊼\or ㊽\or ㊾\or ㊿%
+    \else
+      #1%
+    \fi
+  }%
+}
+\renewcommand{\thefootnote}{\circledfootnotenum{\value{footnote}}}
 
 \newtheorem{definition}{定义}[] % 跟随三级标题排序
 \newtheorem{theorem}{定理}[]  %跟随二级标题排序
@@ -73,7 +98,60 @@
 %\usepackage[hidelinks]{hyperref}
 
 %引用
-\newcommand{\upcite}[1]{{\textsuperscript{\cite{#1}}}}
+\let\szuorigcite\cite
+\ExplSyntaxOn
+\clist_new:N \l__szu_upcite_keys_clist
+\clist_new:N \l__szu_upcite_new_clist
+\tl_new:N \l__szu_upcite_pages_tl
+
+\cs_new_protected:Npn \szu_upcite_mark_seen:n #1
+  {
+    \global\expandafter\let\csname szu@cite@seen@#1\endcsname\empty
+    \label{upcite-first-#1}
+  }
+
+\cs_new_protected:Npn \szu_upcite_render:nn #1#2
+  {
+    \textsuperscript{\szuorigcite{#1}\tl_if_empty:nF {#2} {\,#2}}
+  }
+
+\cs_new_protected:Npn \szu_upcite_single:n #1
+  {
+    \cs_if_exist:cTF {szu@cite@seen@#1}
+      { \szu_upcite_render:nn {#1} {\pageref{upcite-first-#1}} }
+      {
+        \szu_upcite_render:nn {#1} {}
+        \szu_upcite_mark_seen:n {#1}
+      }
+  }
+
+\cs_new_protected:Npn \szu_upcite_multi:n #1
+  {
+    \clist_set:Nn \l__szu_upcite_keys_clist {#1}
+    \clist_clear:N \l__szu_upcite_new_clist
+    \tl_clear:N \l__szu_upcite_pages_tl
+    \clist_map_inline:Nn \l__szu_upcite_keys_clist
+      {
+        \cs_if_exist:cTF {szu@cite@seen@##1}
+          {
+            \tl_if_empty:NF \l__szu_upcite_pages_tl
+              { \tl_put_right:Nn \l__szu_upcite_pages_tl {,} }
+            \tl_put_right:Nx \l__szu_upcite_pages_tl { \pageref{upcite-first-##1} }
+          }
+          { \clist_put_right:Nn \l__szu_upcite_new_clist {##1} }
+      }
+    \szu_upcite_render:nn {#1} { \tl_use:N \l__szu_upcite_pages_tl }
+    \clist_map_inline:Nn \l__szu_upcite_new_clist
+      { \szu_upcite_mark_seen:n {##1} }
+  }
+
+\NewDocumentCommand{\upcite}{m}
+  {
+    \tl_if_in:nnTF {#1}{,}
+      { \szu_upcite_multi:n {#1} }
+      { \szu_upcite_single:n {#1} }
+  }
+\ExplSyntaxOff
 
 %defines the height of the header
 % \setlength{\headheight}{15pt}
@@ -112,6 +190,8 @@
 \titlecontents{subsection}[1em]{\fontspec{simsun.ttc}\zihao{-4}}{{\thecontentslabel}\hspace{1em}}{}{\titlerule*[0.4pc]{.}\contentspage\vspace{1.6pt}}
 
 \titlecontents{subsubsection}[1.8em]{\fontspec{simsun.ttc}\zihao{-4}}{\thecontentslabel\hspace{1em}}{}{\titlerule*[0.4pc]{.}\contentspage\vspace{1.6pt}}
+
+
 
 
 %document begin
@@ -189,7 +269,6 @@
 \input{chapter/cp3.tex}
 \input{chapter/cp4.tex}
 \input{chapter/cp5.tex}
-\input{chapter/cp6.tex}
 
 
 \clearpage

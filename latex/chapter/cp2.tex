@@ -8,7 +8,7 @@
 \subsubsection{AoI的定义与演化特性}
 考虑如图\ref{fig:communication_system}所示的状态更新系统。该系统由一个传感器节点和一个远程接收机组成，传感器节点以速率 $\lambda$ 生成状态更新分组，分组在发送端进入缓冲队列后，由服务速率为 $\mu$ 的服务器经无线信道发送至接收端。
 
-\begin{figure}[h]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=0.8\textwidth]{figure/cp2/2.1.pdf}
     \caption{通信系统}
@@ -21,7 +21,7 @@
 \end{equation}
 由定义可知，AoI 表征的是接收端信息相对于真实状态的陈旧程度。当接收端在一段时间内未获得新的状态更新时，$u(t)$ 保持不变，因此 $\Delta(t)$ 随时间以单位斜率线性增长；当第 $k$ 个分组在时刻 $t_k'$ 被成功接收后，AoI 将被重置为该分组自生成到接收所经历的系统时间，而非重置为 0。正因如此，AoI 在时间轴上通常表现为分段线性增长、在更新到达时发生跳变的锯齿形轨迹，如图\ref{fig:AoI_evolution}所示。
 
-\begin{figure}[h]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=0.8\textwidth]{figure/cp2/2.2.pdf}
     \caption{信息年龄变化趋势图}
@@ -57,7 +57,7 @@ X_{k} + S_{k} - T_{k-1}, & \text{if } X_{k} > T_{k-1}
         \Delta = \lim_{T \to +\infty} \frac{1}{T} \int_{0}^{T} \Delta(t) dt
     \end{equation}
 
-    \begin{figure}[h]
+    \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.8\textwidth]{figure/cp2/2.3.pdf}
     \caption{AoI曲线的面积分解示意图}
@@ -109,7 +109,7 @@ X_{k} + S_{k} - T_{k-1}, & \text{if } X_{k} > T_{k-1}
     \end{equation}
     其中，$\mathbf{1}_{\{\Delta(t) > \omega\}}$ 为指示函数，当 $\Delta(t) > \omega$ 时取 1，否则取 0。该指标刻画了系统在长期运行过程中违反 AoI 门限约束的时间比例。
 
-    \begin{figure}[h]
+    \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.8\textwidth]{figure/cp2/2.4.pdf}
     \caption{具有$\omega$限制的AoI演化图}

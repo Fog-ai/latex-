@@ -206,7 +206,7 @@ FUNCTION {or} {                                   % int Entry::or(int x, int y) 
     skip$                                         %     return x;
   } if$                                           %   }
 }                                                 % }
-                                                  %
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
                                                   % //  calculate the length in characters of a string
                                                   % //  We need this function since text.length$ is NOT
