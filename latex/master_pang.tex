@@ -103,9 +103,7 @@
 % rather than the page number where the citation first appears here.
 \NewDocumentCommand{\upcite}{O{}m}
   {
-    \cite{#2}%
-    \tl_if_blank:nF {#1}
-      { \textsuperscript{#1} }
+    \textsuperscript{[\citen{#2}]\tl_if_blank:nF {#1}{#1}}
   }
 \ExplSyntaxOff
 
