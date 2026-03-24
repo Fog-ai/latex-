@@ -137,7 +137,7 @@ s_0 \left[ \dfrac{(1-p)(z+w-l)}{w} + \dfrac{p(w-l)}{w} \right], & \text{if } z \
     p=1-(1-s_0)^{N-1}.
 \end{equation}
 
-将式\eqref{cp4_p_and_s0}代入式\eqref{cp4_s_0_and_p}，消去中间变量 $s_0$，可得到关于 $p$ 的稳态方程
+为了进一步求解系统稳态下的碰撞概率，将式\eqref{cp4_p_and_s0}代入式\eqref{cp4_s_0_and_p}，消去中间变量 $s_0$，可得到关于 $p$ 的稳态方程
 \begin{equation}\label{cp4_ziqiafangcheng_p}
     \left[ 1 + z(1-p) + \frac{w-1}{2} \right] \left( 1 -\sqrt[N -1]{1-p} \right) - 1=0.
 \end{equation}
@@ -191,7 +191,7 @@ s_0 \left[ \dfrac{(1-p)(z+w-l)}{w} + \dfrac{p(w-l)}{w} \right], & \text{if } z \
 
 1. 求解 $Y$ 的一阶矩
 
-    设在一个离开时间间隔 $Y$ 内，目标终端共发起 $\alpha$ 次传输尝试。由于每次尝试的碰撞概率均为常数 $p$，故 $\alpha$ 服从参数为 $1-p$ 的几何分布，其概率质量函数为
+    设在一个完整的离开时间间隔 $Y$ 内，目标终端共发起了 $\alpha$ 次传输尝试。基于稳态解耦的理论前提，终端每次尝试所经历的碰撞概率均被近似为常数 $p$，因此总传输次数 $\alpha$ 在统计上服从参数为 $1-p$ 的几何分布，其对应的概率质量函数为
     \begin{equation}\label{cp4_alpha}
         \Pr\{\alpha=k\}=(1-p)p^{k-1}, \quad k=1,2,\dots
     \end{equation}
@@ -226,7 +226,7 @@ s_0 \left[ \dfrac{(1-p)(z+w-l)}{w} + \dfrac{p(w-l)}{w} \right], & \text{if } z \
 
 2. 求解 $Y$ 的二阶矩
 
-    为了简化后续书写，记 $\phi=z\left(p+\frac{1-p}{M}\right)$，$\gamma=\frac{w-1}{2}\left(p+\frac{1-p}{M}\right)$。
+    为了简化后续复杂的代数表达式书写，记两个中间变量：$\phi=z\left(p+\frac{1-p}{M}\right)$，$\gamma=\frac{w-1}{2}\left(p+\frac{1-p}{M}\right)$。
 
     在成功后的强制等待阶段，$z$ 个系统时隙中可能出现忙碌时隙和空闲时隙。设其中有 $i$ 个系统时隙为忙碌时隙，则 $i$ 服从二项分布 $B(z,p)$，于是
     \begin{equation}
@@ -281,7 +281,7 @@ E\left[Y_k^2\right] &= \phi^2 + zp(1 - p) \frac{(M - 1)^2}{M^2} + 2k\phi(1 + \ga
         \end{split}
     \end{equation}
 
-    最后，将式\eqref{cp4_EYk2}与式\eqref{cp4_alpha}联立得到 $Y$ 的二阶矩
+    最后，为了求解 $Y$ 的二阶矩，将式\eqref{cp4_EYk2}与式\eqref{cp4_alpha}联立，根据全期望公式展开并化简，可得
     \begin{equation}\label{cp4_EY2result}
         E\left[Y^2\right] = \left( \phi + \frac{1+\gamma}{1-p} \right)^2 + C_1
     \end{equation}

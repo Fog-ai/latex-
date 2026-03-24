@@ -225,7 +225,7 @@ b_i(t) - 1, & \text{if } b_i(t) \neq 0.
         E[Y_k]=z+\frac{k}{p_0}+\frac{(k-1)(w-1)}{2}
     \end{equation}
 
-    将式\eqref{cp3_alpha_expression}与式\eqref{cp3_EYk}联立，可得
+    在明确 $Y_k$ 的统计规律后，为了求解 $Y$ 的整体数学期望，将式\eqref{cp3_alpha_expression}与式\eqref{cp3_EYk}进行联立，根据全期望公式展开并化简，可得
     \begin{equation}\label{cp3_EY}
         \begin{split}
             E[Y] &= \sum_{k=1}^{+\infty}\Pr\{\alpha=k\}E[Y_k] \\
@@ -319,8 +319,15 @@ b_i(t) - 1, & \text{if } b_i(t) \neq 0.
 \end{aligned}
 \end{equation}
 化简可得 $E[J]  = \frac{1}{\lambda} e^{-\lambda(H-c)}$。与式\eqref{cp3_lambdaandc}联立，得到
+\begin{equation}\label{cp3_EJresult_expand}
+\begin{aligned}
+E[J] &= \frac{1}{\lambda} \exp\Big\{ -\lambda \big[ \omega - 1 - \big( E[Y] - \frac{1}{\lambda} \big) \big] \Big\} \\
+&= \frac{1}{\lambda} \exp\big[ -\lambda(\omega - 1 - E[Y]) - 1 \big]
+\end{aligned}
+\end{equation}
+由于 $\lambda=\frac{1}{\sqrt{D[Y]}}$，将上式化简为
 \begin{equation}\label{cp3_EJresult}
-    E[J] = \sqrt{D[Y]} \exp\left( -\frac{\omega - 1 - \mathbb{E}[Y]}{\sqrt{D[Y]}} - 1 \right)
+E[J] = \sqrt{D[Y]} \exp\Bigg( -\frac{\omega - 1 - E[Y]}{\sqrt{D[Y]}} - 1 \Bigg)
 \end{equation}
 
 再将式\eqref{cp3_EJresult}与式\eqref{cp3_EY}一起代入计算公式\eqref{cp2_aoi_violation_expression}，最终得到 AoI 违规概率的闭式表达式
@@ -365,7 +372,7 @@ b_i(t) - 1, & \text{if } b_i(t) \neq 0.
 
 2. 当门限 $\omega$ 大于 $1+\mu_Y$ 时，违规概率关于门限差值呈指数衰减，而衰减快慢由 $\sigma_Y$ 决定。$\sigma_Y$ 越大，尾部衰减越慢，极端陈旧状态出现的概率则越高。
 
-因此，等待 ALOHA 对违规概率的改进并不只体现为平均意义上的 AoI 降低，更体现在对尾部风险的抑制。特别是在高负载场景下，若不对竞争行为进行额外约束，碰撞引发的连续退避会迅速拉长右尾，导致 AoI 违规概率显著上升。
+因此，等待 ALOHA 对违规概率的改进并不只体现为平均意义上的 AoI 降低，更体现在对极端陈旧状态这一尾部风险的抑制。特别是在高负载场景下，无线信道的资源十分受限，若不对盲目且激进的竞争行为进行额外约束，由频繁碰撞所引发的连续退避会迅速拉长右尾，最终导致 AoI 违规概率呈现出显著上升的恶化趋势。等待 ALOHA 通过调节节点在完成更新与碰撞后的再次接入行为，有效抑制了连续碰撞的产生，从而缓解了拥塞环境下极端陈旧状态的发生。
 
 \subsubsection{确定性等待窗口\texorpdfstring{$z$}{z}的参数权衡效应}
 
